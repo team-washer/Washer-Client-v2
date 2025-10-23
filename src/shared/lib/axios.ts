@@ -1,14 +1,14 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 axiosInstance.interceptors.request.use(
   async (config) => {
     return config;
   },
-  async (error) => Promise.reject(error),
+  async (error) => Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
@@ -18,5 +18,5 @@ axiosInstance.interceptors.response.use(
     }
     return Promise.reject(response.data);
   },
-  async (error) => Promise.reject(error),
+  async (error) => Promise.reject(error)
 );
