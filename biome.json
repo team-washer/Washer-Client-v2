@@ -12,19 +12,66 @@
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "quoteStyle": "single",
+    "semicolons": "always",
+    "trailingCommas": "all",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "useTabs": false,
+    "plugins": ["prettier-plugin-tailwindcss"]
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
-      "suspicious": {
-        "noUnknownAtRules": "off"
-      }
+      "style": {
+        "noConsole": "warn",
+        "unusedImports/no-unused-imports-ts": "error"
+      },
+      "import/order": [
+        "error",
+        {
+          "groups": [
+            "builtin",
+            "external",
+            "internal",
+            ["parent", "sibling", "index"],
+            "object",
+            "type"
+          ],
+          "pathGroups": [
+            { "pattern": "react", "group": "external", "position": "before" },
+            {
+              "pattern": "react-dom",
+              "group": "external",
+              "position": "before"
+            },
+            {
+              "pattern": "@tanstack/react-query",
+              "group": "external",
+              "position": "before"
+            },
+            { "pattern": "axios", "group": "external", "position": "before" },
+            {
+              "pattern": "tailwindcss",
+              "group": "external",
+              "position": "before"
+            }
+          ],
+          "pathGroupsExcludedImportTypes": ["builtin"],
+          "newlinesBetween": "always",
+          "alphabetize": { "order": "asc", "caseInsensitive": true }
+        }
+      ],
+      "jsx-a11y/alt-text": "warn",
+      "jsx-a11y/aria-props": "warn"
     },
     "domains": {
-      "next": "recommended",
-      "react": "recommended"
+      "react": "recommended",
+      "typescript": "recommended",
+      "next": "recommended"
     }
   },
   "assist": {
@@ -33,5 +80,41 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "linter": {
+        "rules": {
+          "@typescript-eslint/no-unused-vars": "error",
+          "@typescript-eslint/naming-convention": [
+            "error",
+            {
+              "selector": "variable",
+              "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+            },
+            { "selector": "function", "format": ["camelCase", "PascalCase"] },
+            { "selector": "typeLike", "format": ["PascalCase"] }
+          ]
+        }
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "linter": {
+        "rules": {
+          "@typescript-eslint/naming-convention": "off"
+        }
+      }
+    },
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "linter": {
+        "extends": ["plugin:testing-library/react"]
+      }
+    }
+  ]
 }
