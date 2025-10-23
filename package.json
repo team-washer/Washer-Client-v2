@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check",
-    "format": "biome format --write"
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "lint:fix": "biome check --apply ."
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
