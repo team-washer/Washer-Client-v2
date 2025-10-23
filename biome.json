@@ -26,6 +26,9 @@
       "a11y": {
         "useAltText": "warn",
         "useValidAriaProps": "warn"
+      },
+      "suspicious": {
+        "noUnknownAtRules": "off"
       }
     },
     "domains": {
