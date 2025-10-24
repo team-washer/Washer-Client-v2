@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "@/shared/styles/globals.css";
 import TanStackProvider from "@/shared/lib/TanStackProvider";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "washer",
@@ -17,10 +15,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <TanStackProvider>
-          {children}
-          <ToastContainer />
-        </TanStackProvider>
+        <TanStackProvider>{children}</TanStackProvider>
       </body>
     </html>
   );
