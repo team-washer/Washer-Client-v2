@@ -1,4 +1,4 @@
-import ReportsPage from "@/views/reports/ui/ReportsPage";
+import ReportsPage from "@/widgets/reports-page/ReportsPage";
 export default function Page() {
   return <ReportsPage />;
 }

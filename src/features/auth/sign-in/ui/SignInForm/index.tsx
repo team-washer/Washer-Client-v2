@@ -1,11 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useSignInForm } from "../../model/useSignInForm";
 
 const SignInForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    email,
+    password,
+    showPassword,
+    isLoading,
+    setEmail,
+    setPassword,
+    togglePasswordVisibility,
+    handleSubmit,
+  } = useSignInForm();
 
   return (
     <div className="w-full max-w-[370px] rounded-[20px] bg-white px-7 py-10 shadow-[0_12px_40px_rgba(0,0,0,0.06)]">
@@ -15,36 +23,45 @@ const SignInForm = () => {
         </div>
       </div>
 
-      <form className="flex flex-col gap-5">
+      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-[#555]">이메일</label>
+          <label htmlFor="email" className="text-sm font-medium text-[#555]">
+            이메일
+          </label>
 
-          <div className="flex h-[44px] items-center rounded-[10px] border border-[#d9d9d9] bg-white px-3">
+          <div className="flex h-11 items-center rounded-[10px] border border-[#d9d9d9] bg-white px-3">
             <input
+              id="email"
+              type="text"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="이메일을 입력해주세요"
-              className="flex-1 border-none bg-transparent text-sm text-[#222] outline-none placeholder:text-[#b9b9b9]"
+              className="flex-1 bg-transparent text-sm text-[#222] outline-none placeholder:text-[#b9b9b9]"
             />
             <span className="text-sm text-[#a3a3a3]">@gsm.hs.kr</span>
           </div>
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-[#555]">비밀번호</label>
+          <label htmlFor="password" className="text-sm font-medium text-[#555]">
+            비밀번호
+          </label>
 
-          <div className="flex h-[44px] items-center rounded-[10px] border border-[#d9d9d9] bg-white px-3">
+          <div className="flex h-11 items-center rounded-[10px] border border-[#d9d9d9] bg-white px-3">
             <input
-              type="password"
+              id="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="비밀번호를 입력해주세요"
-              className="flex-1 border-none bg-transparent text-sm text-[#222] outline-none placeholder:text-[#b9b9b9]"
+              className="flex-1 bg-transparent text-sm text-[#222] outline-none placeholder:text-[#b9b9b9]"
             />
+
             <button
               type="button"
+              onClick={togglePasswordVisibility}
               className="text-sm text-[#9a9a9a]"
-              aria-label="비밀번호 표시"
+              aria-label="비밀번호 표시 토글"
             >
               👁
             </button>
@@ -62,9 +79,10 @@ const SignInForm = () => {
 
         <button
           type="submit"
-          className="mt-2 h-[44px] rounded-[10px] bg-[#a9c5ff] text-sm font-semibold text-white"
+          disabled={isLoading}
+          className="mt-2 h-11 rounded-[10px] bg-[#a9c5ff] text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
         >
-          로그인
+          {isLoading ? "로그인 중..." : "로그인"}
         </button>
       </form>
 

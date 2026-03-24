@@ -1,5 +1,4 @@
-import MachinesPage from "@/views/machines/ui/MachinesPage";
-
+import MachinesPage from "@/widgets/machines-page/MachinesPage";
 export default function Page() {
   return <MachinesPage />;
 }

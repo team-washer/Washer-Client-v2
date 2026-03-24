@@ -1,4 +1,4 @@
-import UsersPage from "@/views/users/ui/UsersPage";
+import UsersPage from "@/widgets/users-page/MainPage";
 export default function Page() {
   return <UsersPage />;
 }

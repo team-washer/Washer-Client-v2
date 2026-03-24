@@ -1,4 +1,4 @@
-import SignInPage from "@/views/sign-in/ui/SignInPage";
+import SignInPage from "@/widgets/sign-in-page/SignInPage";
 
 export default function Page() {
   return <SignInPage />;
