@@ -1,7 +1,7 @@
 import { cn } from "@/shared/lib/cn";
 
-const MainPage = () => {
+const ReservationsPage = () => {
   return <div className={cn("flex", "w-screen", "h-screen")}>d</div>;
 };
 
-export default MainPage;
+export default ReservationsPage;
