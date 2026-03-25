@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const tabs = [
   { label: "메인", href: "/" },
@@ -9,10 +12,12 @@ const tabs = [
 ];
 
 export default function DashboardTabs() {
+  const pathname = usePathname();
+
   return (
-    <nav className="grid grid-cols-5 gap-3 rounded-xl bg-[#FDFDFD] p-2">
-      {tabs.map((tab, index) => {
-        const isActive = index === 0;
+    <nav className="grid grid-cols-5 gap-2 rounded-xl bg-[#FDFDFD] p-2">
+      {tabs.map((tab) => {
+        const isActive = pathname === tab.href;
 
         return (
           <Link
