@@ -1,7 +1,26 @@
-import { cn } from "@/shared/lib/cn";
+import AdminLayout from "@/widgets/layout/admin-layout/ui/AdminLayout";
+import DashboardTabs from "./ui/DashboardTabs";
+import SummaryCards from "./ui/SummaryCards";
+import RecentReportsPanel from "./ui/RecentReportsPanel";
+import ActiveReservationsPanel from "./ui/ActiveReservationsPanel";
+import UserManagementPanel from "./ui/UserManagementPanel";
 
-const MainPage = () => {
-  return <div className={cn("flex", "w-screen", "h-screen")}>d</div>;
-};
+export default function MainPage() {
+  return (
+    <AdminLayout>
+      <div className="flex flex-col gap-4">
+        <DashboardTabs />
+        <SummaryCards />
 
-export default MainPage;
+        <div className="grid grid-cols-[1fr_1.02fr] gap-4">
+          <div className="flex flex-col gap-4">
+            <RecentReportsPanel />
+            <UserManagementPanel />
+          </div>
+
+          <ActiveReservationsPanel />
+        </div>
+      </div>
+    </AdminLayout>
+  );
+}
