@@ -3,10 +3,10 @@ import Header from "../Header";
 
 const AdminLayout = ({ children }: PropsWithChildren) => {
   return (
-    <main className="min-h-screen bg-[#f3f3f5]">
+    <main className="min-h-screen bg-[#F4F5F9]">
       <Header />
 
-      <section className="mx-auto w-full max-w-[1080px] px-6 py-7">
+      <section className="mx-auto w-full max-w-[1350px] px-32 py-7">
         {children}
       </section>
     </main>

@@ -1,3 +1,6 @@
+import Image from "next/image";
+import { TriangleAlert } from "lucide-react";
+
 const reports = [
   {
     id: 1,
@@ -5,7 +8,7 @@ const reports = [
     user: "김민솔",
     time: "26.03.13 (21:30)",
     status: "신고",
-    statusColor: "bg-[#ef4b4f]",
+    type: "washer",
   },
   {
     id: 2,
@@ -13,7 +16,7 @@ const reports = [
     user: "김민솔",
     time: "26.03.13 (21:30)",
     status: "처리중",
-    statusColor: "bg-[#4d83f6]",
+    type: "washer",
   },
   {
     id: 3,
@@ -21,37 +24,62 @@ const reports = [
     user: "김민솔",
     time: "26.03.13 (21:30)",
     status: "완료",
-    statusColor: "bg-[#8cb2ff]",
+    type: "dryer",
   },
 ];
 
+const statusMap = {
+  신고: "bg-[#EA3B42]",
+  처리중: "bg-[#4486FF]",
+  완료: "bg-[#85B0FF]",
+};
+
+function ReportMachineIcon({ type }: { type: string }) {
+  const src =
+    type === "washer" ? "/icons/washer-drop.svg" : "/icons/dryer-wave.svg";
+
+  return (
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center">
+      <Image src={src} alt={type} width={28} height={28} />
+    </div>
+  );
+}
+
 export default function RecentReportsPanel() {
   return (
-    <section className="rounded-2xl bg-[#ececef] px-5 py-5">
-      <div className="mb-4 flex items-center gap-2">
-        <h2 className="text-[17px] font-semibold text-[#4a4a4f]">
+    <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5">
+      <div className="mb-5 flex items-center gap-2">
+        <h2 className="text-[17px] font-medium text-[#494949]">
           최근 고장 신고
         </h2>
-        <span className="text-[#a4a4aa]">⚠</span>
+        <TriangleAlert size={18} className="text-[#A4A4AA]" />
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-5">
         {reports.map((item) => (
           <div
             key={item.id}
             className="flex items-center justify-between gap-4"
           >
-            <div className="min-w-0">
-              <p className="text-[15px] font-medium text-[#4a4a4f]">
-                {item.machine}
-              </p>
-              <p className="mt-1 text-sm text-[#9a9aa0]">
-                {item.user} {item.time}
-              </p>
+            <div className="flex min-w-0 items-start gap-2">
+              <div className="translate-y-0.5">
+                <ReportMachineIcon type={item.type} />
+              </div>
+
+              <div className="min-w-0">
+                <p className="text-[15px] font-medium text-[#4A4A4F]">
+                  {item.machine}
+                </p>
+                <p className="mt-1 text-sm text-[#9A9AA0]">
+                  {item.user} {item.time}
+                </p>
+              </div>
             </div>
 
             <span
-              className={`inline-flex h-7 min-w-[54px] items-center justify-center rounded-full px-3 text-xs font-semibold text-white ${item.statusColor}`}
+              className={`inline-flex h-7 min-w-[50px] shrink-0 items-center justify-center rounded-full px-3 text-xs font-medium text-white ${
+                statusMap[item.status as keyof typeof statusMap]
+              }`}
             >
               {item.status}
             </span>
