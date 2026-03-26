@@ -1,31 +1,17 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { Droplet, Trash2 } from "lucide-react";
-
-export type ReservationStatus = "사용중" | "대기중" | "예약중";
-export type ReservationMachineType = "washer" | "dryer";
-
-export interface ReservationItem {
-  id: number;
-  machine: string;
-  remain?: string;
-  reserveAt?: string;
-  expired?: string;
-  status: ReservationStatus;
-  type: ReservationMachineType;
-}
+import type {
+  ReservationItem,
+  ReservationMachineType,
+} from "@/entities/reservation/model/types";
+import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
 
 interface ReservationStatusPanelProps {
-  title?: string;
-  icon?: ReactNode;
+  title: string;
+  icon: ReactNode;
   reservations: ReservationItem[];
 }
-
-const statusMap: Record<ReservationStatus, string> = {
-  사용중: "bg-[#4D83F6]",
-  대기중: "bg-[#8CB2FF]",
-  예약중: "bg-[#8CB2FF]",
-};
 
 function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
   const src =
@@ -65,13 +51,7 @@ function ReservationRow({ item }: { item: ReservationItem }) {
       </div>
 
       <div className="flex shrink-0 items-center gap-3 self-end sm:self-auto">
-        <span
-          className={`inline-flex h-8 min-w-16 items-center justify-center rounded-full px-3 text-xs font-semibold text-white ${
-            statusMap[item.status]
-          }`}
-        >
-          {item.status}
-        </span>
+        <ReservationStatusBadge status={item.status} />
 
         <button className="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-[#EA3B42] px-3 text-sm font-medium text-white">
           <Trash2 size={16} strokeWidth={2.2} />

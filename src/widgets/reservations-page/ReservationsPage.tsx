@@ -1,7 +1,6 @@
 import { Droplet, Waves } from "lucide-react";
-import ReservationStatusPanel, {
-  type ReservationItem,
-} from "@/widgets/reservations-page/ui/ReservationStatusPanel";
+import type { ReservationItem } from "@/entities/reservation/model/types";
+import ReservationStatusPanel from "./ui/ReservationStatusPanel";
 
 const reservations: ReservationItem[] = [
   {
