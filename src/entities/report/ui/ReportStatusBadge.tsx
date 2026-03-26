@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/cn";
-import type { ReportStatus } from "../model/type";
+import type { ReportStatus } from "../model/types";
 import { reportStatusStyleMap } from "../model/status";
 
 interface ReportStatusBadgeProps {

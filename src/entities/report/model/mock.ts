@@ -1,4 +1,4 @@
-import type { ReportItem } from "./type";
+import type { ReportItem } from "./types";
 
 export const reportsMock: ReportItem[] = [
   {

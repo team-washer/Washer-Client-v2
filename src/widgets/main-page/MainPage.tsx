@@ -4,12 +4,13 @@ import { Droplet } from "lucide-react";
 import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
 import { managedUsersMock } from "@/entities/user/model/mock";
 import { reservationsMock } from "@/entities/reservation/model/mock";
+import { reportsMock } from "@/entities/report/model/mock";
 
 export default function MainPage() {
   return (
     <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
       <div className="flex flex-col gap-4">
-        <RecentReportsPanel />
+        <RecentReportsPanel reports={reportsMock} />
         <UserManagementPanel users={managedUsersMock} />
       </div>
 

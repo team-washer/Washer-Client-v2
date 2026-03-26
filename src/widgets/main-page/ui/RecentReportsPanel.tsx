@@ -1,8 +1,14 @@
 import Image from "next/image";
 import { TriangleAlert } from "lucide-react";
-import type { ReportMachineType } from "@/entities/report/model/type";
-import { reportsMock } from "@/entities/report/model/mock";
+import type {
+  ReportItem,
+  ReportMachineType,
+} from "@/entities/report/model/types";
 import ReportStatusBadge from "@/entities/report/ui/ReportStatusBadge";
+
+interface RecentReportsPanelProps {
+  reports: ReportItem[];
+}
 
 function ReportMachineIcon({ type }: { type: ReportMachineType }) {
   const src =
@@ -15,7 +21,9 @@ function ReportMachineIcon({ type }: { type: ReportMachineType }) {
   );
 }
 
-export default function RecentReportsPanel() {
+export default function RecentReportsPanel({
+  reports,
+}: RecentReportsPanelProps) {
   return (
     <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5">
       <div className="mb-5 flex items-center gap-2">
@@ -26,7 +34,7 @@ export default function RecentReportsPanel() {
       </div>
 
       <div className="flex flex-col gap-5">
-        {reportsMock.map((item) => (
+        {reports.map((item) => (
           <div
             key={item.id}
             className="flex items-center justify-between gap-4"

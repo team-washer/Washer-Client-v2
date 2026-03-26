@@ -1,4 +1,4 @@
-import { ReportStatus } from "./type";
+import { ReportStatus } from "./types";
 export const reportStatusStyleMap: Record<ReportStatus, string> = {
   신고: "bg-[#EA3B42]",
   처리중: "bg-[#4486FF]",
