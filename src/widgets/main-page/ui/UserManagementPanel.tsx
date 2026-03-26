@@ -1,37 +1,13 @@
 import { User } from "lucide-react";
+import type { ManagedUserItem } from "@/entities/user/model/types";
 
-const users = [
-  {
-    id: 1,
-    room: "511호",
-    name: "김민솔",
-    reason: "사유 예약 정지 2회 이상",
-    remain: "00:32:12",
-  },
-  {
-    id: 2,
-    room: "511호",
-    name: "김민솔",
-    reason: "사유 예약 정지 2회 이상",
-    remain: "00:32:12",
-  },
-  {
-    id: 3,
-    room: "511호",
-    name: "김민솔",
-    reason: "사유 예약 정지 2회 이상",
-    remain: "00:32:12",
-  },
-  {
-    id: 4,
-    room: "511호",
-    name: "김민솔",
-    reason: "사유 예약 정지 2회 이상",
-    remain: "00:32:12",
-  },
-];
+interface UserManagementPanelProps {
+  users: ManagedUserItem[];
+}
 
-export default function UserManagementPanel() {
+export default function UserManagementPanel({
+  users,
+}: UserManagementPanelProps) {
   return (
     <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5">
       <div className="mb-5 flex items-center gap-2">

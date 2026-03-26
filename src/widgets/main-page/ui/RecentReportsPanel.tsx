@@ -1,40 +1,10 @@
 import Image from "next/image";
 import { TriangleAlert } from "lucide-react";
+import type { ReportMachineType } from "@/entities/report/model/type";
+import { reportsMock } from "@/entities/report/model/mock";
+import ReportStatusBadge from "@/entities/report/ui/ReportStatusBadge";
 
-const reports = [
-  {
-    id: 1,
-    machine: "Washer-3F-L1",
-    user: "김민솔",
-    time: "26.03.13 (21:30)",
-    status: "신고",
-    type: "washer",
-  },
-  {
-    id: 2,
-    machine: "Washer-3F-L1",
-    user: "김민솔",
-    time: "26.03.13 (21:30)",
-    status: "처리중",
-    type: "washer",
-  },
-  {
-    id: 3,
-    machine: "Dryer-3F-L2",
-    user: "김민솔",
-    time: "26.03.13 (21:30)",
-    status: "완료",
-    type: "dryer",
-  },
-];
-
-const statusMap = {
-  신고: "bg-[#EA3B42]",
-  처리중: "bg-[#4486FF]",
-  완료: "bg-[#85B0FF]",
-};
-
-function ReportMachineIcon({ type }: { type: string }) {
+function ReportMachineIcon({ type }: { type: ReportMachineType }) {
   const src =
     type === "washer" ? "/icons/washer-drop.svg" : "/icons/dryer-wave.svg";
 
@@ -56,7 +26,7 @@ export default function RecentReportsPanel() {
       </div>
 
       <div className="flex flex-col gap-5">
-        {reports.map((item) => (
+        {reportsMock.map((item) => (
           <div
             key={item.id}
             className="flex items-center justify-between gap-4"
@@ -76,13 +46,7 @@ export default function RecentReportsPanel() {
               </div>
             </div>
 
-            <span
-              className={`inline-flex h-7 min-w-[50px] shrink-0 items-center justify-center rounded-full px-3 text-xs font-medium text-white ${
-                statusMap[item.status as keyof typeof statusMap]
-              }`}
-            >
-              {item.status}
-            </span>
+            <ReportStatusBadge status={item.status} />
           </div>
         ))}
       </div>
