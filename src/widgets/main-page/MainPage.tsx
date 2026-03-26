@@ -1,8 +1,9 @@
+import { Droplet } from "lucide-react";
+import type { ReservationItem } from "@/entities/reservation/model/types";
+import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
 import RecentReportsPanel from "./ui/RecentReportsPanel";
 import UserManagementPanel from "./ui/UserManagementPanel";
-import { Droplet } from "lucide-react";
-import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
-import type { ReservationItem } from "@/entities/reservation/model/types";
+
 const reservations: ReservationItem[] = [
   {
     id: 1,

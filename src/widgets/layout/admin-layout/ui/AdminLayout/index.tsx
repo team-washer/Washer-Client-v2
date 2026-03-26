@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import Header from "../Header";
 import DashboardTabs from "../DashboardTabs";
+import Header from "../Header";
 import SummaryCards from "../SummaryCards";
 
 export default function AdminLayout({ children }: PropsWithChildren) {

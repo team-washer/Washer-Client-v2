@@ -1,7 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { type FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { requestSignIn } from "../api/requestSignIn";
 export const useSignInForm = () => {

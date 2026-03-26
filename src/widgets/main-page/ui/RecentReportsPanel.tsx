@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { TriangleAlert } from "lucide-react";
+import Image from "next/image";
 
 const reports = [
   {

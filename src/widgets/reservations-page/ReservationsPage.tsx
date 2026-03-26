@@ -51,11 +51,11 @@ const reservations: ReservationItem[] = [
 
 export default function ReservationsPage() {
   const dryerReservations = reservations.filter(
-    (item) => item.type === "dryer"
+    (item) => item.type === "dryer",
   );
 
   const washerReservations = reservations.filter(
-    (item) => item.type === "washer"
+    (item) => item.type === "washer",
   );
 
   return (
