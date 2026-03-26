@@ -7,7 +7,7 @@ const summaryItems = [
 
 export default function SummaryCards() {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
       {summaryItems.map((item) => (
         <article
           key={item.label}

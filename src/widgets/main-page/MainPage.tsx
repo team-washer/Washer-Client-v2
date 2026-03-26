@@ -6,7 +6,7 @@ import UserManagementPanel from "./ui/UserManagementPanel";
 
 export default function MainPage() {
   return (
-    <div className="grid grid-cols-[1fr_1.02fr] gap-4">
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
       <div className="flex flex-col gap-4">
         <RecentReportsPanel />
         <UserManagementPanel />
