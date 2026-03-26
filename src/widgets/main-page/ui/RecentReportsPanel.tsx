@@ -1,40 +1,16 @@
 import { TriangleAlert } from "lucide-react";
 import Image from "next/image";
+import type {
+  ReportItem,
+  ReportMachineType,
+} from "@/entities/report/model/types";
+import ReportStatusBadge from "@/entities/report/ui/ReportStatusBadge";
 
-const reports = [
-  {
-    id: 1,
-    machine: "Washer-3F-L1",
-    user: "김민솔",
-    time: "26.03.13 (21:30)",
-    status: "신고",
-    type: "washer",
-  },
-  {
-    id: 2,
-    machine: "Washer-3F-L1",
-    user: "김민솔",
-    time: "26.03.13 (21:30)",
-    status: "처리중",
-    type: "washer",
-  },
-  {
-    id: 3,
-    machine: "Dryer-3F-L2",
-    user: "김민솔",
-    time: "26.03.13 (21:30)",
-    status: "완료",
-    type: "dryer",
-  },
-];
+interface RecentReportsPanelProps {
+  reports: ReportItem[];
+}
 
-const statusMap = {
-  신고: "bg-[#EA3B42]",
-  처리중: "bg-[#4486FF]",
-  완료: "bg-[#85B0FF]",
-};
-
-function ReportMachineIcon({ type }: { type: string }) {
+function ReportMachineIcon({ type }: { type: ReportMachineType }) {
   const src =
     type === "washer" ? "/icons/washer-drop.svg" : "/icons/dryer-wave.svg";
 
@@ -45,7 +21,9 @@ function ReportMachineIcon({ type }: { type: string }) {
   );
 }
 
-export default function RecentReportsPanel() {
+export default function RecentReportsPanel({
+  reports,
+}: RecentReportsPanelProps) {
   return (
     <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5">
       <div className="mb-5 flex items-center gap-2">
@@ -76,13 +54,7 @@ export default function RecentReportsPanel() {
               </div>
             </div>
 
-            <span
-              className={`inline-flex h-7 min-w-[50px] shrink-0 items-center justify-center rounded-full px-3 text-xs font-medium text-white ${
-                statusMap[item.status as keyof typeof statusMap]
-              }`}
-            >
-              {item.status}
-            </span>
+            <ReportStatusBadge status={item.status} />
           </div>
         ))}
       </div>
