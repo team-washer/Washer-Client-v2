@@ -1,19 +1,19 @@
 import { cn } from "@/shared/lib/cn";
-import { reservationStatusStyleMap } from "../model/status";
-import type { ReservationStatus } from "../model/types";
+import { occupancyStatusStyleMap } from "../model/status";
+import { OccupancyStatus } from "../model/types";
 
-interface ReservationStatusBadgeProps {
-  status: ReservationStatus;
+interface Props {
+    status: OccupancyStatus;
 }
 
 export default function ReservationStatusBadge({
   status,
-}: ReservationStatusBadgeProps) {
+}: Props) {
   return (
     <span
       className={cn(
         "inline-flex h-7 min-w-16 items-center justify-center rounded-full px-3 text-xs font-semibold text-white",
-        reservationStatusStyleMap[status],
+        occupancyStatusStyleMap[status],
       )}
     >
       {status}
