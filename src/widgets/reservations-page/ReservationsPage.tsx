@@ -12,18 +12,18 @@ export default function ReservationsPage() {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-4 xl:h-full xl:min-h-0 xl:grid-cols-2">
-      <div className="xl:min-h-0">
+    <div className="admin-page-grid">
+      <div className="admin-page-item">
         <ReservationStatusPanel
-          title="활성화 된 예약"
+          title="건조기 예약 현황"
           icon={<Waves size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={dryerReservations}
         />
       </div>
 
-      <div className="xl:min-h-0">
+      <div className="admin-page-item">
         <ReservationStatusPanel
-          title="활성화 된 예약"
+          title="세탁기 예약 현황"
           icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={washerReservations}
         />

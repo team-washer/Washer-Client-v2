@@ -25,15 +25,15 @@ export default function RecentReportsPanel({
   reports,
 }: RecentReportsPanelProps) {
   return (
-    <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5 xl:flex xl:h-full xl:min-h-0 xl:flex-col">
-      <div className="mb-5 flex items-center gap-2 xl:shrink-0">
+    <section className="admin-panel">
+      <div className="admin-panel-header">
         <h2 className="text-[17px] font-medium text-[#494949]">
           최근 고장 신고
         </h2>
         <TriangleAlert size={18} className="text-[#A4A4AA]" />
       </div>
 
-      <div className="flex flex-col gap-5 xl:min-h-0 xl:flex-1 xl:overflow-y-auto xl:pr-1">
+      <div className="admin-panel-body flex flex-col gap-5">
         {reports.map((item) => (
           <div
             key={item.id}
