@@ -9,13 +9,13 @@ export default function UserManagementPanel({
   users,
 }: UserManagementPanelProps) {
   return (
-    <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5">
-      <div className="mb-5 flex items-center gap-2">
+    <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5 xl:flex xl:h-full xl:min-h-0 xl:flex-col">
+      <div className="mb-5 flex items-center gap-2 xl:shrink-0">
         <h2 className="text-[17px] font-medium text-[#494949]">사용자 관리</h2>
         <User size={18} className="translate-y-px text-[#A4A4AA]" />
       </div>
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 xl:min-h-0 xl:flex-1 xl:overflow-y-auto xl:pr-1">
         {users.map((item) => (
           <div key={item.id} className="flex items-start justify-between gap-4">
             <div className="min-w-0">

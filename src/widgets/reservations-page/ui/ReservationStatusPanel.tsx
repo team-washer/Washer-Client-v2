@@ -65,19 +65,19 @@ function ReservationRow({ item }: { item: ReservationItem }) {
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-2">
+      <div className="flex shrink-0 items-center gap-1">
         <ReservationStatusBadge status={item.status} />
 
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#B7B7BD] text-[#9A9AA0]"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#B7B7BD] text-[#9A9AA0]"
         >
           <History size={16} strokeWidth={2.2} />
         </button>
 
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#EF4B4F] text-[#EF4B4F]"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#EF4B4F] text-[#EF4B4F]"
         >
           <Trash2 size={16} strokeWidth={2.2} />
         </button>
@@ -87,22 +87,22 @@ function ReservationRow({ item }: { item: ReservationItem }) {
 }
 
 export default function ReservationStatusPanel({
-  title,
-  icon,
-  reservations,
-}: ReservationStatusPanelProps) {
-  return (
-    <section className="flex h-full min-h-[500px] flex-col rounded-2xl bg-[#FDFDFD] px-5 py-5">
-      <div className="mb-5 flex items-center gap-2">
-        <h2 className="text-[17px] font-medium text-[#4A4A4F]">{title}</h2>
-        {icon}
-      </div>
-
-      <div className="flex flex-1 flex-col">
-        {reservations.map((item) => (
-          <ReservationRow key={item.id} item={item} />
-        ))}
-      </div>
-    </section>
-  );
-}
+    title,
+    icon,
+    reservations,
+  }: ReservationStatusPanelProps) {
+    return (
+      <section className="rounded-2xl bg-[#FDFDFD] px-5 py-5 xl:flex xl:h-full xl:min-h-0 xl:flex-col">
+        <div className="mb-5 flex items-center gap-2 xl:shrink-0">
+          <h2 className="text-[17px] font-medium text-[#4A4A4F]">{title}</h2>
+          {icon}
+        </div>
+  
+        <div className="flex flex-col xl:min-h-0 xl:flex-1 xl:overflow-y-auto xl:pr-1">
+          {reservations.map((item) => (
+            <ReservationRow key={item.id} item={item} />
+          ))}
+        </div>
+      </section>
+    );
+  }

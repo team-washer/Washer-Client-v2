@@ -31,4 +31,20 @@ export const reservationsMock: ReservationItem[] = [
     status: "확인필요",
     type: "washer",
   },
+  {
+    id: 5,
+    machine: "Washer-3F-L1 301호",
+    reserveAt: "25.8.18 21:35",
+    expired: "00:02:32",
+    status: "예약중",
+    type: "washer",
+  },
+  {
+    id: 6,
+    machine: "Washer-3F-L1 301호",
+    reserveAt: "25.8.18 21:35",
+    expired: "00:02:32",
+    status: "예약중",
+    type: "washer",
+  },
 ];

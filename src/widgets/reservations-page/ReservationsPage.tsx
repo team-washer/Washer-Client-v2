@@ -12,18 +12,22 @@ export default function ReservationsPage() {
   );
 
   return (
-    <div className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
-      <ReservationStatusPanel
-        title="건조기 예약 현황"
-        icon={<Waves size={18} className="translate-y-px text-[#A4A4AA]" />}
-        reservations={dryerReservations}
-      />
+    <div className="grid grid-cols-1 gap-4 xl:h-full xl:min-h-0 xl:grid-cols-2">
+      <div className="xl:min-h-0">
+        <ReservationStatusPanel
+          title="활성화 된 예약"
+          icon={<Waves size={18} className="translate-y-px text-[#A4A4AA]" />}
+          reservations={dryerReservations}
+        />
+      </div>
 
-      <ReservationStatusPanel
-        title="세탁기 예약 현황"
-        icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
-        reservations={washerReservations}
-      />
+      <div className="xl:min-h-0">
+        <ReservationStatusPanel
+          title="활성화 된 예약"
+          icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
+          reservations={washerReservations}
+        />
+      </div>
     </div>
   );
 }
