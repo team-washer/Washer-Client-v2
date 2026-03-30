@@ -1,4 +1,3 @@
-import { History, Trash2 } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import type {
@@ -6,6 +5,8 @@ import type {
   ReservationMachineType,
 } from "@/entities/reservation/model/types";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
+import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
+import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
 
 interface ReservationStatusPanelProps {
   title: string;
@@ -65,23 +66,9 @@ function ReservationRow({ item }: { item: ReservationItem }) {
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-2">
-        <ReservationStatusBadge status={item.status} />
-
-        <button
-          type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#B7B7BD] text-[#9A9AA0]"
-        >
-          <History size={16} strokeWidth={2.2} />
-        </button>
-
-        <button
-          type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#EF4B4F] text-[#EF4B4F]"
-        >
-          <Trash2 size={16} strokeWidth={2.2} />
-        </button>
-      </div>
+      <StatusRowActions
+        badge={<ReservationStatusBadge status={item.status} />}
+      />
     </div>
   );
 }
@@ -92,17 +79,10 @@ export default function ReservationStatusPanel({
   reservations,
 }: ReservationStatusPanelProps) {
   return (
-    <section className="admin-panel">
-      <div className="admin-panel-header">
-        <h2 className="text-[17px] font-medium text-[#4A4A4F]">{title}</h2>
-        {icon}
-      </div>
-
-      <div className="admin-panel-body flex flex-col">
-        {reservations.map((item) => (
-          <ReservationRow key={item.id} item={item} />
-        ))}
-      </div>
-    </section>
+    <StatusPanelShell title={title} icon={icon}>
+      {reservations.map((item) => (
+        <ReservationRow key={item.id} item={item} />
+      ))}
+    </StatusPanelShell>
   );
 }
