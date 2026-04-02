@@ -1,44 +1,59 @@
 import { User } from "lucide-react";
 import type { ManagedUserItem } from "@/entities/user/model/types";
-
-interface UserManagementPanelProps {
+import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
+import UserRowActions from "@/widgets/users-page/ui/UserRowActions";
+interface UserStatusPanelProps {
   users: ManagedUserItem[];
 }
 
-export default function UserManagementPanel({
-  users,
-}: UserManagementPanelProps) {
+function UserRow({ item }: { item: ManagedUserItem }) {
+  const isRestrictedCase = Boolean(item.remain);
+
   return (
-    <section className="admin-panel">
-      <div className="admin-panel-header">
-        <h2 className="text-[17px] font-medium text-[#494949]">사용자 관리</h2>
-        <User size={18} className="translate-y-px text-[#A4A4AA]" />
+    <div className="flex items-start justify-between gap-4 border-b border-[#E9E9EE] py-4 last:border-b-0">
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[15px] font-medium leading-6 text-[#4A4A4F]">
+          {item.name}
+          <span className="ml-1 font-normal text-[#9A9AA0]">
+            {item.room} · {item.studentNumber}
+          </span>
+        </p>
+
+        {item.reason && (
+          <p className="mt-0.5 text-sm leading-5 text-[#9A9AA0]">
+            사유: {item.reason}
+          </p>
+        )}
+
+        {item.warningCount ? (
+          <p className="mt-0.5 text-sm leading-5 text-[#9A9AA0]">
+            경고: {item.warningCount}번
+          </p>
+        ) : null}
+
+        {item.remain && (
+          <p className="mt-0.5 text-sm leading-5 text-[#9A9AA0]">
+            남은 시간: {item.remain}
+          </p>
+        )}
       </div>
 
-      <div className="admin-panel-body flex flex-col gap-5">
-        {users.map((item) => (
-          <div key={item.id} className="flex items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p className="text-[15px] font-medium text-[#4A4A4F]">
-                {item.room} {item.name}
-              </p>
-              <p className="mt-1 text-sm text-[#9A9AA0]">{item.reason}</p>
-              <p className="mt-1 text-sm text-[#9A9AA0]">
-                남은 시간: {item.remain}
-              </p>
-            </div>
-
-            <div className="flex shrink-0 items-center gap-2">
-              <button className="inline-flex h-7 min-w-[54px] items-center justify-center rounded-full bg-[#EF4B4F] px-3 text-xs font-semibold text-white">
-                연장
-              </button>
-              <button className="inline-flex h-7 min-w-[54px] items-center justify-center rounded-full bg-[#4D83F6] px-3 text-xs font-semibold text-white">
-                해제
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className="shrink-0 pt-1">
+        <UserRowActions isRestrictedCase={isRestrictedCase} />
       </div>
-    </section>
+    </div>
+  );
+}
+
+export default function UserStatusPanel({ users }: UserStatusPanelProps) {
+  return (
+    <StatusPanelShell
+      title="활성화 된 예약"
+      icon={<User size={18} className="translate-y-px text-[#A4A4AA]" />}
+    >
+      {users.map((item) => (
+        <UserRow key={item.id} item={item} />
+      ))}
+    </StatusPanelShell>
   );
 }
