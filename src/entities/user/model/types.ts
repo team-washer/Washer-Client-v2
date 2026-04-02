@@ -1,7 +1,10 @@
 export interface ManagedUserItem {
   id: number;
-  room: string;
   name: string;
-  reason: string;
-  remain: string;
+  room: string;
+  roomNumber: string;
+  reason?: string;
+  warningCount?: number;
+  remain?: string;
+  studentNumber: number;
 }
