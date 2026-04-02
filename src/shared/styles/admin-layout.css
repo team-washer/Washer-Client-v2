@@ -1,0 +1,35 @@
+@layer components {
+    .admin-page-grid {
+      @apply grid grid-cols-1 gap-4 xl:h-full xl:min-h-0 xl:grid-cols-2;
+    }
+  
+    .admin-page-column {
+      @apply flex flex-col gap-4 xl:min-h-0;
+    }
+  
+    .admin-page-fill {
+      @apply xl:min-h-0 xl:flex-1;
+    }
+  
+    .admin-page-item {
+      @apply xl:min-h-0;
+    }
+  
+    .admin-panel {
+      @apply rounded-2xl bg-[#FDFDFD] px-5 py-5 xl:flex xl:h-full xl:min-h-0 xl:flex-col;
+    }
+  
+    .admin-panel-header {
+      @apply mb-4 flex items-center gap-2 xl:shrink-0;
+    }
+  
+    .admin-panel-body {
+      @apply xl:min-h-0 xl:flex-1 xl:overflow-y-auto xl:pr-1;
+    }
+    .admin-filter-label {
+      @apply mb-3 text-[14px] font-medium text-[#4A4A4F];
+    }
+    .admin-filter-options {
+      @apply flex flex-wrap gap-2;
+    }
+  }
