@@ -13,12 +13,16 @@ export default function StatusPanelShell({
 }: StatusPanelShellProps) {
   return (
     <section className="admin-panel">
-      <div className="admin-panel-header">
-        <h2 className="text-[17px] font-medium text-[#4A4A4F]">{title}</h2>
-        {icon}
+      <div className="admin-panel-header justify-between">
+        <div className="flex items-center gap-2">
+          <h2 className="text-[16px] font-semibold leading-6 text-[#4A4A4F]">
+            {title}
+          </h2>
+          {icon}
+        </div>
       </div>
 
-      <div className="admin-panel-body flex flex-col">
+      <div className="admin-panel-body">
         {children}
       </div>
     </section>

@@ -34,8 +34,8 @@ export default function FilterPanelShell({
   children,
 }: FilterPanelShellProps) {
   return (
-    <section className="admin-panel flex h-full min-h-0 flex-col rounded-3xl px-5 py-5">
-      <div className="flex items-center justify-between">
+    <section className="admin-panel">
+      <div className="admin-panel-header justify-between">
         <h2 className="text-[16px] font-semibold leading-6 text-[#4A4A4F]">
           필터
         </h2>
