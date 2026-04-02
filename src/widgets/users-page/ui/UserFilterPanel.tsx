@@ -1,5 +1,14 @@
-import FilterPanelShell from "@/shared/ui/admin/FilterPanelShell";
-
-export default function UserFilterPanel() {
-  return <FilterPanelShell />;
-}
+import {
+    FilterPanelShell,
+    FilterSearchField,
+    FloorGenderFilters,
+  } from "@/shared/ui/admin/Filter";
+  
+  export default function UserFilterPanel() {
+    return (
+      <FilterPanelShell>
+        <FilterSearchField />
+        <FloorGenderFilters />
+      </FilterPanelShell>
+    );
+  }
