@@ -34,7 +34,7 @@ function ReservationRow({ item }: { item: ReservationItem }) {
         <div className="min-w-0">
           <p className="truncate text-[15px] text-[#4A4A4F]">{item.machine}</p>
 
-          {item.status === "사용중" && (
+          {item.badgeStatus === "사용중" && (
             <>
               <p className="mt-1 text-sm text-[#969696]">
                 남은 시간: {item.remain}
@@ -47,7 +47,7 @@ function ReservationRow({ item }: { item: ReservationItem }) {
             </>
           )}
 
-          {item.status === "예약중" && (
+          {item.badgeStatus === "예약중" && (
             <>
               <p className="mt-1 text-sm text-[#969696]">
                 예약 시간: {item.reserveAt}
@@ -58,16 +58,16 @@ function ReservationRow({ item }: { item: ReservationItem }) {
             </>
           )}
 
-          {item.status === "확인필요" && (
+          {item.badgeStatus === "확인필요" && (
             <p className="mt-1 text-sm text-[#EA3B42]">
-              기기에 이상이 감지되었습니다.
+              기기를 현재 사용할 수 없습니다.
             </p>
           )}
         </div>
       </div>
 
       <StatusRowActions
-        badge={<ReservationStatusBadge status={item.status} />}
+        badge={<ReservationStatusBadge badgeStatus={item.badgeStatus} />}
       />
     </div>
   );

@@ -1,25 +1,32 @@
 import { WashingMachine } from "lucide-react";
-import { reportsMock } from "@/entities/report/model/mock";
-import { reservationsMock } from "@/entities/reservation/model/mock";
-import { managedUsersMock } from "@/entities/user/model/mock";
+import { getReports } from "@/entities/report/api/getReports";
+import { getReservations } from "@/entities/reservation/api/getReservations";
+import { getUsers } from "@/entities/user/api/getUsers";
+
 import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
 import ReportsPanel from "../reports-page/ui/ReportsPanel";
 import UserStatusPanel from "../users-page/ui/UserStatusPanel";
 
-export default function MainPage() {
+export default async function MainPage() {
+  const [reports, users, reservations] = await Promise.all([
+    getReports(),
+    getUsers(),
+    getReservations(),
+  ]);
+
   return (
     <div className="admin-page-grid">
       <div className="admin-page-column">
         <div className="admin-page-fill">
           <ReportsPanel
             title="최근 고장 신고"
-            reports={reportsMock}
+            reports={reports}
             variant="summary"
           />
         </div>
 
         <div className="admin-page-fill">
-          <UserStatusPanel users={managedUsersMock} />
+          <UserStatusPanel users={users} />
         </div>
       </div>
 
@@ -32,7 +39,7 @@ export default function MainPage() {
               className="translate-y-px text-[#A4A4AA]"
             />
           }
-          reservations={reservationsMock}
+          reservations={reservations}
         />
       </div>
     </div>
