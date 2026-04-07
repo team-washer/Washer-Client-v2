@@ -25,4 +25,20 @@ export const reportsMock: ReportItem[] = [
     status: "완료",
     type: "dryer",
   },
+  {
+    id: 4,
+    machine: "Dryer-3F-L2",
+    user: "김민솔",
+    time: "26.03.13 (21:30)",
+    status: "완료",
+    type: "dryer",
+  },
+  {
+    id: 5,
+    machine: "Dryer-3F-L2",
+    user: "김민솔",
+    time: "26.03.13 (21:30)",
+    status: "완료",
+    type: "dryer",
+  },
 ];

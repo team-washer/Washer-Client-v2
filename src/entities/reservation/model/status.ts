@@ -1,7 +1,7 @@
-import type { ReservationStatus } from "./types";
+import type { OccupancyStatus } from "./types";
 
-export const reservationStatusStyleMap: Record<ReservationStatus, string> = {
+export const occupancyStatusStyleMap: Record<OccupancyStatus, string> = {
   사용중: "bg-[#4D83F6]",
-  대기중: "bg-[#8CB2FF]",
-  예약중: "bg-[#8CB2FF]",
+  예약중: "bg-[#4D83F6]",
+  확인필요: "bg-[#EF4B4F]",
 };

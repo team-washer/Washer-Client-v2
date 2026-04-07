@@ -1,7 +1,21 @@
-import { cn } from "@/shared/lib/cn";
+import { reportsMock } from "@/entities/report/model/mock";
+import ReportFilterPanel from "./ui/ReportFilterPanel";
+import ReportsPanel from "./ui/ReportsPanel";
 
-const ReportsPage = () => {
-  return <div className={cn("flex", "w-screen", "h-screen")}>d</div>;
-};
+export default function ReportsPage() {
+  return (
+    <div className="admin-page-grid xl:grid-cols-[1.9fr_0.62fr]">
+      <div className="admin-page-item">
+        <ReportsPanel
+          title="고장 신고 관리"
+          reports={reportsMock}
+          variant="detail"
+        />
+      </div>
 
-export default ReportsPage;
+      <div className="admin-page-item">
+        <ReportFilterPanel />
+      </div>
+    </div>
+  );
+}

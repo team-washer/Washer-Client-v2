@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./admin-layout.css";
 
 @custom-variant dark (&:is(.dark *));
 
