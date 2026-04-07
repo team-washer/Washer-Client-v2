@@ -17,7 +17,10 @@ export async function GET(request: NextRequest) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ authCode: code }),
+      body: JSON.stringify({
+        authCode: code,
+        redirectUri: process.env.NEXT_PUBLIC_DATAGSM_REDIRECT_URI,
+      }),
     });
 
     if (!tokenResponse.ok) {
@@ -26,8 +29,8 @@ export async function GET(request: NextRequest) {
 
     const tokenData = await tokenResponse.json();
 
-    const accessToken = tokenData.access_token;
-    const refreshToken = tokenData.refresh_token;
+    const accessToken = tokenData.data.accessToken;
+    const refreshToken = tokenData.data.refreshToken;
 
     if (!accessToken || !refreshToken) {
       return NextResponse.redirect(new URL("/", request.url));
@@ -55,8 +58,7 @@ export async function GET(request: NextRequest) {
     });
 
     return response;
-  } catch (error) {
-    console.error("Error in callback route:", error);
+  } catch {
     return NextResponse.redirect(new URL("/", request.url));
   }
 }
