@@ -1,4 +1,8 @@
+"use client";
+
 import { WashingMachine } from "lucide-react";
+import { useQueries } from "@tanstack/react-query";
+
 import { getReports } from "@/entities/report/api/getReports";
 import { getReservations } from "@/entities/reservation/api/getReservations";
 import { getUsers } from "@/entities/user/api/getUsers";
@@ -7,12 +11,40 @@ import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPan
 import ReportsPanel from "../reports-page/ui/ReportsPanel";
 import UserStatusPanel from "../users-page/ui/UserStatusPanel";
 
-export default async function MainPage() {
-  const [reports, users, reservations] = await Promise.all([
-    getReports(),
-    getUsers(),
-    getReservations(),
-  ]);
+export default function MainPage() {
+  const results = useQueries({
+    queries: [
+      {
+        queryKey: ["reports", "summary"],
+        queryFn: getReports,
+      },
+      {
+        queryKey: ["users", "summary"],
+        queryFn: getUsers,
+      },
+      {
+        queryKey: ["reservations", "summary"],
+        queryFn: getReservations,
+      },
+    ],
+  });
+
+  const [reportsQuery, usersQuery, reservationsQuery] = results;
+
+  const isLoading = results.some((query) => query.isLoading);
+  const isError = results.some((query) => query.isError);
+
+  if (isLoading) {
+    return <div>불러오는 중...</div>;
+  }
+
+  if (isError) {
+    return <div>데이터를 불러오지 못했습니다.</div>;
+  }
+
+  const reports = reportsQuery.data ?? [];
+  const users = usersQuery.data ?? [];
+  const reservations = reservationsQuery.data ?? [];
 
   return (
     <div className="admin-page-grid">
