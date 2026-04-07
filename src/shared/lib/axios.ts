@@ -43,7 +43,11 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes("/api/v2/auth/refresh")
+    ) {
       originalRequest._retry = true;
 
       const refreshToken = getCookie(COOKIE_KEYS.REFRESH_TOKEN);
