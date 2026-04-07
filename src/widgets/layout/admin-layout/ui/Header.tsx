@@ -28,7 +28,7 @@ export default function Header() {
         <button
           type="button"
           onClick={handleLogout}
-          className="flex items-center gap-2 text-[#EF4B4F] hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 text-[#EF4B4F] hover:opacity-80 transition-opacity cursor-pointer"
           title="로그아웃"
         >
           <LogOut size={20} />
