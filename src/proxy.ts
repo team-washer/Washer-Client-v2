@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { COOKIE_KEYS } from "@/shared/constants/cookies";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get(COOKIE_KEYS.ACCESS_TOKEN)?.value;
 
