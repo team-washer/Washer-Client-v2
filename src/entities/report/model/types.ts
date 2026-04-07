@@ -6,7 +6,8 @@ export interface ReportItem {
   id: number;
   machine: string;
   user: string;
-  time: string;
+  time?: string;
+  reason?: string,
   status: ReportStatus;
   type: ReportMachineType;
 }

@@ -15,7 +15,7 @@ export default function DashboardTabs() {
   const pathname = usePathname();
 
   return (
-    <nav className="grid grid-cols-5 gap-2 rounded-xl bg-[#FDFDFD] p-2">
+    <nav className="grid grid-cols-5 gap-2 rounded-xl bg-[#FDFDFD] p-2 whitespace-nowrap">
       {tabs.map((tab) => {
         const isActive = pathname === tab.href;
 
