@@ -19,7 +19,7 @@ export default function RootLayout({
         <OAuthProvider
           clientId={process.env.NEXT_PUBLIC_DATAGSM_CLIENT_ID || ""}
           redirectUri={process.env.NEXT_PUBLIC_DATAGSM_REDIRECT_URI || ""}
-          authMode="PKCE"
+          authMode="STANDARD"
         >
           <TanStackProvider>{children}</TanStackProvider>
         </OAuthProvider>
