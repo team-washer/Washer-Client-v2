@@ -1,4 +1,4 @@
-import { api } from "@/shared/api/client";
+import { axiosInstance } from "@/shared";
 import { mapReservations } from "../lib/mapReservation";
 import type { ReservationDTO, ReservationItem } from "../model/types";
 
@@ -15,6 +15,6 @@ type GetReservationsResponse = {
 };
 
 export async function getReservations(): Promise<ReservationItem[]> {
-  const { data } = await api.get<GetReservationsResponse>("/v2/admin/reservations");
+  const { data } = await axiosInstance.get<GetReservationsResponse>("/v2/admin/reservations");
   return mapReservations(data.data.reservations);
 }

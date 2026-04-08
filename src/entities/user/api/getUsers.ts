@@ -1,4 +1,4 @@
-import { api } from "@/shared/api/client";
+import { axiosInstance } from "@/shared";
 import { mapUsers } from "../lib/mapUser";
 import type { ManagedUserItem, UserDTO } from "../model/types";
 
@@ -15,6 +15,6 @@ type GetUsersResponse = {
 };
 
 export async function getUsers(): Promise<ManagedUserItem[]> {
-  const { data } = await api.get<GetUsersResponse>("/v2/admin/users");
+  const { data } = await axiosInstance.get<GetUsersResponse>("/v2/admin/users");
   return mapUsers(data.data.users);
 }
