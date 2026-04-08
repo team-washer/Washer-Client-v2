@@ -45,7 +45,7 @@ function UserRow({ item }: { item: ManagedUserItem }) {
 export default function UserStatusPanel({ users }: UserStatusPanelProps) {
   return (
     <StatusPanelShell
-      title="활성화 된 예약"
+      title="사용자 관리"
       icon={<User size={18} className="translate-y-px text-[#A4A4AA]" />}
     >
       {users.map((item) => (
