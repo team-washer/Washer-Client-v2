@@ -1,12 +1,12 @@
 import { cn } from "@/shared/lib/cn";
-import type { ReportStatus } from "../model/types";
-import { reportStatusStyleMap } from "../model/status";
+import type { ReportStatusType } from "../model/types";
+import { reportStatusStyleMap, reportStatusLabelMap } from "../model/status";
 
 interface ReportStatusBadgeProps {
-  status: ReportStatus;
+  status: ReportStatusType;
 }
 
-export default function ReportStatusBadge({ status }: ReportStatusBadgeProps) {
+const ReportStatusBadge = ({ status }: ReportStatusBadgeProps) => {
   return (
     <span
       className={cn(
@@ -14,7 +14,9 @@ export default function ReportStatusBadge({ status }: ReportStatusBadgeProps) {
         reportStatusStyleMap[status]
       )}
     >
-      {status}
+      {reportStatusLabelMap[status]}
     </span>
   );
-}
+};
+
+export default ReportStatusBadge;

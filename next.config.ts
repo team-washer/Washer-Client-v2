@@ -7,15 +7,6 @@ if (process.env.NODE_ENV === "development") {
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
-
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
-      },
-    ];
-  },
 };
 
 export default nextConfig;
