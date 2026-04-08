@@ -1,15 +1,28 @@
+"use client";
+
 import { Droplet, Waves } from "lucide-react";
-import { reservationsMock } from "@/entities/reservation/model/mock";
+import { useQuery } from "@tanstack/react-query";
+import { getReservations } from "@/entities/reservation/api/getReservations";
 import ReservationStatusPanel from "./ui/ReservationStatusPanel";
 
 export default function ReservationsPage() {
-  const dryerReservations = reservationsMock.filter(
-    (item) => item.type === "dryer",
-  );
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["reservations"],
+    queryFn: getReservations,
+  });
 
-  const washerReservations = reservationsMock.filter(
-    (item) => item.type === "washer",
-  );
+  if (isLoading) {
+    return <div>불러오는 중...</div>;
+  }
+
+  if (isError) {
+    return <div>데이터를 불러오지 못했습니다.</div>;
+  }
+
+  const reservations = data ?? [];
+
+  const dryerReservations = reservations.filter((item) => item.type === "dryer");
+  const washerReservations = reservations.filter((item) => item.type === "washer");
 
   return (
     <div className="admin-page-grid">

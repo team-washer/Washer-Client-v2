@@ -15,15 +15,15 @@ export default function MainPage() {
   const results = useQueries({
     queries: [
       {
-        queryKey: ["reports", "summary"],
+        queryKey: ["reports"],
         queryFn: getReports,
       },
       {
-        queryKey: ["users", "summary"],
+        queryKey: ["users"],
         queryFn: getUsers,
       },
       {
-        queryKey: ["reservations", "summary"],
+        queryKey: ["reservations"],
         queryFn: getReservations,
       },
     ],
