@@ -13,6 +13,7 @@ interface ReportFilterPanelProps {
   onSearchChange: (value: string) => void;
   floor: number | undefined;
   onFloorChange: (floor: number | undefined) => void;
+  onReset: () => void;
 }
 
 const ReportFilterPanel = ({
@@ -22,9 +23,10 @@ const ReportFilterPanel = ({
   onSearchChange,
   floor,
   onFloorChange,
+  onReset,
 }: ReportFilterPanelProps) => {
   return (
-    <FilterPanelShell>
+    <FilterPanelShell onReset={onReset}>
       <FilterSearchField value={search} onChange={onSearchChange} />
 
       <div>

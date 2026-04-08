@@ -3,26 +3,24 @@
 import { useState, useMemo } from "react";
 import { useGetMalfunctionReports, type ReportStatusType, type ReportResponseType } from "@/entities/report";
 import { useGetMachines } from "@/entities/machine";
-import type { BaseResponseType } from "@/shared/api/types";
 import ReportFilterPanel from "./ui/ReportFilterPanel";
 import ReportsPanel from "./ui/ReportsPanel";
 
-interface ReportsPageProps {
-  initialMalfunctionReports?: BaseResponseType<ReportResponseType>;
-}
 
-const ReportsPage = ({ initialMalfunctionReports }: ReportsPageProps) => {
+const ReportsPage = () => {
   const [status, setStatus] = useState<ReportStatusType | undefined>();
   const [search, setSearch] = useState("");
   const [floor, setFloor] = useState<number | undefined>();
 
   const { data: reportsData, isLoading: isReportsLoading, isError: isReportsError, refetch: refetchReports } = useGetMalfunctionReports({
     status,
-  }, initialMalfunctionReports);
+  });
 
   const { data: machinesData, isLoading: isMachinesLoading } = useGetMachines({
     floor,
   });
+
+  const isLoading = isReportsLoading || isMachinesLoading
 
   const reports = reportsData?.data.reports ?? [];
   const machines = machinesData?.data.machines ?? [];
@@ -46,7 +44,11 @@ const ReportsPage = ({ initialMalfunctionReports }: ReportsPageProps) => {
     return result;
   }, [reports, machines, floor, search]);
 
-  const isLoading = isReportsLoading || (floor !== undefined && isMachinesLoading);
+  const handleReset = () => {
+    setStatus(undefined);
+    setSearch("");
+    setFloor(undefined);
+  };
 
   return (
     <div className="admin-page-grid xl:grid-cols-[1.9fr_0.62fr]">
@@ -69,6 +71,7 @@ const ReportsPage = ({ initialMalfunctionReports }: ReportsPageProps) => {
           onSearchChange={setSearch}
           floor={floor}
           onFloorChange={setFloor}
+          onReset={handleReset}
         />
       </div>
     </div>
