@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { COOKIE_KEYS } from "@/shared";
+import { COOKIE_KEYS, authUrl } from "@/shared";
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
     const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const tokenResponse = await fetch(`${baseUrl}/api/v2/auth/login`, {
+    const tokenResponse = await fetch(`${baseUrl}${authUrl.login()}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
