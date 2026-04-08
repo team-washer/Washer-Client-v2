@@ -15,6 +15,6 @@ type GetReservationsResponse = {
 };
 
 export async function getReservations(): Promise<ReservationItem[]> {
-  const { data } = await axiosInstance.get<GetReservationsResponse>("/v2/admin/reservations");
-  return mapReservations(data.data.reservations);
+  const response = await axiosInstance.get("/api/v2/admin/reservations") as GetReservationsResponse;
+  return mapReservations(response.data.reservations);
 }

@@ -15,6 +15,6 @@ type GetReportsResponse = {
 };
 
 export async function getReports(): Promise<ReportItem[]> {
-  const { data } = await axiosInstance.get<GetReportsResponse>("/v2/admin/malfunction-reports");
-  return mapReports(data.data.reports);
+  const response = await axiosInstance.get("/api/v2/admin/malfunction-reports") as GetReportsResponse;
+  return mapReports(response.data.reports);
 }
