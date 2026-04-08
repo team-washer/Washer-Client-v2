@@ -1,24 +1,35 @@
 import FilterChip from "./FilterChip";
 
-export default function FloorGenderFilters() {
-  return (
-    <>
-      <div>
-        <p className="admin-filter-label">층</p>
-        <div className="admin-filter-options">
-          <FilterChip label="2" />
-          <FilterChip label="3" active />
-          <FilterChip label="4" />
-        </div>
-      </div>
+interface FloorGenderFiltersProps {
+  selectedFloor?: number;
+  onFloorChange?: (floor: number | undefined) => void;
+}
 
-      <div>
-        <p className="admin-filter-label">성별</p>
-        <div className="admin-filter-options">
-          <FilterChip label="남자" minWidthClass="min-w-[48px]" />
-          <FilterChip label="여자" minWidthClass="min-w-[48px]" />
-        </div>
+export default function FloorGenderFilters({
+  selectedFloor,
+  onFloorChange,
+}: FloorGenderFiltersProps) {
+  const handleFloorClick = (floor: number) => {
+    if (onFloorChange) {
+      onFloorChange(selectedFloor === floor ? undefined : floor);
+    }
+  };
+
+  return (
+    <div>
+      <p className="admin-filter-label">층</p>
+      <div className="admin-filter-options">
+        <FilterChip
+          label="3"
+          active={selectedFloor === 3}
+          onClick={() => handleFloorClick(3)}
+        />
+        <FilterChip
+          label="4"
+          active={selectedFloor === 4}
+          onClick={() => handleFloorClick(4)}
+        />
       </div>
-    </>
+    </div>
   );
 }

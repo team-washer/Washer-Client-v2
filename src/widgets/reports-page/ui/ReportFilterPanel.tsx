@@ -9,15 +9,23 @@ import {
 interface ReportFilterPanelProps {
   status: ReportStatusType | undefined;
   onStatusChange: (status: ReportStatusType | undefined) => void;
+  search: string;
+  onSearchChange: (value: string) => void;
+  floor: number | undefined;
+  onFloorChange: (floor: number | undefined) => void;
 }
 
 const ReportFilterPanel = ({
   status,
   onStatusChange,
+  search,
+  onSearchChange,
+  floor,
+  onFloorChange,
 }: ReportFilterPanelProps) => {
   return (
     <FilterPanelShell>
-      <FilterSearchField />
+      <FilterSearchField value={search} onChange={onSearchChange} />
 
       <div>
         <p className="admin-filter-label">상태</p>
@@ -43,9 +51,10 @@ const ReportFilterPanel = ({
         </div>
       </div>
 
-      <FloorGenderFilters />
+      <FloorGenderFilters selectedFloor={floor} onFloorChange={onFloorChange} />
     </FilterPanelShell>
   );
 };
+
 
 export default ReportFilterPanel;
