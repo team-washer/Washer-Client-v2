@@ -102,12 +102,13 @@ const ReportsPanel = ({
         )}
 
         {!isLoading && !isError && reports.length > 0 && (
-          <div className="divide-y divide-[#E9E9EE]">
+          <div className="sidebar-scrollbar max-h-full overflow-y-auto divide-y divide-[#E9E9EE]">
             {reports.map((item) => (
               <ReportRow key={item.id} item={item} variant={variant} />
             ))}
           </div>
         )}
+
       </div>
     </StatusPanelShell>
   );

@@ -1,19 +1,24 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useGetMalfunctionReports, type ReportStatusType } from "@/entities/report";
+import { useGetMalfunctionReports, type ReportStatusType, type ReportResponseType } from "@/entities/report";
 import { useGetMachines } from "@/entities/machine";
+import type { BaseResponseType } from "@/shared/api/types";
 import ReportFilterPanel from "./ui/ReportFilterPanel";
 import ReportsPanel from "./ui/ReportsPanel";
 
-const ReportsPage = () => {
+interface ReportsPageProps {
+  initialMalfunctionReports?: BaseResponseType<ReportResponseType>;
+}
+
+const ReportsPage = ({ initialMalfunctionReports }: ReportsPageProps) => {
   const [status, setStatus] = useState<ReportStatusType | undefined>();
   const [search, setSearch] = useState("");
   const [floor, setFloor] = useState<number | undefined>();
 
   const { data: reportsData, isLoading: isReportsLoading, isError: isReportsError, refetch: refetchReports } = useGetMalfunctionReports({
     status,
-  });
+  }, initialMalfunctionReports);
 
   const { data: machinesData, isLoading: isMachinesLoading } = useGetMachines({
     floor,
