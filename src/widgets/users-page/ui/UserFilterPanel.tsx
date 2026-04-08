@@ -5,10 +5,11 @@ import {
   } from "@/shared/ui/admin/Filter";
   
   interface UserFilterPanelProps {
-  floor?: number;
-  onFloorChange?: (floor: number | undefined) => void;
-  search?: string;
-  onSearchChange?: (value: string) => void;
+  floor: number | undefined;
+  onFloorChange: (floor: number | undefined) => void;
+  search: string;
+  onSearchChange: (value: string) => void;
+  onReset: () => void;
 }
 
 export default function UserFilterPanel({
@@ -16,9 +17,10 @@ export default function UserFilterPanel({
   onFloorChange,
   search,
   onSearchChange,
+  onReset,
 }: UserFilterPanelProps) {
   return (
-    <FilterPanelShell>
+    <FilterPanelShell onReset={onReset}>
       <FilterSearchField value={search} onChange={onSearchChange} />
       <FloorGenderFilters selectedFloor={floor} onFloorChange={onFloorChange} />
     </FilterPanelShell>
