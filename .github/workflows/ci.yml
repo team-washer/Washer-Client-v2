@@ -8,21 +8,25 @@ jobs:
   lint-and-build:
     name: Lint and Build
     runs-on: ubuntu-latest
+
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 8
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -41,21 +45,19 @@ jobs:
         if: success()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          avatar_url: ${{ secrets.SUCCESS_DISCORD_AVATAR_URL }}
           title: '✅ CI 성공'
+          content: |
+            PR: ${{ github.event.pull_request.title }}
+            Author: ${{ github.actor }}
           status: success
-          content: 'PR을 확인해주세요.'
-          username: washer-front bot
-          color: 0x4CAF50
 
       - name: Failure Discord Notification
         uses: sarisia/actions-status-discord@v1.15.5
         if: failure()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          avatar_url: ${{ secrets.FAILED_DISCORD_AVATAR_URL }}
           title: '❌ CI 실패'
-          content: '에러를 확인해주세요.'
+          content: |
+            PR: ${{ github.event.pull_request.title }}
+            Author: ${{ github.actor }}
           status: failure
-          username: washer-front bot
-          color: 0xe74c3c
