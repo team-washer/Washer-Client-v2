@@ -1,6 +1,10 @@
 import { axiosInstance } from "@/shared";
 import type { ApiResponse } from "@/shared/api/types";
-import type { MachineReservationHistoryDTO } from "../model/types";
+import { mapMachineReservationHistory } from "../lib/mapReservationHistory";
+import type {
+  MachineReservationHistory,
+  MachineReservationHistoryDTO,
+} from "../model/types";
 
 type GetMachineReservationHistoryPayload = {
   machines: MachineReservationHistoryDTO[];
@@ -8,7 +12,7 @@ type GetMachineReservationHistoryPayload = {
 
 export async function getMachineReservationHistory(
   machineName: string,
-): Promise<MachineReservationHistoryDTO | null> {
+): Promise<MachineReservationHistory | null> {
   const response = (await axiosInstance.get(
     "/api/v2/admin/reservations/machines/history",
     {
@@ -16,5 +20,9 @@ export async function getMachineReservationHistory(
     },
   )) as ApiResponse<GetMachineReservationHistoryPayload>;
 
-  return response.data.machines[0] ?? null;
+  const machine = response.data.machines[0];
+
+  if (!machine) return null;
+
+  return mapMachineReservationHistory(machine);
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { WashingMachine } from "lucide-react";
 import { useQueries } from "@tanstack/react-query";
 
@@ -8,10 +9,13 @@ import { getReservations } from "@/entities/reservation/api/getReservations";
 import { getUsers } from "@/entities/user/api/getUsers";
 
 import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
+import ReservationHistoryModal from "../reservations-page/ui/ReservationHistoryModal";
 import ReportsPanel from "../reports-page/ui/ReportsPanel";
 import UserStatusPanel from "../users-page/ui/UserStatusPanel";
 
 export default function MainPage() {
+  const [selectedMachineName, setSelectedMachineName] = useState<string | null>(null);
+
   const results = useQueries({
     queries: [
       {
@@ -48,7 +52,7 @@ export default function MainPage() {
 
   return (
     <div className="admin-page-grid">
-      <div className="admin-page-column">
+      <div className="relative admin-page-column">
         <div className="admin-page-fill">
           <ReportsPanel
             title="최근 고장 신고"
@@ -60,6 +64,11 @@ export default function MainPage() {
         <div className="admin-page-fill">
           <UserStatusPanel users={users} />
         </div>
+
+        <ReservationHistoryModal
+          machineName={selectedMachineName}
+          onClose={() => setSelectedMachineName(null)}
+        />
       </div>
 
       <div className="admin-page-item">
@@ -69,9 +78,10 @@ export default function MainPage() {
             <WashingMachine
               size={18}
               className="translate-y-px text-[#A4A4AA]"
-            /> 
+            />
           }
           reservations={reservations}
+          onOpenHistory={setSelectedMachineName}
         />
       </div>
     </div>

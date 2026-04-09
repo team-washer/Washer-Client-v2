@@ -12,7 +12,7 @@ import { useDeleteReservation } from "@/features/reservation/model/useDeleteRese
 
 interface ReservationRowProps {
   item: ReservationItem;
-  onHistory?: (machineName: string) => void;
+  onOpenHistory: (machineName: string) => void;
 }
 
 function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
@@ -28,12 +28,12 @@ function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
 
 export default function ReservationRow({
   item,
-  onHistory,
+  onOpenHistory,
 }: ReservationRowProps) {
   const { mutate: deleteReservation, isPending } = useDeleteReservation();
 
   const handleHistory = () => {
-    onHistory?.(item.machine);
+    onOpenHistory?.(item.machine);
   };
 
   const handleDelete = () => {

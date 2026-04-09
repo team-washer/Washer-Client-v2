@@ -2,6 +2,8 @@ export type ReservationMachineType = "washer" | "dryer";
 
 export type BadgeStatus = "예약중" | "사용중" | "확인필요";
 
+export type ReservationHistoryStatus = "사용 완료" | "취소됨";
+
 export interface ReservationItem {
   id: number;
   machine: string;
@@ -29,9 +31,7 @@ export type ReservationDTO = {
   expectedCompletionTime: string;
   actualCompletionTime: string | null;
   cancelledAt: string | null;
-
   status: "RESERVED" | "IN_USE" | "RUNNING" | "COMPLETED" | "CANCELLED";
-
   machineAvailability:
     | "IN_USE"
     | "RESERVED"
@@ -47,7 +47,20 @@ export type MachineReservationHistoryItemDTO = {
   status: "COMPLETED" | "CANCELLED" | "RESERVED" | "IN_USE";
 };
 
+
 export type MachineReservationHistoryDTO = {
   machineName: string;
   reservations: MachineReservationHistoryItemDTO[];
 };
+
+export interface ReservationHistoryItem {
+  roomNumber: string;
+  reservedAt: string;
+  actionAt?: string;
+  status: ReservationHistoryStatus;
+}
+
+export interface MachineReservationHistory {
+  machineName: string;
+  reservations: ReservationHistoryItem[];
+}

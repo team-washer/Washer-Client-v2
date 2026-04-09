@@ -1,11 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { Droplet, Waves } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+
 import { getReservations } from "@/entities/reservation/api/getReservations";
+import ReservationHistoryModal from "./ui/ReservationHistoryModal";
 import ReservationStatusPanel from "./ui/ReservationStatusPanel";
-  
+
 export default function ReservationsPage() {
+  const [selectedMachineName, setSelectedMachineName] = useState<string | null>(null);
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["reservations"],
     queryFn: getReservations,
@@ -26,11 +31,17 @@ export default function ReservationsPage() {
 
   return (
     <div className="admin-page-grid">
-      <div className="admin-page-item">
+      <div className="relative admin-page-item">
         <ReservationStatusPanel
           title="건조기 예약 현황"
           icon={<Waves size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={dryerReservations}
+          onOpenHistory={setSelectedMachineName}
+        />
+
+        <ReservationHistoryModal
+          machineName={selectedMachineName}
+          onClose={() => setSelectedMachineName(null)}
         />
       </div>
 
@@ -39,6 +50,7 @@ export default function ReservationsPage() {
           title="세탁기 예약 현황"
           icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={washerReservations}
+          onOpenHistory={setSelectedMachineName}
         />
       </div>
     </div>
