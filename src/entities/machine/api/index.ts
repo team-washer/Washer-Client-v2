@@ -10,5 +10,6 @@ export const useGetMachines = (params: { floor?: number }) => {
       get<BaseResponseType<MachineResponseType>>(machineUrl.getMachines(), {
         params,
       }),
+    enabled: params.floor !== undefined,
   });
 };
