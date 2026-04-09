@@ -8,8 +8,14 @@ import { getReservations } from "@/entities/reservation/api/getReservations";
 import ReservationHistoryModal from "./ui/ReservationHistoryModal";
 import ReservationStatusPanel from "./ui/ReservationStatusPanel";
 
+type HistoryOverlayState = {
+  machineName: string;
+  side: "left" | "right";
+} | null;
+
 export default function ReservationsPage() {
-  const [selectedMachineName, setSelectedMachineName] = useState<string | null>(null);
+  const [historyOverlay, setHistoryOverlay] =
+    useState<HistoryOverlayState>(null);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["reservations"],
@@ -36,22 +42,37 @@ export default function ReservationsPage() {
           title="건조기 예약 현황"
           icon={<Waves size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={dryerReservations}
-          onOpenHistory={setSelectedMachineName}
+          onOpenHistory={(machineName) =>
+            setHistoryOverlay({ machineName, side: "right" })
+          }
         />
 
-        <ReservationHistoryModal
-          machineName={selectedMachineName}
-          onClose={() => setSelectedMachineName(null)}
-        />
+        {historyOverlay?.side === "right" && (
+          <ReservationHistoryModal
+            machineName={historyOverlay.machineName}
+            side="right"
+            onClose={() => setHistoryOverlay(null)}
+          />
+        )}
       </div>
 
-      <div className="admin-page-item">
+      <div className="relative admin-page-item">
         <ReservationStatusPanel
           title="세탁기 예약 현황"
           icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={washerReservations}
-          onOpenHistory={setSelectedMachineName}
+          onOpenHistory={(machineName) =>
+            setHistoryOverlay({ machineName, side: "left" })
+          }
         />
+
+        {historyOverlay?.side === "left" && (
+          <ReservationHistoryModal
+            machineName={historyOverlay.machineName}
+            side="left"
+            onClose={() => setHistoryOverlay(null)}
+          />
+        )}
       </div>
     </div>
   );

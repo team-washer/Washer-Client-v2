@@ -84,7 +84,7 @@ export default function ReservationRow({
       </div>
 
       <StatusRowActions
-        badge={<ReservationStatusBadge badgeStatus={item.badgeStatus} />}
+        badge={<ReservationStatusBadge label={item.badgeStatus} />}
         onHistory={handleHistory}
         onDelete={handleDelete}
         disabled={isPending}

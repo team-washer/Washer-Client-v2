@@ -64,14 +64,14 @@ export default function MainPage() {
         <div className="admin-page-fill">
           <UserStatusPanel users={users} />
         </div>
-
-        <ReservationHistoryModal
-          machineName={selectedMachineName}
-          onClose={() => setSelectedMachineName(null)}
-        />
       </div>
 
-      <div className="admin-page-item">
+      <div className="relative admin-page-item">
+      <ReservationHistoryModal
+          machineName={selectedMachineName}
+          onClose={() => setSelectedMachineName(null)}
+          side="left"
+        />
         <ReservationStatusPanel
           title="활성화 된 예약"
           icon={
