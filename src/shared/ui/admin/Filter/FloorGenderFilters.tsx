@@ -1,6 +1,6 @@
 import FilterChip from "./FilterChip";
 
-interface FloorGenderFiltersProps {
+interface FloorFiltersProps {
   selectedFloor?: number;
   onFloorChange?: (floor: number | undefined) => void;
 }
@@ -8,7 +8,7 @@ interface FloorGenderFiltersProps {
 export default function FloorGenderFilters({
   selectedFloor,
   onFloorChange,
-}: FloorGenderFiltersProps) {
+}: FloorFiltersProps) {
   const handleFloorClick = (floor: number) => {
     if (onFloorChange) {
       onFloorChange(selectedFloor === floor ? undefined : floor);
