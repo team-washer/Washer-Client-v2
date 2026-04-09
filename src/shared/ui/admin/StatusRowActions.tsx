@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 
 interface StatusRowActionsProps {
   badge: ReactNode;
-  onReload?: () => void;
+  onHistory?: () => void;
   onDelete?: () => void;
   disabled?: boolean;
 }
 
 export default function StatusRowActions({
   badge,
-  onReload,
+  onHistory,
   onDelete,
   disabled = false,
 }: StatusRowActionsProps) {
@@ -20,7 +20,7 @@ export default function StatusRowActions({
 
       <button
         type="button"
-        onClick={onReload}
+        onClick={onHistory}
         disabled={disabled}
         className="inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#B7B7BD] text-[#9A9AA0] disabled:cursor-not-allowed disabled:opacity-50"
       >

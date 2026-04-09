@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useQueryClient } from "@tanstack/react-query";
 
 import type {
   ReservationItem,
@@ -13,6 +12,7 @@ import { useDeleteReservation } from "@/features/reservation/model/useDeleteRese
 
 interface ReservationRowProps {
   item: ReservationItem;
+  onHistory?: (machineName: string) => void;
 }
 
 function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
@@ -26,15 +26,14 @@ function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
   );
 }
 
-export default function ReservationRow({ item }: ReservationRowProps) {
-  const queryClient = useQueryClient();
-
+export default function ReservationRow({
+  item,
+  onHistory,
+}: ReservationRowProps) {
   const { mutate: deleteReservation, isPending } = useDeleteReservation();
 
-  const handleReload = async () => {
-    await queryClient.invalidateQueries({
-      queryKey: ["reservations"],
-    });
+  const handleHistory = () => {
+    onHistory?.(item.machine);
   };
 
   const handleDelete = () => {
@@ -86,7 +85,7 @@ export default function ReservationRow({ item }: ReservationRowProps) {
 
       <StatusRowActions
         badge={<ReservationStatusBadge badgeStatus={item.badgeStatus} />}
-        onReload={handleReload}
+        onHistory={handleHistory}
         onDelete={handleDelete}
         disabled={isPending}
       />

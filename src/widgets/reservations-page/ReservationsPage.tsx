@@ -4,7 +4,7 @@ import { Droplet, Waves } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getReservations } from "@/entities/reservation/api/getReservations";
 import ReservationStatusPanel from "./ui/ReservationStatusPanel";
-
+  
 export default function ReservationsPage() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["reservations"],

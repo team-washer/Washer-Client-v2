@@ -69,7 +69,7 @@ export default function MainPage() {
             <WashingMachine
               size={18}
               className="translate-y-px text-[#A4A4AA]"
-            />
+            /> 
           }
           reservations={reservations}
         />
