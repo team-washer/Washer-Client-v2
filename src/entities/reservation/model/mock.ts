@@ -7,7 +7,7 @@ export const reservationsMock: ReservationItem[] = [
     remain: "00:32:12",
     deviceStatus: "건조중",
     status: "사용중",
-    type: "washer",
+    type: "WASHER",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const reservationsMock: ReservationItem[] = [
     remain: "00:32:12",
     deviceStatus: "건조중",
     status: "사용중",
-    type: "dryer",
+    type: "DRYER",
   },
   {
     id: 3,
@@ -23,13 +23,13 @@ export const reservationsMock: ReservationItem[] = [
     reserveAt: "25.8.18 21:35",
     expired: "00:02:32",
     status: "예약중",
-    type: "washer",
+    type: "WASHER",
   },
   {
     id: 4,
     machine: "Washer-3F-L1 301호",
     status: "확인필요",
-    type: "washer",
+    type: "WASHER",
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ export const reservationsMock: ReservationItem[] = [
     reserveAt: "25.8.18 21:35",
     expired: "00:02:32",
     status: "예약중",
-    type: "washer",
+    type: "WASHER",
   },
   {
     id: 6,
@@ -45,6 +45,6 @@ export const reservationsMock: ReservationItem[] = [
     reserveAt: "25.8.18 21:35",
     expired: "00:02:32",
     status: "예약중",
-    type: "washer",
+    type: "WASHER",
   },
 ];

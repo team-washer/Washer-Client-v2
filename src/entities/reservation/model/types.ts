@@ -3,7 +3,7 @@ export type OccupancyStatus =
   | "사용중"      // 실제 사용 중 (점유 진행)
   | "확인필요";   // 오류/이상 (점유 + 문제)
 
-export type ReservationMachineType = "washer" | "dryer";
+export type ReservationMachineType = "WASHER" | "DRYER";
 
 export interface ReservationItem {
   id: number;

@@ -20,7 +20,7 @@ const ReportMachineIcon = ({ machineName }: { machineName: string }) => {
 
   return (
     <div className="flex h-10 w-10 shrink-0 items-center justify-center translate-y-0.5">
-      <Image src={src} alt={isWasher ? "washer" : "dryer"} width={28} height={28} />
+      <Image src={src} alt={isWasher ? "WASHER" : "DRYER"} width={28} height={28} />
     </div>
   );
 };

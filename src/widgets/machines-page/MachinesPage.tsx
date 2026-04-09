@@ -3,8 +3,8 @@ import { machinesMock } from "@/entities/machine/model/mock";
 import MachineStatusPanel from "./ui/MachineStatusPanel";
 
 export default function MachinesPage() {
-  const dryerMachines = machinesMock.filter((item) => item.type === "dryer");
-  const washerMachines = machinesMock.filter((item) => item.type === "washer");
+  const dryerMachines = machinesMock.filter((item) => item.type === "DRYER");
+  const washerMachines = machinesMock.filter((item) => item.type === "WASHER");
 
   return (
     <div className="admin-page-grid">

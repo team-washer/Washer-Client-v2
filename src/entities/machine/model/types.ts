@@ -1,4 +1,4 @@
-export type MachineType = "WASHER" | "DRYER" | "washer" | "dryer";
+export type MachineType = "WASHER" | "DRYER";
 
 export type MachineStatus =
   | "사용중"
