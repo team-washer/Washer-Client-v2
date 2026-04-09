@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome lint .",
+    "check-types": "tsc --noEmit",
     "format": "biome format --write .",
     "lint:fix": "biome check --write ."
   },
