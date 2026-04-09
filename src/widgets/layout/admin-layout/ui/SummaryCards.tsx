@@ -1,32 +1,11 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
-import { getMalfunctionReports } from "@/entities/report";
+const summaryItems = [
+  { label: "총 기기수", value: "24대" },
+  { label: "예약 활성화", value: "6대" },
+  { label: "고장 신고", value: "3대" },
+  { label: "세탁정지", value: "4명" },
+];
 
 export default function SummaryCards() {
-  const { data: summaryData } = useQuery({
-    queryKey: ["admin", "summary"],
-    queryFn: async () => {
-      const [malfunctionData] = await Promise.all([
-        getMalfunctionReports(),
-        //나중에 다른 함수 추가
-      ]);
-
-      return {
-        malfunctionData,
-      };
-    },
-  });
-
-  const malfunctionDataLength = summaryData?.malfunctionData?.data?.reports.length ?? 0;
-
-  const summaryItems = [
-    { label: "총 기기수", value: "24대" },
-    { label: "예약 활성화", value: "6대" },
-    { label: "고장 신고", value: `${malfunctionDataLength}건` },
-    { label: "세탁정지", value: "4명" },
-  ];
-
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
       {summaryItems.map((item) => (
