@@ -1,18 +1,25 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useGetMalfunctionReports, type ReportStatusType, type ReportResponseType } from "@/entities/report";
+import { useMemo, useState } from "react";
 import { useGetMachines } from "@/entities/machine";
+import {
+  type ReportStatusType,
+  useGetMalfunctionReports,
+} from "@/entities/report";
 import ReportFilterPanel from "./ui/ReportFilterPanel";
 import ReportsPanel from "./ui/ReportsPanel";
-
 
 const ReportsPage = () => {
   const [status, setStatus] = useState<ReportStatusType | undefined>();
   const [search, setSearch] = useState("");
   const [floor, setFloor] = useState<number | undefined>();
 
-  const { data: reportsData, isLoading: isReportsLoading, isError: isReportsError, refetch: refetchReports } = useGetMalfunctionReports({
+  const {
+    data: reportsData,
+    isLoading: isReportsLoading,
+    isError: isReportsError,
+    refetch: refetchReports,
+  } = useGetMalfunctionReports({
     status,
   });
 
@@ -20,7 +27,7 @@ const ReportsPage = () => {
     floor,
   });
 
-  const isLoading = isReportsLoading || isMachinesLoading
+  const isLoading = isReportsLoading || isMachinesLoading;
 
   const reports = reportsData?.data.reports ?? [];
   const machines = machinesData?.data.machines ?? [];
@@ -31,7 +38,9 @@ const ReportsPage = () => {
     // Filter by floor if selected
     if (floor !== undefined) {
       const machineIdsOnFloor = new Set(machines.map((m) => m.id));
-      result = result.filter((report) => machineIdsOnFloor.has(report.machineId));
+      result = result.filter((report) =>
+        machineIdsOnFloor.has(report.machineId),
+      );
     }
 
     // Filter by search
@@ -77,6 +86,5 @@ const ReportsPage = () => {
     </div>
   );
 };
-
 
 export default ReportsPage;

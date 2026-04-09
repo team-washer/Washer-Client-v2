@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { managedUsersMock } from "@/entities/user/model/mock";
 import UserFilterPanel from "./ui/UserFilterPanel";
 import UserStatusPanel from "./ui/UserStatusPanel";
@@ -12,10 +12,11 @@ export default function UsersPage() {
   const filteredUsers = useMemo(() => {
     return managedUsersMock.filter((user) => {
       // Filter by floor: Room starts with the floor number (e.g., '5' for '511호')
-      const matchesFloor = floor === undefined || user.room.startsWith(floor.toString());
-      
+      const matchesFloor =
+        floor === undefined || user.room.startsWith(floor.toString());
+
       // Filter by name (search)
-      const matchesSearch = user.name.toLowerCase().includes(search.toLowerCase());
+      const matchesSearch = user.name.includes(search);
 
       return matchesFloor && matchesSearch;
     });
@@ -33,7 +34,7 @@ export default function UsersPage() {
       </div>
 
       <div className="admin-page-item">
-        <UserFilterPanel 
+        <UserFilterPanel
           search={search}
           onSearchChange={setSearch}
           floor={floor}
