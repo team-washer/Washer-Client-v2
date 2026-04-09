@@ -44,7 +44,7 @@ export default function Header() {
               </p>
               <p className="mt-1 text-[14px] font-semibold text-[#EF4B4F]">
                 {myInfo.roomNumber}호 |{" "}
-                {myInfo.role === "ADMIN" ? "관리자" : "사용자"}
+                {myInfo.role !== "USER" ? "관리자" : "사용자"}
               </p>
             </div>
           )}
