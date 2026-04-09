@@ -17,4 +17,5 @@ export const reservationUrl = {
 
 export const userUrl = {
   getUsers: () => "/api/v2/admin/users",
+  getMyInfo: () => "/api/v2/users/my",
 } as const;

@@ -1,3 +1,20 @@
+export type UserRole = "ADMIN" | "USER";
+
+export interface MyInfoType {
+  id: number;
+  name: string;
+  studentId: string;
+  roomNumber: string;
+  grade: number;
+  floor: number;
+  penaltyCount: number;
+  createdAt: string;
+  updatedAt: string;
+  canReserve: boolean;
+  penaltyExpiresAt: string;
+  role: UserRole;
+}
+
 export interface ManagedUserItem {
   id: number;
   name: string;

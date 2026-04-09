@@ -9,3 +9,8 @@ export const machineQueryKeys = {
     ["machines", "list", params] as const,
 } as const;
 
+export const userQueryKeys = {
+  getUsers: (params?: { [key: string]: any }) => ["users", "list", params] as const,
+  getMyInfo: () => ["users", "my"] as const,
+} as const;
+
