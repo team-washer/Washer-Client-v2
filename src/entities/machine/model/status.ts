@@ -7,4 +7,6 @@ export const machineStatusStyleMap: Record<MachineStatus, string> = {
   예약: "bg-[#AFC8FF] text-white",
   확인필요: "bg-[#EF3E45] text-white",
   고장: "bg-[#EF3E45] text-white",
+  NORMAL: "bg-[#A4A4AA] text-white",
+  MALFUNCTION: "bg-[#EF3E45] text-white",
 };

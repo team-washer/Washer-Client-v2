@@ -4,11 +4,11 @@ import ReservationStatusPanel from "./ui/ReservationStatusPanel";
 
 export default function ReservationsPage() {
   const dryerReservations = reservationsMock.filter(
-    (item) => item.type === "dryer",
+    (item) => item.type === "DRYER",
   );
 
   const washerReservations = reservationsMock.filter(
-    (item) => item.type === "washer",
+    (item) => item.type === "WASHER",
   );
 
   return (

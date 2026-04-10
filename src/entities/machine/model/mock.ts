@@ -4,7 +4,7 @@ export const machinesMock: MachineItem[] = [
   {
     id: 1,
     machine: "Dryer-3F-L3 301호",
-    type: "dryer",
+    type: "DRYER",
     status: "사용중",
     deviceStatus: "건조중",
     remain: "00:32:12",
@@ -12,7 +12,7 @@ export const machinesMock: MachineItem[] = [
   {
     id: 2,
     machine: "Dryer-3F-L3 301호",
-    type: "dryer",
+    type: "DRYER",
     status: "사용중",
     deviceStatus: "건조중",
     remain: "00:32:12",
@@ -20,13 +20,13 @@ export const machinesMock: MachineItem[] = [
   {
     id: 3,
     machine: "Dryer-3F-L3",
-    type: "dryer",
+    type: "DRYER",
     status: "미사용",
   },
   {
     id: 4,
     machine: "Dryer-3F-L3 301호",
-    type: "dryer",
+    type: "DRYER",
     status: "사용중",
     deviceStatus: "건조중",
     remain: "00:32:12",
@@ -34,7 +34,7 @@ export const machinesMock: MachineItem[] = [
   {
     id: 5,
     machine: "Dryer-3F-L3 301호",
-    type: "dryer",
+    type: "DRYER",
     status: "사용 정지",
     deviceStatus: "건조중",
     remain: "00:32:12",
@@ -42,26 +42,26 @@ export const machinesMock: MachineItem[] = [
   {
     id: 6,
     machine: "Dryer-3F-L3 301호",
-    type: "dryer",
+    type: "DRYER",
     status: "예약",
     reserveAt: "25.8.18 21:35",
   },
   {
     id: 7,
     machine: "Washer-3F-L1 301호",
-    type: "washer",
+    type: "WASHER",
     status: "확인필요",
   },
   {
     id: 8,
     machine: "Washer-3F-L1 301호",
-    type: "washer",
+    type: "WASHER",
     status: "고장",
   },
   {
     id: 9,
     machine: "Washer-3F-L1 301호",
-    type: "washer",
+    type: "WASHER",
     status: "사용중",
     deviceStatus: "건조중",
     remain: "00:32:12",
@@ -69,13 +69,13 @@ export const machinesMock: MachineItem[] = [
   {
     id: 10,
     machine: "Washer-3F-L1",
-    type: "washer",
+    type: "WASHER",
     status: "미사용",
   },
   {
     id: 11,
     machine: "Washer-3F-L1 301호",
-    type: "washer",
+    type: "WASHER",
     status: "사용 정지",
     deviceStatus: "건조중",
     remain: "00:32:12",
@@ -83,7 +83,7 @@ export const machinesMock: MachineItem[] = [
   {
     id: 12,
     machine: "Washer-3F-L1 301호",
-    type: "washer",
+    type: "WASHER",
     status: "예약",
     reserveAt: "25.8.18 21:35",
   },

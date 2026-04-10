@@ -4,8 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: 'Ria';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/RiaSans-ExtraBold.woff2') format('woff2');
+  font-family: "Ria";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/RiaSans-ExtraBold.woff2")
+    format("woff2");
   font-weight: normal;
   font-display: swap;
 }
@@ -51,7 +52,7 @@
 }
 
 :root {
-  --Blue-b-500: #4486FF;
+  --Blue-b-500: #4486ff;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -131,4 +132,28 @@
 
 .layout-container {
   @apply mx-auto w-full max-w-[1350px] px-4 md:px-6 xl:px-8;
+}
+
+@layer utilities {
+  .sidebar-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #e2e2e2 transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #e2e2e2;
+      border-radius: 20px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #d1d1d1;
+    }
+  }
 }
