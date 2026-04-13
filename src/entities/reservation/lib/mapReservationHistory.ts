@@ -4,7 +4,7 @@ import type {
     MachineReservationHistory,
     ReservationHistoryItem,
     ReservationHistoryStatus,
-  } from "../model/types";
+  } from "../model/historyTypes";
   
   // ===== 날짜 포맷 =====
   function formatDateTime(date: string | null): string | undefined {

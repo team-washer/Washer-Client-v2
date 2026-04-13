@@ -20,8 +20,6 @@ export type MachineAvailabilityStatus =
 
 export type BadgeStatus = "예약중" | "사용중" | "확인필요";
 
-export type ReservationHistoryStatus = "사용 완료" | "취소됨";
-
 export interface ReservationParamsType {
   userName?: string;
   machineName?: string;
@@ -62,27 +60,9 @@ export type ReservationDTO = {
   machineAvailability: MachineAvailabilityStatus;
 };
 
-export type MachineReservationHistoryItemDTO = {
-  roomNumber: string;
-  reservedAt: string;
-  actualCompletionTime: string | null;
-  cancelledAt: string | null;
-  status: "COMPLETED" | "CANCELLED" | "RESERVED" | "IN_USE";
-};
-
-export type MachineReservationHistoryDTO = {
-  machineName: string;
-  reservations: MachineReservationHistoryItemDTO[];
-};
-
-export interface ReservationHistoryItem {
-  roomNumber: string;
-  reservedAt: string;
-  actionAt?: string;
-  status: ReservationHistoryStatus;
-}
-
-export interface MachineReservationHistory {
-  machineName: string;
-  reservations: ReservationHistoryItem[];
+export interface ReservationResponseType {
+  reservations: ReservationDTO[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
 }

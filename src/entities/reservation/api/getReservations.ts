@@ -2,22 +2,15 @@ import { get, reservationUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapReservations } from "../lib/mapReservation";
 import type {
-  ReservationDTO,
   ReservationItem,
   ReservationParamsType,
+  ReservationResponseType,
 } from "../model/types";
-
-type GetReservationsPayload = {
-  reservations: ReservationDTO[];
-  totalCount: number;
-  totalPages: number;
-  currentPage: number;
-};
 
 export async function getReservations(
   params?: ReservationParamsType,
 ): Promise<ReservationItem[]> {
-  const response = await get<BaseResponseType<GetReservationsPayload>>(
+  const response = await get<BaseResponseType<ReservationResponseType>>(
     reservationUrl.getReservations(),
     {
       params,

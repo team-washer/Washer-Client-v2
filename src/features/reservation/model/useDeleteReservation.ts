@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteReservation } from "@/entities/reservation/api/deleteReservation";
+import { reservationQueryKeys } from "@/shared";
 
 export function useDeleteReservation() {
   const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export function useDeleteReservation() {
     mutationFn: deleteReservation,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ["reservations"],
+        queryKey: reservationQueryKeys.getReservations(),
       });
     },
   });

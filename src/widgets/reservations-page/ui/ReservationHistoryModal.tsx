@@ -20,9 +20,10 @@ export default function ReservationHistoryModal({
   const isOpen = Boolean(machineName);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const { data, isLoading, isError } =
-    useGetMachineReservationHistory(machineName);
-
+  const { data, isLoading, isError } = useGetMachineReservationHistory(
+    machineName ? { machineName } : undefined,
+  );
+  
   useOutsideClick(panelRef, onClose, isOpen);
 
   if (!isOpen || !machineName) return null;

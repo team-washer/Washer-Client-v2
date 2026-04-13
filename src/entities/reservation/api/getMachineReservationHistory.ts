@@ -3,21 +3,14 @@ import type { BaseResponseType } from "@/shared/api/types";
 import { mapMachineReservationHistory } from "../lib/mapReservationHistory";
 import type {
   MachineReservationHistory,
-  MachineReservationHistoryDTO,
-} from "../model/types";
-
-type GetMachineReservationHistoryParamsType = {
-  machineName?: string;
-};
-
-type GetMachineReservationHistoryPayload = {
-  machines: MachineReservationHistoryDTO[];
-};
+  MachineReservationHistoryParamsType,
+  MachineReservationHistoryResponseType,
+} from "../model/historyTypes";
 
 export async function getMachineReservationHistory(
-  params?: GetMachineReservationHistoryParamsType,
+  params?: MachineReservationHistoryParamsType,
 ): Promise<MachineReservationHistory | null> {
-  const response = await get<BaseResponseType<GetMachineReservationHistoryPayload>>(
+  const response = await get<BaseResponseType<MachineReservationHistoryResponseType>>(
     reservationUrl.getMachineReservationHistory(),
     {
       params,
