@@ -8,18 +8,18 @@ export const axiosInstance = axios.create({
 });
 
 type RefreshResponse = {
-  data: {
-    accessToken: string;
-    expiresIn: number;
-    refreshToken: string;
-  };
+  accessToken: string;
+  expiresIn: number;
+  refreshToken: string;
 };
 
 axiosInstance.interceptors.request.use((config) => {
   const accessToken = getCookie(COOKIE_KEYS.ACCESS_TOKEN);
+
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
+
   return config;
 });
 
@@ -43,6 +43,10 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
 
     if (
       error.response?.status === 401 &&
@@ -76,8 +80,8 @@ axiosInstance.interceptors.response.use(
           },
         );
 
-        const newAccessToken = response.data.accessToken;
-        const newRefreshToken = response.data.refreshToken;
+        const newAccessToken = response.accessToken;
+        const newRefreshToken = response.refreshToken;
 
         setCookie(COOKIE_KEYS.ACCESS_TOKEN, newAccessToken);
         setCookie(COOKIE_KEYS.REFRESH_TOKEN, newRefreshToken);
@@ -87,8 +91,8 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return axiosInstance(originalRequest);
-      } catch (error) {
-        console.error(error);
+      } catch (refreshError) {
+        return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
       }

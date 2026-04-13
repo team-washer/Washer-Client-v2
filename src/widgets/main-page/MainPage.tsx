@@ -1,29 +1,70 @@
+"use client";
+
+import { useState } from "react";
 import { WashingMachine } from "lucide-react";
-import { reportsMock } from "@/entities/report/model/mock";
-import { reservationsMock } from "@/entities/reservation/model/mock";
-import { managedUsersMock } from "@/entities/user/model/mock";
+
+import { useGetMalfunctionReports } from "@/entities/report/api/useGetMalfunctionReports";
+import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
+import { useGetUsers } from "@/entities/user/api/useGetUsers";
+
 import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
+import ReservationHistoryModal from "../reservations-page/ui/ReservationHistoryModal";
 import ReportsPanel from "../reports-page/ui/ReportsPanel";
 import UserStatusPanel from "../users-page/ui/UserStatusPanel";
 
 export default function MainPage() {
+  const [selectedMachineName, setSelectedMachineName] = useState<string | null>(
+    null,
+  );
+
+  const reportsQuery = useGetMalfunctionReports();
+  const usersQuery = useGetUsers();
+  const reservationsQuery = useGetReservations();
+
+  const isLoading =
+    reportsQuery.isLoading ||
+    usersQuery.isLoading ||
+    reservationsQuery.isLoading;
+
+  const isError =
+    reportsQuery.isError ||
+    usersQuery.isError ||
+    reservationsQuery.isError;
+
+  if (isLoading) {
+    return <div>불러오는 중...</div>;
+  }
+
+  if (isError) {
+    return <div>데이터를 불러오지 못했습니다.</div>;
+  }
+
+  const reports = reportsQuery.data?.data.reports ?? [];
+  const users = usersQuery.data ?? [];
+  const reservations = reservationsQuery.data ?? [];
+
   return (
     <div className="admin-page-grid">
-      <div className="admin-page-column">
+      <div className="relative admin-page-column">
         <div className="admin-page-fill">
           <ReportsPanel
             title="최근 고장 신고"
-            reports={reportsMock}
+            reports={reports}
             variant="summary"
           />
         </div>
 
         <div className="admin-page-fill">
-          <UserStatusPanel users={managedUsersMock} />
+          <UserStatusPanel users={users} />
         </div>
       </div>
 
-      <div className="admin-page-item">
+      <div className="relative admin-page-item">
+        <ReservationHistoryModal
+          machineName={selectedMachineName}
+          onClose={() => setSelectedMachineName(null)}
+          side="left"
+        />
         <ReservationStatusPanel
           title="활성화 된 예약"
           icon={
@@ -32,7 +73,8 @@ export default function MainPage() {
               className="translate-y-px text-[#A4A4AA]"
             />
           }
-          reservations={reservationsMock}
+          reservations={reservations}
+          onOpenHistory={setSelectedMachineName}
         />
       </div>
     </div>

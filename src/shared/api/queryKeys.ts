@@ -1,3 +1,6 @@
+import { ReservationParamsType } from "@/entities/reservation/model/types";
+import { UserParamsType } from "@/entities/user";
+
 export const reportQueryKeys = {
   getMalfunctionReports: (params?: { status?: string; [key: string]: any }) =>
     ["reports", "list", params] as const,
@@ -10,7 +13,14 @@ export const machineQueryKeys = {
 } as const;
 
 export const userQueryKeys = {
-  getUsers: (params?: { [key: string]: any }) => ["users", "list", params] as const,
+  getUsers: (params?: UserParamsType) => ["users", "list", params] as const,
   getMyInfo: () => ["users", "my"] as const,
 } as const;
 
+
+export const reservationQueryKeys = {
+  getReservations: (params?: ReservationParamsType) =>
+    ["reservations", "list", params] as const,
+  getMachineReservationHistory: (machineName: string | null) =>
+    ["reservations", "history", machineName] as const,
+} as const;
