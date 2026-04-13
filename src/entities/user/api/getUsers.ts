@@ -1,18 +1,20 @@
 import { get, userUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapUsers } from "../lib/mapUser";
-import type { ManagedUserItem, UserDTO } from "../model/types";
+import type {
+  ManagedUserItem,
+  UserParamsType,
+  UserResponseType,
+} from "../model/types";
 
-type GetUsersPayload = {
-  users: UserDTO[];
-  totalCount: number;
-  totalPages: number;
-  currentPage: number;
-};
-
-export async function getUsers(): Promise<ManagedUserItem[]> {
-  const response = await get<BaseResponseType<GetUsersPayload>>(
+export async function getUsers(
+  params?: UserParamsType,
+): Promise<ManagedUserItem[]> {
+  const response = await get<BaseResponseType<UserResponseType>>(
     userUrl.getUsers(),
+    {
+      params,
+    },
   );
 
   return mapUsers(response.data.users);

@@ -9,11 +9,7 @@ export default function UsersPage() {
   const [search, setSearch] = useState("");
   const [floor, setFloor] = useState<number | undefined>();
 
-  const {
-    data: users = [],
-    isLoading,
-    isError,
-  } = useGetUsers();
+  const { data: users = [], isLoading, isError } = useGetUsers();
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
