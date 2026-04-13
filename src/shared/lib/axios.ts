@@ -1,10 +1,10 @@
 import axios from "axios";
 import { COOKIE_KEYS } from "../constants/cookies";
 import { getCookie, setCookie } from "../utils/cookies";
+import { authUrl } from "../api/apiUrls";
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 10000,
 });
 
 type RefreshResponse = {
@@ -51,7 +51,7 @@ axiosInstance.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes("/api/v2/auth/refresh")
+      !originalRequest.url?.includes(authUrl.refresh())
     ) {
       originalRequest._retry = true;
 
@@ -74,7 +74,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         const response: RefreshResponse = await axiosInstance.post(
-          "/api/v2/auth/refresh",
+          authUrl.refresh(),
           {
             refreshToken,
           },
