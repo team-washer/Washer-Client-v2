@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/shared";
+import { get, reservationUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapMachineReservationHistory } from "../lib/mapReservationHistory";
 import type {
@@ -6,19 +6,23 @@ import type {
   MachineReservationHistoryDTO,
 } from "../model/types";
 
+type GetMachineReservationHistoryParamsType = {
+  machineName?: string;
+};
+
 type GetMachineReservationHistoryPayload = {
   machines: MachineReservationHistoryDTO[];
 };
 
 export async function getMachineReservationHistory(
-  machineName: string,
+  params?: GetMachineReservationHistoryParamsType,
 ): Promise<MachineReservationHistory | null> {
-  const response = (await axiosInstance.get(
-    "/api/v2/admin/reservations/machines/history",
+  const response = await get<BaseResponseType<GetMachineReservationHistoryPayload>>(
+    reservationUrl.getMachineReservationHistory(),
     {
-      params: { machineName },
+      params,
     },
-  )) as BaseResponseType<GetMachineReservationHistoryPayload>;
+  );
 
   const machine = response.data.machines[0];
 

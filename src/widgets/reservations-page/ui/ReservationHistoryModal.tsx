@@ -1,9 +1,8 @@
 "use client";
 
 import { History, X } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
-import { getMachineReservationHistory } from "@/entities/reservation/api/getMachineReservationHistory";
+import { useGetMachineReservationHistory } from "@/entities/reservation/api/useGetMachineReservationHistory";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import ReservationHistoryCard from "./ReservationHistoryCard";
 
@@ -21,11 +20,8 @@ export default function ReservationHistoryModal({
   const isOpen = Boolean(machineName);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["reservation-history", machineName],
-    queryFn: () => getMachineReservationHistory(machineName as string),
-    enabled: isOpen,
-  });
+  const { data, isLoading, isError } =
+    useGetMachineReservationHistory(machineName);
 
   useOutsideClick(panelRef, onClose, isOpen);
 

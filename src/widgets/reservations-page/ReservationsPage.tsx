@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { Droplet, Waves } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-
-import { getReservations } from "@/entities/reservation/api/getReservations";
+import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
 import ReservationHistoryModal from "./ui/ReservationHistoryModal";
 import ReservationStatusPanel from "./ui/ReservationStatusPanel";
 
@@ -17,10 +15,7 @@ export default function ReservationsPage() {
   const [historyOverlay, setHistoryOverlay] =
     useState<HistoryOverlayState>(null);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["reservations"],
-    queryFn: getReservations,
-  });
+  const { data, isLoading, isError } = useGetReservations();
 
   if (isLoading) {
     return <div>불러오는 중...</div>;
@@ -32,8 +27,12 @@ export default function ReservationsPage() {
 
   const reservations = data ?? [];
 
-  const dryerReservations = reservations.filter((item) => item.type === "DRYER");
-  const washerReservations = reservations.filter((item) => item.type === "WASHER");
+  const dryerReservations = reservations.filter(
+    (item) => item.type === "DRYER",
+  );
+  const washerReservations = reservations.filter(
+    (item) => item.type === "WASHER",
+  );
 
   return (
     <div className="admin-page-grid">
@@ -59,7 +58,9 @@ export default function ReservationsPage() {
       <div className="relative admin-page-item">
         <ReservationStatusPanel
           title="세탁기 예약 현황"
-          icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
+          icon={
+            <Droplet size={18} className="translate-y-px text-[#A4A4AA]" />
+          }
           reservations={washerReservations}
           onOpenHistory={(machineName) =>
             setHistoryOverlay({ machineName, side: "left" })

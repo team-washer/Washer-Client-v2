@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { WashingMachine } from "lucide-react";
-import { useQueries } from "@tanstack/react-query";
 
-import { getReports } from "@/entities/report/api/getReports";
-import { getReservations } from "@/entities/reservation/api/getReservations";
-import { getUsers } from "@/entities/user/api/getUsers";
+import { useGetMalfunctionReports } from "@/entities/report/api/useGetMalfunctionReports";
+import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
+import { useGetUsers } from "@/entities/user/api/useGetUsers";
 
 import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
 import ReservationHistoryModal from "../reservations-page/ui/ReservationHistoryModal";
@@ -14,29 +13,23 @@ import ReportsPanel from "../reports-page/ui/ReportsPanel";
 import UserStatusPanel from "../users-page/ui/UserStatusPanel";
 
 export default function MainPage() {
-  const [selectedMachineName, setSelectedMachineName] = useState<string | null>(null);
+  const [selectedMachineName, setSelectedMachineName] = useState<string | null>(
+    null,
+  );
 
-  const results = useQueries({
-    queries: [
-      {
-        queryKey: ["reports"],
-        queryFn: getReports,
-      },
-      {
-        queryKey: ["users"],
-        queryFn: getUsers,
-      },
-      {
-        queryKey: ["reservations"],
-        queryFn: getReservations,
-      },
-    ],
-  });
+  const reportsQuery = useGetMalfunctionReports();
+  const usersQuery = useGetUsers();
+  const reservationsQuery = useGetReservations();
 
-  const [reportsQuery, usersQuery, reservationsQuery] = results;
+  const isLoading =
+    reportsQuery.isLoading ||
+    usersQuery.isLoading ||
+    reservationsQuery.isLoading;
 
-  const isLoading = results.some((query) => query.isLoading);
-  const isError = results.some((query) => query.isError);
+  const isError =
+    reportsQuery.isError ||
+    usersQuery.isError ||
+    reservationsQuery.isError;
 
   if (isLoading) {
     return <div>불러오는 중...</div>;
@@ -46,7 +39,7 @@ export default function MainPage() {
     return <div>데이터를 불러오지 못했습니다.</div>;
   }
 
-  const reports = reportsQuery.data ?? [];
+  const reports = reportsQuery.data?.data.reports ?? [];
   const users = usersQuery.data ?? [];
   const reservations = reservationsQuery.data ?? [];
 
@@ -67,7 +60,7 @@ export default function MainPage() {
       </div>
 
       <div className="relative admin-page-item">
-      <ReservationHistoryModal
+        <ReservationHistoryModal
           machineName={selectedMachineName}
           onClose={() => setSelectedMachineName(null)}
           side="left"

@@ -1,5 +1,5 @@
-import { axiosInstance } from "@/shared";
+import { del, reservationUrl } from "@/shared/api";
 
 export async function deleteReservation(id: number) {
-  await axiosInstance.delete(`/api/v2/admin/reservations/${id}`);
+  await del(reservationUrl.deleteReservation(id));
 }
