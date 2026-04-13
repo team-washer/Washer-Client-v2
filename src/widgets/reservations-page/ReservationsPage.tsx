@@ -32,8 +32,8 @@ export default function ReservationsPage() {
 
   const reservations = data ?? [];
 
-  const dryerReservations = reservations.filter((item) => item.type === "dryer");
-  const washerReservations = reservations.filter((item) => item.type === "washer");
+  const dryerReservations = reservations.filter((item) => item.type === "DRYER");
+  const washerReservations = reservations.filter((item) => item.type === "WASHER");
 
   return (
     <div className="admin-page-grid">

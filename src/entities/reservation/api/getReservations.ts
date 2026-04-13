@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/shared";
 import { mapReservations } from "../lib/mapReservation";
 import type { ReservationDTO, ReservationItem } from "../model/types";
-import { ApiResponse } from "@/shared/api/types";
+import { BaseResponseType } from "@/shared/api/types";
 
 
 type GetReservationsPayload= {
@@ -12,6 +12,6 @@ type GetReservationsPayload= {
 };
 
 export async function getReservations(): Promise<ReservationItem[]> {
-  const response = await axiosInstance.get("/api/v2/admin/reservations") as ApiResponse<GetReservationsPayload>;
+  const response = await axiosInstance.get("/api/v2/admin/reservations") as BaseResponseType<GetReservationsPayload>;
   return mapReservations(response.data.reservations);
 }

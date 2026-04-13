@@ -10,10 +10,10 @@ function getMachineType(machineName: string): ReservationMachineType {
   const upper = machineName.toUpperCase();
 
   if (upper.startsWith("D") || upper.includes("DRYER")) {
-    return "dryer";
+    return "DRYER";
   }
 
-  return "washer";
+  return "WASHER";
 }
 
 // ===== 날짜 포맷 =====

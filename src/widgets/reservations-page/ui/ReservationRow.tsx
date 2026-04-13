@@ -17,7 +17,7 @@ interface ReservationRowProps {
 
 function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
   const src =
-    type === "washer" ? "/icons/washer-drop.svg" : "/icons/dryer-wave.svg";
+    type === "WASHER" ? "/icons/washer-drop.svg" : "/icons/dryer-wave.svg";
 
   return (
     <div className="flex h-10 w-10 shrink-0 items-center justify-center translate-y-0.5">

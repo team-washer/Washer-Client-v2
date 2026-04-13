@@ -1,4 +1,3 @@
-
 export type ReportStatusType = 'PENDING' | 'IN_PROGRESS' | 'RESOLVED';
 
 export interface ReportItemType {
@@ -26,4 +25,3 @@ export interface ReportResponseType {
   totalPages: number;
   currentPage: number;
 }
-

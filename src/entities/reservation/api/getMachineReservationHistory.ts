@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/shared";
-import type { ApiResponse } from "@/shared/api/types";
+import type { BaseResponseType } from "@/shared/api/types";
 import { mapMachineReservationHistory } from "../lib/mapReservationHistory";
 import type {
   MachineReservationHistory,
@@ -18,7 +18,7 @@ export async function getMachineReservationHistory(
     {
       params: { machineName },
     },
-  )) as ApiResponse<GetMachineReservationHistoryPayload>;
+  )) as BaseResponseType<GetMachineReservationHistoryPayload>;
 
   const machine = response.data.machines[0];
 
