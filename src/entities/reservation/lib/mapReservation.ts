@@ -90,6 +90,7 @@ export function mapReservation(dto: ReservationDTO): ReservationItem {
 
   return {
     id: dto.id,
+    machineId: dto.machineId,
     machine: dto.machineName,
     type: getMachineType(dto.machineName),
     badgeStatus,

@@ -21,18 +21,23 @@ const statusTextMap: Record<string, string> = {
   IN_USE: "사용중",
   RESERVED: "예약된",
   UNAVAILABLE: "사용불가",
+  RUNNING: "사용중",
 };
 
 const availabilityStyleMap: Record<string, string> = {
-  AVAILABLE: "bg-[#A4A4AA] text-white",   // Gray (미사용)
-  IN_USE: "bg-[#4486FF] text-white",      // Blue (사용중)
-  RESERVED: "bg-[#4486FF] text-white",    // Blue (예약된)
+  AVAILABLE: "bg-[#A4A4AA] text-white", // Gray (미사용)
+  IN_USE: "bg-[#4486FF] text-white", // Blue (사용중)
+  RESERVED: "bg-[#4486FF] text-white", // Blue (예약된)
   UNAVAILABLE: "bg-[#EA3B42] text-white", // Red (사용불가)
 };
 
 export default function MachineStatusBadge({ status, availability }: Props) {
-  const label = availability ? statusTextMap[availability] : statusTextMap[status];
-  const style = availability ? availabilityStyleMap[availability] : machineStatusStyleMap[status];
+  const label = availability
+    ? statusTextMap[availability]
+    : statusTextMap[status];
+  const style = availability
+    ? availabilityStyleMap[availability]
+    : machineStatusStyleMap[status];
 
   return (
     <span

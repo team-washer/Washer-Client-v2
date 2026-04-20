@@ -14,6 +14,7 @@ const updateMachineStatus = (id: number) => `/api/v2/admin/machines/${id}/status
 export const machineUrl = {
   getMachines,
   updateMachineStatus,
+  deleteMachine: (id: number) => `/api/v2/admin/machines/${id}`,
 } as const;
 
 export const reservationUrl = {
