@@ -7,8 +7,13 @@ export const reportUrl = {
   getMalfunctionReports: () => "/api/v2/admin/malfunction-reports",
 } as const;
 
+// 개별 상수로 분리하여 확실하게 정의
+const getMachines = () => "/api/v2/admin/machines";
+const updateMachineStatus = (id: number) => `/api/v2/admin/machines/${id}/status`;
+
 export const machineUrl = {
-  getMachines: () => "/api/v2/admin/machines",
+  getMachines,
+  updateMachineStatus,
 } as const;
 
 export const reservationUrl = {

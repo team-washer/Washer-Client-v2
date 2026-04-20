@@ -4,7 +4,7 @@
     }
   
     .admin-page-column {
-      @apply flex flex-col gap-4 xl:min-h-0;
+      @apply flex flex-col gap-4 xl:h-full xl:min-h-0;
     }
   
     .admin-page-fill {
@@ -12,7 +12,7 @@
     }
   
     .admin-page-item {
-      @apply xl:min-h-0;
+      @apply xl:h-full xl:min-h-0;
     }
   
     .admin-panel {
