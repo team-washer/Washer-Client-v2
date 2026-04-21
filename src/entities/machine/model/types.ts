@@ -27,8 +27,8 @@ export interface AdminMachineItem {
   floor: number;
   position: "LEFT" | "RIGHT";
   number: number;
-  status: string;
-  availability: "AVAILABLE" | "UNAVAILABLE";
+  status: MachineStatus;
+  availability: "AVAILABLE" | "IN_USE" | "RESERVED" | "UNAVAILABLE";
   deviceId: string;
 }
 

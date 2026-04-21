@@ -34,6 +34,7 @@ export interface ReservationParamsType {
 
 export interface ReservationItem {
   id: number;
+  machineId: number;
   machine: string;
   type: ReservationMachineType;
   badgeStatus: BadgeStatus;
