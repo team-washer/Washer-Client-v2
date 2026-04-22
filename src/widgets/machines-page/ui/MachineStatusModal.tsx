@@ -17,7 +17,7 @@ import {
 import {
   useDeleteMachine,
   useUpdateMachineStatus,
-} from "@/entities/machine/api";
+} from "@/entities/machine/api/useGetMachines";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 
 interface MachineStatusModalProps {

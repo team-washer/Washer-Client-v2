@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { type ReactNode, useState } from "react";
 import {
-  getMachineReservationInfo,
   type MachineItem,
   type MachineType,
 } from "@/entities/machine";
@@ -14,7 +13,7 @@ import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
 import ReservationHistoryModal from "@/widgets/reservations-page/ui/ReservationHistoryModal";
 import MachineStatusModal from "./MachineStatusModal";
-
+import { getMachineReservationInfo } from "../lib/getMachineReservationInfo";
 interface MachineStatusPanelProps {
   title: string;
   icon: ReactNode;

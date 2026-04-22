@@ -1,3 +1,8 @@
+import {
+  formatDateTime,
+  formatRemainingTime,
+  mapAvailabilityDeviceStatus,
+} from "@/shared/lib";
 import type {
   ReservationStatusLabel,
   ReservationDTO,
@@ -13,53 +18,6 @@ function getMachineType(machineName: string): ReservationMachineType {
   }
 
   return "WASHER";
-}
-
-function formatDateTime(date: string): string {
-  const value = new Date(date);
-
-  if (Number.isNaN(value.getTime())) return "-";
-
-  return value.toLocaleString("ko-KR", {
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-}
-
-function formatRemainTime(targetTime: string): string {
-  const now = new Date();
-  const target = new Date(targetTime);
-  const diff = target.getTime() - now.getTime();
-
-  if (Number.isNaN(target.getTime()) || diff <= 0) {
-    return "00시간 00분";
-  }
-
-  const totalMinutes = Math.floor(diff / 1000 / 60);
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  return `${String(hours).padStart(2, "0")}시간 ${String(minutes).padStart(2, "0")}분`;
-}
-
-function mapDeviceStatus(
-  availability: ReservationDTO["machineAvailability"],
-): string | undefined {
-  switch (availability) {
-    case "IN_USE":
-      return "사용 중";
-    case "RESERVED":
-      return "예약됨";
-    case "AVAILABLE":
-      return "사용 가능";
-    case "UNAVAILABLE":
-      return "사용 불가";
-    default:
-      return undefined;
-  }
 }
 
 function mapBadgeStatus(dto: ReservationDTO): ReservationStatusLabel {
@@ -89,11 +47,11 @@ export function mapReservation(dto: ReservationDTO): ReservationItem {
     badgeStatus,
     remain:
       badgeStatus === "사용중"
-        ? formatRemainTime(dto.expectedCompletionTime)
+        ? formatRemainingTime(dto.expectedCompletionTime)
         : undefined,
     deviceStatus:
       badgeStatus === "사용중"
-        ? mapDeviceStatus(dto.machineAvailability)
+        ? mapAvailabilityDeviceStatus(dto.machineAvailability)
         : undefined,
     reserveAt:
       badgeStatus === "예약중"
@@ -101,7 +59,7 @@ export function mapReservation(dto: ReservationDTO): ReservationItem {
         : undefined,
     expired:
       badgeStatus === "예약중"
-        ? formatRemainTime(dto.startTime)
+        ? formatRemainingTime(dto.startTime)
         : undefined,
   };
 }
