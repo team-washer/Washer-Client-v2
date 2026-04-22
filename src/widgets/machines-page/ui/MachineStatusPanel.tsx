@@ -1,72 +1,94 @@
 "use client";
 
-import { History, Trash2 } from "lucide-react";
-import { useState } from "react";
-import type { ReactNode } from "react";
-import type { MachineItem, MachineConditionStatusDTO } from "@/entities/machine/model/types";
+import Image from "next/image";
+import { type ReactNode, useState } from "react";
+import {
+  getMachineReservationInfo,
+  type MachineItem,
+  type MachineType,
+} from "@/entities/machine";
+import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
 import type { ReservationItem } from "@/entities/reservation/model/types";
+import MachineStatusBadge from "@/entities/machine/ui/MachineStatusBadge";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
+import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
+import ReservationHistoryModal from "@/widgets/reservations-page/ui/ReservationHistoryModal";
 import MachineStatusModal from "./MachineStatusModal";
-import { useMachineReservationInfo } from "@/entities/machine/hooks/useMachineReservationInfo";
 
 interface MachineStatusPanelProps {
   title: string;
   icon: ReactNode;
   machines: MachineItem[];
-  reservations?: ReservationItem[];
   side?: "left" | "right";
 }
 
-interface MachineRowProps {
-  item: MachineItem;
-  reservations: ReservationItem[];
-  onOpenModal: (machine: MachineItem) => void;
+function MachineIcon({ type }: { type: MachineType }) {
+  const src =
+    type === "WASHER" ? "/icons/washer-drop.svg" : "/icons/dryer-wave.svg";
+
+  return (
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center translate-y-0.5">
+      <Image src={src} alt={type} width={28} height={28} />
+    </div>
+  );
 }
 
-function MachineRow({ item, reservations, onOpenModal }: MachineRowProps) {
+function MachineRow({
+  machine,
+  reservations,
+  onHistory,
+  onManage,
+}: {
+  machine: MachineItem;
+  reservations: ReservationItem[];
+  onHistory: () => void;
+  onManage: () => void;
+}) {
   const { warningMessage, primaryInfo, secondaryInfo } =
-    useMachineReservationInfo({
-      machine: item,
+    getMachineReservationInfo({
+      machine,
       reservations,
     });
 
   return (
-    <div className="rounded-xl border border-[#E9E9EE] bg-white px-4 py-4">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="text-[15px] font-medium text-[#4A4A4F]">
-            {item.machine}
-          </p>
+    <div className="flex items-center justify-between gap-4 border-b border-[#E9E9EE] py-4 last:border-b-0">
+      <div className="flex min-w-0 items-start gap-4">
+        <MachineIcon type={machine.type} />
 
-          <div className="mt-2 space-y-1 text-[14px] text-[#71717A]">
-            {warningMessage && <p>{warningMessage}</p>}
-            {primaryInfo && <p>{primaryInfo}</p>}
-            {secondaryInfo && <p>{secondaryInfo}</p>}
+        <div className="min-w-0 flex flex-col justify-center">
+          <div className="text-[15px] font-medium text-[#4A4A4F]">
+            <p className="truncate">{machine.name}</p>
+
+            {primaryInfo && (
+              <p className="text-[12px] font-normal text-[#969696]">
+                {machine.availability === "IN_USE" ? "남은 시간" : "예약 시간"}:{" "}
+                <span className="font-semibold text-[#EA3B42]">
+                  {primaryInfo}
+                </span>
+              </p>
+            )}
           </div>
+
+          {warningMessage && (
+            <p className="mt-1 text-sm text-[#EA3B42]">{warningMessage}</p>
+          )}
+
+          {!warningMessage && secondaryInfo && (
+            <p className="mt-1 text-sm text-[#969696]">{secondaryInfo}</p>
+          )}
         </div>
-
-        <span className="shrink-0 rounded-full bg-[#F4F4F5] px-3 py-1 text-sm font-medium text-[#3F3F46]">
-          {item.status}
-        </span>
       </div>
 
-      <div className="mt-4 flex items-center justify-end gap-2">
-        <button
-          type="button"
-          onClick={() => onOpenModal(item)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E4E4E7] text-[#52525B] hover:bg-[#FAFAFA]"
-        >
-          <History size={16} />
-        </button>
-
-        <button
-          type="button"
-          onClick={() => onOpenModal(item)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#F1B5B8] text-[#D11A2A] hover:bg-[#FFF5F5]"
-        >
-          <Trash2 size={16} />
-        </button>
-      </div>
+      <StatusRowActions
+        badge={
+          <MachineStatusBadge
+            status={machine.status}
+            availability={machine.availability}
+          />
+        }
+        onHistory={onHistory}
+        onDelete={onManage}
+      />
     </div>
   );
 }
@@ -75,61 +97,50 @@ export default function MachineStatusPanel({
   title,
   icon,
   machines,
-  reservations = [],
+  side = "right",
 }: MachineStatusPanelProps) {
-  const [selectedMachine, setSelectedMachine] = useState<MachineItem | null>(null);
-  const [selectedStatus, setSelectedStatus] =
-    useState<MachineConditionStatusDTO>("NORMAL");
+  const [selectedHistoryMachineName, setSelectedHistoryMachineName] = useState<
+    string | null
+  >(null);
+  const [selectedMachine, setSelectedMachine] = useState<MachineItem | null>(
+    null,
+  );
 
-  const handleOpenModal = (machine: MachineItem) => {
-    setSelectedMachine(machine);
-    setSelectedStatus(machine.status === "고장" ? "MALFUNCTION" : "NORMAL");
-  };
-
-  const handleCloseModal = () => {
-    setSelectedMachine(null);
-    setSelectedStatus("NORMAL");
-  };
-
-  const handleUpdateStatus = () => {
-    // TODO: useUpdateMachineStatus 연결
-    handleCloseModal();
-  };
-
-  const handleDelete = () => {
-    // TODO: useDeleteMachine 연결
-    handleCloseModal();
-  };
+  const { data: reservations } = useGetReservations();
 
   return (
-    <>
+    <div className="relative xl:h-full xl:min-h-0">
       <StatusPanelShell title={title} icon={icon}>
-        {machines.length === 0 ? (
-          <div className="flex h-full items-center justify-center py-10 text-sm text-[#8B8B8B]">
-            표시할 기기 상태가 없습니다.
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {machines.map((item) => (
-              <MachineRow
-                key={item.id}
-                item={item}
-                reservations={reservations}
-                onOpenModal={handleOpenModal}
-              />
-            ))}
-          </div>
-        )}
+        {machines.map((machine) => (
+          <MachineRow
+            key={machine.id}
+            machine={machine}
+            reservations={reservations ?? []}
+            onHistory={() =>
+              setSelectedHistoryMachineName((prev) =>
+                prev === machine.name ? null : machine.name,
+              )
+            }
+            onManage={() =>
+              setSelectedMachine((prev) =>
+                prev?.id === machine.id ? null : machine,
+              )
+            }
+          />
+        ))}
       </StatusPanelShell>
+
+      <ReservationHistoryModal
+        machineName={selectedHistoryMachineName}
+        onClose={() => setSelectedHistoryMachineName(null)}
+        side={side}
+      />
 
       <MachineStatusModal
         machine={selectedMachine}
-        selectedStatus={selectedStatus}
-        onChangeStatus={setSelectedStatus}
-        onUpdateStatus={handleUpdateStatus}
-        onDelete={handleDelete}
-        onClose={handleCloseModal}
+        onClose={() => setSelectedMachine(null)}
+        side={side}
       />
-    </>
+    </div>
   );
 }

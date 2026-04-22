@@ -20,12 +20,12 @@ export type MachinePosition = "LEFT" | "RIGHT";
 
 export interface MachineItem {
   id: number;
-  machine: string;
+  name: string;
   type: MachineType;
   status: MachineStatusLabel;
+  condition: MachineConditionStatusDTO;
+  availability: MachineAvailabilityStatusDTO;
   deviceStatus?: string;
-  remain?: string;
-  reserveAt?: string;
 }
 
 export interface AdminMachineDTO {

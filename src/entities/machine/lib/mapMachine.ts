@@ -10,7 +10,9 @@ import type {
     condition: MachineConditionStatusDTO,
     availability: MachineAvailabilityStatusDTO,
   ): MachineStatusLabel {
-    if (condition === "MALFUNCTION") return "고장";
+    if (condition === "MALFUNCTION") {
+      return "고장";
+    }
   
     switch (availability) {
       case "IN_USE":
@@ -44,13 +46,13 @@ import type {
   }
   
   export function mapMachine(dto: AdminMachineDTO): MachineItem {
-    const status = mapMachineStatusLabel(dto.status, dto.availability);
-  
     return {
       id: dto.id,
-      machine: dto.name,
+      name: dto.name,
       type: dto.type,
-      status,
+      status: mapMachineStatusLabel(dto.status, dto.availability),
+      condition: dto.status,
+      availability: dto.availability,
       deviceStatus: mapDeviceStatus(dto.availability),
     };
   }
