@@ -71,7 +71,7 @@ function mapBadgeStatus(dto: ReservationDTO): ReservationStatusLabel {
     return "예약중";
   }
 
-  if (dto.status === "IN_USE" || dto.status === "RUNNING") {
+  if (dto.status === "RUNNING") {
     return "사용중";
   }
 

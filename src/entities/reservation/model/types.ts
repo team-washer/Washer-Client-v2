@@ -7,7 +7,6 @@ export type ReservationMachineType = "WASHER" | "DRYER";
 
 export type ReservationDTOStatus =
   | "RESERVED"
-  | "IN_USE"
   | "RUNNING"
   | "COMPLETED"
   | "CANCELLED";
