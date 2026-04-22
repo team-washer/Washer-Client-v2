@@ -2,7 +2,8 @@
 
 import { Droplet, Waves } from "lucide-react";
 import { useGetMachines } from "@/entities/machine/api";
-import { mapMachines } from "@/entities/machine/lib/mapMachine";
+import { mapMachines } from "@/entities/machine";
+
 import MachineStatusPanel from "./ui/MachineStatusPanel";
 
 export default function MachinesPage() {

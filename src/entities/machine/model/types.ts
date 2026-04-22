@@ -46,3 +46,9 @@ export interface MachineResponseType {
   totalPages: number;
   currentPage: number;
 }
+
+export interface MachineStatusOption {
+  value: MachineConditionStatusDTO;
+  title: string;
+  description: string;
+}
