@@ -5,12 +5,13 @@ import type { MachineResponseType } from "../model/types";
 
 export * from "./useUpdateMachineStatus";
 export * from "./useDeleteMachine";
+
 export const useGetMachines = (params: { floor?: number } = {}) => {
   return useQuery({
     queryKey: machineQueryKeys.getMachines(params),
     queryFn: () =>
       get<BaseResponseType<MachineResponseType>>(machineUrl.getMachines(), {
-        params,
+        params,  
       }),
   });
 };

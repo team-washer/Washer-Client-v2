@@ -1,4 +1,4 @@
-export type OccupancyStatus =
+export type ReservationStatusLabel =
   | "예약중"
   | "사용중"
   | "확인필요";
@@ -18,8 +18,6 @@ export type MachineAvailabilityStatus =
   | "AVAILABLE"
   | "UNAVAILABLE";
 
-export type BadgeStatus = "예약중" | "사용중" | "확인필요";
-
 export interface ReservationParamsType {
   userName?: string;
   machineName?: string;
@@ -37,7 +35,7 @@ export interface ReservationItem {
   machineId: number;
   machine: string;
   type: ReservationMachineType;
-  badgeStatus: BadgeStatus;
+  badgeStatus: ReservationStatusLabel;
   remain?: string;
   reserveAt?: string;
   expired?: string;
