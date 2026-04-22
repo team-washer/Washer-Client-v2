@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import type {
-  AdminMachineItem,
+  MachineItem,
   MachineType,
 } from "@/entities/machine/model/types";
 import MachineStatusBadge from "@/entities/machine/ui/MachineStatusBadge";
@@ -18,7 +18,7 @@ import MachineStatusModal from "./MachineStatusModal";
 interface MachineStatusPanelProps {
   title: string;
   icon: ReactNode;
-  machines: AdminMachineItem[];
+  machines: MachineItem[];
   side?: "left" | "right";
 }
 
@@ -39,7 +39,7 @@ function MachineRow({
   onHistory,
   onDelete,
 }: {
-  item: AdminMachineItem;
+  item:MachineItem;
   reservations: ReservationItem[];
   onHistory: () => void;
   onDelete: () => void;
@@ -178,7 +178,7 @@ export default function MachineStatusPanel({
     string | null
   >(null);
   const [selectedStatusMachine, setSelectedStatusMachine] =
-    useState<AdminMachineItem | null>(null);
+    useState<MachineItem | null>(null);
 
   // 예약 목록 API(/api/v2/admin/reservations) 호출
   const { data: reservations } = useGetReservations();
