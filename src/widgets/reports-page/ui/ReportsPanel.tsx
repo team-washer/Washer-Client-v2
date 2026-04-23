@@ -20,7 +20,12 @@ const ReportMachineIcon = ({ machineName }: { machineName: string }) => {
 
   return (
     <div className="flex h-10 w-10 shrink-0 items-center justify-center translate-y-0.5">
-      <Image src={src} alt={isWasher ? "WASHER" : "DRYER"} width={28} height={28} />
+      <Image
+        src={src}
+        alt={isWasher ? "WASHER" : "DRYER"}
+        width={28}
+        height={28}
+      />
     </div>
   );
 };
@@ -48,7 +53,9 @@ const ReportRow = ({
             </p>
           ) : (
             <>
-              <p className="mt-1 text-sm text-[#9A9AA0]">신고자: {item.reporterName}</p>
+              <p className="mt-1 text-sm text-[#9A9AA0]">
+                신고자: {item.reporterName}
+              </p>
               <p className="mt-1 text-sm text-[#9A9AA0]">
                 신고 사유: {item.description}
               </p>
@@ -80,13 +87,17 @@ const ReportsPanel = ({
       <div className="relative min-h-[200px]">
         {isLoading && (
           <div className="flex h-[200px] items-center justify-center">
-            <p className="text-sm text-gray-500 font-medium animate-pulse">데이터를 불러오는 중...</p>
+            <p className="text-sm text-gray-500 font-medium animate-pulse">
+              데이터를 불러오는 중...
+            </p>
           </div>
         )}
 
         {isError && (
           <div className="flex h-[200px] flex-col items-center justify-center gap-4">
-            <p className="text-sm text-red-500 font-medium">데이터를 불러오는 중 오류가 발생했습니다.</p>
+            <p className="text-sm text-red-500 font-medium">
+              데이터를 불러오는 중 오류가 발생했습니다.
+            </p>
             {onRetry && (
               <Button variant="outline" size="sm" onClick={onRetry}>
                 다시 시도
@@ -97,7 +108,9 @@ const ReportsPanel = ({
 
         {!isLoading && !isError && reports.length === 0 && (
           <div className="flex h-[200px] items-center justify-center">
-            <p className="text-sm text-gray-500 font-medium">신고 내역이 없습니다.</p>
+            <p className="text-sm text-gray-500 font-medium">
+              신고 내역이 없습니다.
+            </p>
           </div>
         )}
 
@@ -108,7 +121,6 @@ const ReportsPanel = ({
             ))}
           </div>
         )}
-
       </div>
     </StatusPanelShell>
   );

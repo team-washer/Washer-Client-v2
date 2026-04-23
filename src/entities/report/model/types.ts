@@ -1,4 +1,4 @@
-export type ReportStatusType = 'PENDING' | 'IN_PROGRESS' | 'RESOLVED';
+export type ReportStatusType = "PENDING" | "IN_PROGRESS" | "RESOLVED";
 
 export interface ReportItemType {
   id: number;

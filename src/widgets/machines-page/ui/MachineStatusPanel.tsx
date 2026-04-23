@@ -2,20 +2,18 @@
 
 import Image from "next/image";
 import { type ReactNode, useState } from "react";
-import {
-  type MachineItem,
-  type MachineType,
-} from "@/entities/machine";
+import type { MachineItem, MachineType } from "@/entities/machine";
+import MachineStatusBadge from "@/entities/machine/ui/MachineStatusBadge";
 import {
   type ReservationItem,
   useGetReservations,
 } from "@/entities/reservation";
-import MachineStatusBadge from "@/entities/machine/ui/MachineStatusBadge";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
 import ReservationHistoryModal from "@/widgets/reservations-page/ui/ReservationHistoryModal";
-import MachineStatusModal from "./MachineStatusModal";
 import { getMachineReservationInfo } from "../lib/getMachineReservationInfo";
+import MachineStatusModal from "./MachineStatusModal";
+
 interface MachineStatusPanelProps {
   title: string;
   icon: ReactNode;
@@ -81,10 +79,7 @@ function MachineRow({
       </div>
 
       <StatusRowActions
-        badge={
-          <MachineStatusBadge
-            status={machine.status}/>
-        }
+        badge={<MachineStatusBadge status={machine.status} />}
         onHistory={onHistory}
         onDelete={onManage}
       />

@@ -22,7 +22,7 @@ export default function FilterChip({
         minWidthClass,
         active
           ? "border border-[#4D83F6] bg-[#4D83F6] text-white"
-          : "border border-[#969696] bg-white text-[#8C8C93]"
+          : "border border-[#969696] bg-white text-[#8C8C93]",
       )}
     >
       {label}

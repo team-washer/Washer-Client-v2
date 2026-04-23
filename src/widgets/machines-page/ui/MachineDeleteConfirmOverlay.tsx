@@ -25,8 +25,7 @@ export default function MachineDeleteConfirmOverlay({
 
       <p className="mb-8 text-sm text-[#71717A]">
         <span className="font-semibold text-[#EF4B4F]">{machineName}</span>
-        을(를) 시스템에서 영구적으로 제거합니다. 이 작업은 되돌릴 수
-        없습니다.
+        을(를) 시스템에서 영구적으로 제거합니다. 이 작업은 되돌릴 수 없습니다.
       </p>
 
       <div className="flex w-full flex-col gap-2">

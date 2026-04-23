@@ -1,8 +1,8 @@
 import { formatDateTime } from "@/shared/lib";
 import type {
+  MachineReservationHistory,
   MachineReservationHistoryDTO,
   MachineReservationHistoryItemDTO,
-  MachineReservationHistory,
   ReservationHistoryItem,
   ReservationHistoryStatus,
 } from "../model/historyTypes";

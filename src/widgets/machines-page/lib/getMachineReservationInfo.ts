@@ -29,7 +29,6 @@ export function getMachineReservationInfo({
       : isReserved
         ? matchingReservation?.reserveAt
         : undefined,
-    secondaryInfo:
-      matchingReservation?.deviceStatus ?? machine.deviceStatus,
+    secondaryInfo: matchingReservation?.deviceStatus ?? machine.deviceStatus,
   };
 }

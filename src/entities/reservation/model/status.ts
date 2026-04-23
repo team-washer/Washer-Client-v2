@@ -6,5 +6,5 @@ export const statusColorMap = {
 
   // 히스토리 상태
   "사용 완료": "bg-[#4D83F6]",
-  "취소됨": "bg-[#EF4B4F]",
+  취소됨: "bg-[#EF4B4F]",
 } as const;

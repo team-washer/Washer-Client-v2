@@ -1,9 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { reservationQueryKeys } from "@/shared/api";
-import type {
-  ReservationItem,
-  ReservationParamsType,
-} from "../model/types";
+import type { ReservationItem, ReservationParamsType } from "../model/types";
 import { getReservations as fetchReservations } from "./getReservations";
 
 export const useGetReservations = (

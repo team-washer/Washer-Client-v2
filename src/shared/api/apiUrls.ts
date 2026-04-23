@@ -9,7 +9,8 @@ export const reportUrl = {
 
 // 개별 상수로 분리하여 확실하게 정의
 const getMachines = () => "/api/v2/admin/machines";
-const updateMachineStatus = (id: number) => `/api/v2/admin/machines/${id}/status`;
+const updateMachineStatus = (id: number) =>
+  `/api/v2/admin/machines/${id}/status`;
 
 export const machineUrl = {
   getMachines,

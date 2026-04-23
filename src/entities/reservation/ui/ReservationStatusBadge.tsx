@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/cn";
 import { statusColorMap } from "../model/status";
+
 interface Props {
   label: keyof typeof statusColorMap;
 }

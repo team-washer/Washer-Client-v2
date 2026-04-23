@@ -4,4 +4,3 @@ export interface BaseResponseType<T> {
   message: string;
   data: T;
 }
-

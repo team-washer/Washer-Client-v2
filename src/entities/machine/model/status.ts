@@ -1,7 +1,4 @@
-import type {
-  MachineConditionStatusDTO,
-  MachineStatusLabel,
-} from "./types";
+import type { MachineConditionStatusDTO, MachineStatusLabel } from "./types";
 
 export const machineStatusStyleMap: Record<MachineStatusLabel, string> = {
   사용중: "bg-[#4486FF] text-white",

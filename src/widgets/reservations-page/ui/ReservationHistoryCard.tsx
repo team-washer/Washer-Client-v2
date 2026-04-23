@@ -2,6 +2,7 @@
 
 import type { ReservationHistoryItem } from "@/entities/reservation";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
+
 interface ReservationHistoryCardProps {
   machineName: string;
   item: ReservationHistoryItem;
@@ -21,14 +22,10 @@ export default function ReservationHistoryCard({
       <div className="border-t border-[#ECECEC] pt-3">
         <div className="grid grid-cols-[90px_1fr] gap-y-2 text-[14px] text-[#555]">
           <span>예약호실</span>
-          <span className="text-right text-[#8B8B8B]">
-            {item.roomNumber}호
-          </span>
+          <span className="text-right text-[#8B8B8B]">{item.roomNumber}호</span>
 
           <span>예약시간</span>
-          <span className="text-right text-[#8B8B8B]">
-            {item.reservedAt}
-          </span>
+          <span className="text-right text-[#8B8B8B]">{item.reservedAt}</span>
 
           <span>{item.status === "취소됨" ? "취소 시간" : "완료 시간"}</span>
           <span className="text-right text-[#8B8B8B]">
