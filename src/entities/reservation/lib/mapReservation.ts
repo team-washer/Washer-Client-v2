@@ -1,13 +1,12 @@
 import {
   formatDateTime,
-  formatRemainingTime,
   mapAvailabilityDeviceStatus,
 } from "@/shared/lib";
 import type {
+  ReservationStatusLabel,
   ReservationDTO,
   ReservationItem,
   ReservationMachineType,
-  ReservationStatusLabel,
 } from "../model/types";
 
 function getMachineType(machineName: string): ReservationMachineType {
@@ -45,18 +44,18 @@ export function mapReservation(dto: ReservationDTO): ReservationItem {
     machine: dto.machineName,
     type: getMachineType(dto.machineName),
     badgeStatus,
-    remain:
-      badgeStatus === "사용중"
-        ? formatRemainingTime(dto.expectedCompletionTime)
+    reserveAt:
+      badgeStatus === "예약중"
+        ? formatDateTime(dto.reservedAt)
         : undefined,
     deviceStatus:
       badgeStatus === "사용중"
         ? mapAvailabilityDeviceStatus(dto.machineAvailability)
         : undefined,
-    reserveAt:
-      badgeStatus === "예약중" ? formatDateTime(dto.reservedAt) : undefined,
-    expired:
-      badgeStatus === "예약중" ? formatRemainingTime(dto.startTime) : undefined,
+    expectedCompletionTime:
+      badgeStatus === "사용중" ? dto.expectedCompletionTime : undefined,
+    startTime:
+      badgeStatus === "예약중" ? dto.startTime : undefined,
   };
 }
 

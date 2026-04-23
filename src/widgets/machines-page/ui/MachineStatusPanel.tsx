@@ -8,6 +8,7 @@ import {
   type ReservationItem,
   useGetReservations,
 } from "@/entities/reservation";
+import { useRemainingTime } from "@/shared/hooks/useRemainingTime";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
 import ReservationHistoryModal from "@/widgets/reservations-page/ui/ReservationHistoryModal";
@@ -43,11 +44,13 @@ function MachineRow({
   onHistory: () => void;
   onManage: () => void;
 }) {
-  const { warningMessage, primaryInfo, secondaryInfo } =
+  const { warningMessage, timeTarget, secondaryInfo } =
     getMachineReservationInfo({
       machine,
       reservations,
     });
+
+  const timeText = useRemainingTime(timeTarget);
 
   return (
     <div className="flex items-center justify-between gap-4 border-b border-[#E9E9EE] py-4 last:border-b-0">
@@ -58,23 +61,26 @@ function MachineRow({
           <div className="text-[15px] font-medium text-[#4A4A4F]">
             <p className="truncate">{machine.name}</p>
 
-            {primaryInfo && (
-              <p className="text-[12px] font-normal text-[#969696]">
-                {machine.availability === "IN_USE" ? "남은 시간" : "예약 시간"}:{" "}
-                <span className="font-semibold text-[#EA3B42]">
-                  {primaryInfo}
-                </span>
+            {warningMessage ? (
+              <p className="mt-1 text-[13px] text-[#EA3B42]">
+                {warningMessage}
               </p>
+            ) : (
+              <>
+                {secondaryInfo && machine.availability !== "AVAILABLE" && (
+                  <p className="mt-1 text-[13px] text-[#969696]">
+                    기기 상태: {secondaryInfo}
+                  </p>
+                )}
+
+                {timeText && machine.availability === "IN_USE" && (
+                  <p className="mt-1 text-[13px] text-[#969696]">
+                    남은 시간: {timeText}
+                  </p>
+                )}
+              </>
             )}
           </div>
-
-          {warningMessage && (
-            <p className="mt-1 text-sm text-[#EA3B42]">{warningMessage}</p>
-          )}
-
-          {!warningMessage && secondaryInfo && (
-            <p className="mt-1 text-sm text-[#969696]">{secondaryInfo}</p>
-          )}
         </div>
       </div>
 

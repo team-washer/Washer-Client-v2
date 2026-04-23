@@ -15,20 +15,17 @@ export function getMachineReservationInfo({
   );
 
   const isUsing = machine.availability === "IN_USE";
-  const isReserved = machine.availability === "RESERVED";
   const isUnavailable = machine.availability === "UNAVAILABLE";
   const isMalfunction = machine.condition === "MALFUNCTION";
 
   return {
     warningMessage:
       isUnavailable || isMalfunction
-        ? "기기 고장으로 인해 현재 사용할 수 없습니다."
+        ? "기기 고장으로 인하여 당분간 사용이 정지됩니다."
         : undefined,
-    primaryInfo: isUsing
-      ? matchingReservation?.remain
-      : isReserved
-        ? matchingReservation?.reserveAt
-        : undefined,
+    timeTarget: isUsing
+      ? matchingReservation?.expectedCompletionTime
+      : undefined,
     secondaryInfo: matchingReservation?.deviceStatus ?? machine.deviceStatus,
   };
 }
