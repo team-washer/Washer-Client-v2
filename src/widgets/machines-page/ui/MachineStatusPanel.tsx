@@ -81,9 +81,7 @@ function MachineRow({
       <StatusRowActions
         badge={
           <MachineStatusBadge
-            status={machine.status}
-            availability={machine.availability}
-          />
+            status={machine.status}/>
         }
         onHistory={onHistory}
         onDelete={onManage}
