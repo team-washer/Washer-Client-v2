@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 
-import type {
-  ReservationItem,
-  ReservationMachineType,
-} from "@/entities/reservation/model/types";
+import {
+  type ReservationItem,
+  type ReservationMachineType,
+  useDeleteReservation,
+} from "@/entities/reservation";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
-import { useDeleteReservation } from "@/features/reservation/model/useDeleteReservation";
 
 interface ReservationRowProps {
   item: ReservationItem;
@@ -33,7 +33,7 @@ export default function ReservationRow({
   const { mutate: deleteReservation, isPending } = useDeleteReservation();
 
   const handleHistory = () => {
-    onOpenHistory?.(item.machine);
+    onOpenHistory(item.machine);
   };
 
   const handleDelete = () => {
