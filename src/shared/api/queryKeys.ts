@@ -1,17 +1,17 @@
+import type { ReportParamsType } from "@/entities/report";
 import type { ReservationParamsType } from "@/entities/reservation/model/types";
 import type { UserParamsType } from "@/entities/user";
 
 export const reportQueryKeys = {
   all: ["reports"] as const,
-  getMalfunctionReports: (
-    params?: { status?: string } & Record<string, unknown>,
-  ) => ["reports", "list", params] as const,
+  getMalfunctionReports: (params?: ReportParamsType) =>
+    ["reports", "list", params] as const,
   getReportById: (id: number) => ["reports", "detail", id] as const,
 } as const;
 
 export const machineQueryKeys = {
   all: ["machines"] as const,
-  getMachines: (params: { floor?: number } & Record<string, unknown> = {}) =>
+  getMachines: (params: { floor?: number } = {}) =>
     ["machines", "list", params] as const,
 } as const;
 
