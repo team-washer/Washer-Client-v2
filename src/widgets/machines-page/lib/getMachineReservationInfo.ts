@@ -20,9 +20,6 @@ export function getMachineReservationInfo({
   const isMalfunction = machine.condition === "MALFUNCTION";
 
   return {
-    matchingReservation,
-    isUsing,
-    isReserved,
     warningMessage:
       isUnavailable || isMalfunction
         ? "기기 고장으로 인해 현재 사용할 수 없습니다."
@@ -32,6 +29,7 @@ export function getMachineReservationInfo({
       : isReserved
         ? matchingReservation?.reserveAt
         : undefined,
-    secondaryInfo: matchingReservation?.deviceStatus ?? machine.deviceStatus,
+    secondaryInfo:
+      matchingReservation?.deviceStatus ?? machine.deviceStatus,
   };
 }
