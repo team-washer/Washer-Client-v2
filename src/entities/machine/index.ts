@@ -1,6 +1,5 @@
 export * from "./model/types";
-export * from "./api/useGetMachines";
-
+export * from "./api";
 
 export { machineStatusStyleMap, machineConditionStyleMap } from "./model/status";
 export { mapMachine, mapMachines } from "./lib/mapMachine";

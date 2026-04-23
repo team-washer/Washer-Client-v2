@@ -14,10 +14,7 @@ import {
   type MachineConditionStatusDTO,
   type MachineItem,
 } from "@/entities/machine";
-import {
-  useDeleteMachine,
-  useUpdateMachineStatus,
-} from "@/entities/machine/api/useGetMachines";
+import { useDeleteMachine, useUpdateMachineStatus } from "@/entities/machine";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 
 interface MachineStatusModalProps {
