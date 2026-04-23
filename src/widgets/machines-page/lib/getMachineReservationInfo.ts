@@ -1,5 +1,5 @@
-import type { ReservationItem } from "@/entities/reservation/model/types";
-import type { MachineItem } from "../../../entities/machine/model/types";
+import type { MachineItem } from "@/entities/machine";
+import type { ReservationItem } from "@/entities/reservation";
 
 interface GetMachineReservationInfoParams {
   machine: MachineItem;

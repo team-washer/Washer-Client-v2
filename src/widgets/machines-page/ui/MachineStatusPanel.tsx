@@ -6,8 +6,10 @@ import {
   type MachineItem,
   type MachineType,
 } from "@/entities/machine";
-import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
-import type { ReservationItem } from "@/entities/reservation/model/types";
+import {
+  type ReservationItem,
+  useGetReservations,
+} from "@/entities/reservation";
 import MachineStatusBadge from "@/entities/machine/ui/MachineStatusBadge";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
