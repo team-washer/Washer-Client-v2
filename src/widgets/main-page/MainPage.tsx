@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { WashingMachine } from "lucide-react";
 
-import { useGetMalfunctionReports } from "@/entities/report/api/useGetMalfunctionReports";
-import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
-import { useGetUsers } from "@/entities/user/api/useGetUsers";
-
+import { useGetMalfunctionReports } from "@/entities/report";
+import { useGetReservations } from "@/entities/reservation";
+import { useGetUsers } from "@/entities/user";
 import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
 import ReservationHistoryModal from "../reservations-page/ui/ReservationHistoryModal";
 import ReportsPanel from "../reports-page/ui/ReportsPanel";

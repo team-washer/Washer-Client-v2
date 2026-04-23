@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Droplet, Waves } from "lucide-react";
-import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
+import { useGetReservations } from "@/entities/reservation";
 import ReservationHistoryModal from "./ui/ReservationHistoryModal";
 import ReservationStatusPanel from "./ui/ReservationStatusPanel";
 

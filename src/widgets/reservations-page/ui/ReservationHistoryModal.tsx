@@ -2,7 +2,7 @@
 
 import { History, X } from "lucide-react";
 import { useRef } from "react";
-import { useGetMachineReservationHistory } from "@/entities/reservation/api/useGetMachineReservationHistory";
+import { useGetMachineReservationHistory } from "@/entities/reservation";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import ReservationHistoryCard from "./ReservationHistoryCard";
 

@@ -3,9 +3,8 @@
 import type { PropsWithChildren } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { getDashboardSummary } from "@/entities/dashboard/api/getDashboardSummary";
-import { mapDashboard } from "@/entities/dashboard/lib/mapDashboard";
-
+import { getDashboardSummary } from "@/entities/dashboard";
+import { mapDashboard } from "@/entities/dashboard";
 import DashboardTabs from "../DashboardTabs";
 import Header from "../Header";
 import SummaryCards from "../SummaryCards";

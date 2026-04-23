@@ -1,8 +1,7 @@
 "use client";
 
-import type { ReservationHistoryItem } from "@/entities/reservation/model/historyTypes";
+import type { ReservationHistoryItem } from "@/entities/reservation";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
-
 interface ReservationHistoryCardProps {
   machineName: string;
   item: ReservationHistoryItem;
