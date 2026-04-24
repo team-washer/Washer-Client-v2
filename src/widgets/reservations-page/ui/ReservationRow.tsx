@@ -6,8 +6,8 @@ import {
   type ReservationMachineType,
   useDeleteReservation,
 } from "@/entities/reservation";
-import { useRemainingTime } from "@/shared/hooks/useRemainingTime";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
+import { useRemainingTime } from "@/shared/hooks/useRemainingTime";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
 
 interface ReservationRowProps {

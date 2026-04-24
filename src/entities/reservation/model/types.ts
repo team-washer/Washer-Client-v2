@@ -26,17 +26,17 @@ export interface ReservationParamsType {
   sort?: string[];
 }
 
-  export interface ReservationItem {
-    id: number;
-    machineId: number;
-    machine: string;
-    type: ReservationMachineType;
-    badgeStatus: ReservationStatusLabel;
-    reserveAt?: string;
-    deviceStatus?: string;
-    expectedCompletionTime?: string;
-    startTime?: string;
-  }
+export interface ReservationItem {
+  id: number;
+  machineId: number;
+  machine: string;
+  type: ReservationMachineType;
+  badgeStatus: ReservationStatusLabel;
+  reserveAt?: string;
+  deviceStatus?: string;
+  expectedCompletionTime?: string;
+  startTime?: string;
+}
 
 export type ReservationDTO = {
   id: number;
