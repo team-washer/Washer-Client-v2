@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-
-import type {
-  ReservationItem,
-  ReservationMachineType,
-} from "@/entities/reservation/model/types";
+import {
+  type ReservationItem,
+  type ReservationMachineType,
+  useDeleteReservation,
+} from "@/entities/reservation";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
+import { useRemainingTime } from "@/shared/hooks/useRemainingTime";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
-import { useDeleteReservation } from "@/features/reservation/model/useDeleteReservation";
 
 interface ReservationRowProps {
   item: ReservationItem;
@@ -32,8 +32,11 @@ export default function ReservationRow({
 }: ReservationRowProps) {
   const { mutate: deleteReservation, isPending } = useDeleteReservation();
 
+  const remainText = useRemainingTime(item.expectedCompletionTime);
+  const expiredText = useRemainingTime(item.startTime);
+
   const handleHistory = () => {
-    onOpenHistory?.(item.machine);
+    onOpenHistory(item.machine);
   };
 
   const handleDelete = () => {
@@ -54,7 +57,7 @@ export default function ReservationRow({
           {item.badgeStatus === "사용중" && (
             <>
               <p className="mt-1 text-sm text-[#969696]">
-                남은 시간: {item.remain}
+                남은 시간: {remainText}
               </p>
               {item.deviceStatus && (
                 <p className="mt-1 text-sm text-[#969696]">
@@ -70,7 +73,7 @@ export default function ReservationRow({
                 예약 시간: {item.reserveAt}
               </p>
               <p className="mt-1 text-sm text-[#EA3B42]">
-                예약 만료까지: {item.expired}
+                예약 만료까지: {expiredText}
               </p>
             </>
           )}

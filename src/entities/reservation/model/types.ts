@@ -1,13 +1,9 @@
-export type OccupancyStatus =
-  | "예약중"
-  | "사용중"
-  | "확인필요";
+export type ReservationStatusLabel = "예약중" | "사용중" | "확인필요";
 
 export type ReservationMachineType = "WASHER" | "DRYER";
 
 export type ReservationDTOStatus =
   | "RESERVED"
-  | "IN_USE"
   | "RUNNING"
   | "COMPLETED"
   | "CANCELLED";
@@ -17,8 +13,6 @@ export type MachineAvailabilityStatus =
   | "RESERVED"
   | "AVAILABLE"
   | "UNAVAILABLE";
-
-export type BadgeStatus = "예약중" | "사용중" | "확인필요";
 
 export interface ReservationParamsType {
   userName?: string;
@@ -37,11 +31,11 @@ export interface ReservationItem {
   machineId: number;
   machine: string;
   type: ReservationMachineType;
-  badgeStatus: BadgeStatus;
-  remain?: string;
+  badgeStatus: ReservationStatusLabel;
   reserveAt?: string;
-  expired?: string;
   deviceStatus?: string;
+  expectedCompletionTime?: string;
+  startTime?: string;
 }
 
 export type ReservationDTO = {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useGetUsers } from "@/entities/user/api/useGetUsers";
+import { useGetUsers } from "@/entities/user";
 import UserFilterPanel from "./ui/UserFilterPanel";
 import UserStatusPanel from "./ui/UserStatusPanel";
 

@@ -1,10 +1,10 @@
 import {
-    FilterPanelShell,
-    FilterSearchField,
-    FloorGenderFilters,
-  } from "@/shared/ui/admin/Filter";
-  
-  interface UserFilterPanelProps {
+  FilterPanelShell,
+  FilterSearchField,
+  FloorGenderFilters,
+} from "@/shared/ui/admin/Filter";
+
+interface UserFilterPanelProps {
   floor: number | undefined;
   onFloorChange: (floor: number | undefined) => void;
   search: string;

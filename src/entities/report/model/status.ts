@@ -1,4 +1,4 @@
-import { ReportStatusType } from "./types";
+import type { ReportStatusType } from "./types";
 
 export const reportStatusStyleMap: Record<ReportStatusType, string> = {
   PENDING: "bg-[#EA3B42]",

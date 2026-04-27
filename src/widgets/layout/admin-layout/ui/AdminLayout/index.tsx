@@ -1,11 +1,8 @@
 "use client";
 
-import type { PropsWithChildren } from "react";
 import { useQuery } from "@tanstack/react-query";
-
-import { getDashboardSummary } from "@/entities/dashboard/api/getDashboardSummary";
-import { mapDashboard } from "@/entities/dashboard/lib/mapDashboard";
-
+import type { PropsWithChildren } from "react";
+import { getDashboardSummary, mapDashboard } from "@/entities/dashboard";
 import DashboardTabs from "../DashboardTabs";
 import Header from "../Header";
 import SummaryCards from "../SummaryCards";
@@ -39,9 +36,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           </div>
         </div>
 
-        <div className="xl:min-h-0 xl:flex-1">
-          {children}
-        </div>
+        <div className="xl:min-h-0 xl:flex-1">{children}</div>
       </section>
     </main>
   );

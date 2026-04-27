@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { WashingMachine } from "lucide-react";
+import { useState } from "react";
 
-import { useGetMalfunctionReports } from "@/entities/report/api/useGetMalfunctionReports";
-import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
-import { useGetUsers } from "@/entities/user/api/useGetUsers";
-
-import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
-import ReservationHistoryModal from "../reservations-page/ui/ReservationHistoryModal";
+import { useGetMalfunctionReports } from "@/entities/report";
+import { useGetReservations } from "@/entities/reservation";
+import { useGetUsers } from "@/entities/user";
 import ReportsPanel from "../reports-page/ui/ReportsPanel";
+import ReservationHistoryModal from "../reservations-page/ui/ReservationHistoryModal";
+import ReservationStatusPanel from "../reservations-page/ui/ReservationStatusPanel";
 import UserStatusPanel from "../users-page/ui/UserStatusPanel";
 
 export default function MainPage() {
@@ -27,9 +26,7 @@ export default function MainPage() {
     reservationsQuery.isLoading;
 
   const isError =
-    reportsQuery.isError ||
-    usersQuery.isError ||
-    reservationsQuery.isError;
+    reportsQuery.isError || usersQuery.isError || reservationsQuery.isError;
 
   if (isLoading) {
     return <div>불러오는 중...</div>;

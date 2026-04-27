@@ -1,13 +1,13 @@
 "use client";
 
 import { Droplet, Waves } from "lucide-react";
-import { useGetMachines } from "@/entities/machine/api";
+import { mapMachines, useGetMachines } from "@/entities/machine";
 import MachineStatusPanel from "./ui/MachineStatusPanel";
 
 export default function MachinesPage() {
   const { data: machinesResponse } = useGetMachines();
-  
-  const machines = machinesResponse?.data.machines ?? [];
+
+  const machines = mapMachines(machinesResponse?.data.machines ?? []);
   const dryerMachines = machines.filter((item) => item.type === "DRYER");
   const washerMachines = machines.filter((item) => item.type === "WASHER");
 
