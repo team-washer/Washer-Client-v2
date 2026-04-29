@@ -4,7 +4,7 @@ import { COOKIE_KEYS } from "../constants/cookies";
 import { getCookie, setCookie } from "../utils/cookies";
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "/api",
 });
 
 type RefreshResponse = {
