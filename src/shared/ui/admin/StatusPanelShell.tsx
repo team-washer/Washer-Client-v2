@@ -22,9 +22,7 @@ export default function StatusPanelShell({
         </div>
       </div>
 
-      <div className="admin-panel-body">
-        {children}
-      </div>
+      <div className="admin-panel-body">{children}</div>
     </section>
   );
 }

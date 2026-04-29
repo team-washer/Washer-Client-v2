@@ -1,20 +1,22 @@
 import { cn } from "@/shared/lib/cn";
-import type { ReportStatus } from "../model/types";
-import { reportStatusStyleMap } from "../model/status";
+import { reportStatusLabelMap, reportStatusStyleMap } from "../model/status";
+import type { ReportStatusType } from "../model/types";
 
 interface ReportStatusBadgeProps {
-  status: ReportStatus;
+  status: ReportStatusType;
 }
 
-export default function ReportStatusBadge({ status }: ReportStatusBadgeProps) {
+const ReportStatusBadge = ({ status }: ReportStatusBadgeProps) => {
   return (
     <span
       className={cn(
         "inline-flex h-7 min-w-[50px] shrink-0 items-center justify-center rounded-full px-3 text-xs font-medium text-white",
-        reportStatusStyleMap[status]
+        reportStatusStyleMap[status],
       )}
     >
-      {status}
+      {reportStatusLabelMap[status]}
     </span>
   );
-}
+};
+
+export default ReportStatusBadge;
