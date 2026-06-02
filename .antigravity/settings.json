@@ -1,0 +1,65 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "includeGitInstructions": false,
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "PowerShell(git diff*)",
+      "PowerShell(git status)",
+      "PowerShell(git log*)",
+      "PowerShell(git add*)",
+      "PowerShell(git commit*)",
+      "PowerShell(git push*)",
+      "PowerShell(git branch*)",
+      "PowerShell(git rev-parse*)",
+      "PowerShell(gh repo view*)",
+      "PowerShell(gh pr view*)",
+      "PowerShell(gh pr create*)",
+      "PowerShell(gh api*)",
+      "PowerShell(mkdir .pr-tmp)",
+      "PowerShell(rm -Recurse -Force .pr-tmp)",
+      "PowerShell(pnpm lint)",
+      "PowerShell(pnpm format:check)",
+      "PowerShell(pnpm prettier --check*)",
+      "PowerShell(pnpm build)",
+      "PowerShell(powershell -File .antigravity/skills/commit/scripts/discover-changed-areas.ps1*)",
+      "PowerShell(powershell -File .antigravity/skills/write-pr/scripts/create-pr.ps1*)",
+      "PowerShell(powershell -File .antigravity/skills/review-pr/scripts/get-pr-data.ps1*)",
+      "PowerShell(powershell -File .antigravity/skills/review-pr/scripts/reply-review-comment.ps1*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -File .antigravity/hooks/preToolUse.ps1"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -File .antigravity/hooks/postToolUse.ps1"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "antigravity-hud@antigravity-hud": true,
+    "github@antigravity-plugins-official": true
+  },
+  "language": "korean",
+  "effortLevel": "high"
+}
