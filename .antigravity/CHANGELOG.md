@@ -1,4 +1,4 @@
-# EveryGSM Antigravity Harness Changelog
+﻿# Washer Antigravity Harness Changelog
 
 | Date       | Change                                                                   | Target                                                           | Reason                                                                                          |
 | ---------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
@@ -10,4 +10,5 @@
 | 2026-05-19 | Added executable commit, PR creation, and PR review reply workflows      | `.antigravity/skills`, `.antigravity/settings.json`, `ANTIGRAVITY.md`           | Support explicit GitHub automation requests similar to the backend example harness              |
 | 2026-05-19 | Moved harness change history out of `ANTIGRAVITY.md`                          | `ANTIGRAVITY.md`, `.antigravity/CHANGELOG.md`                              | Keep `ANTIGRAVITY.md` focused on project instructions and harness trigger pointers                   |
 | 2026-05-19 | Split detailed conventions into path-scoped rules                        | `ANTIGRAVITY.md`, `.antigravity/rules`                                     | Reduce duplicated context in `ANTIGRAVITY.md` and use rules for stricter convention injection        |
+
 

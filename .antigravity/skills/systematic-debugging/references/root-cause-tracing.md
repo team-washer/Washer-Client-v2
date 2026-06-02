@@ -1,4 +1,4 @@
-# EveryGSM Root-Cause Tracing
+﻿# Washer Root-Cause Tracing
 
 Use this reference when a failure crosses more than one file or layer.
 
@@ -70,3 +70,4 @@ Stop and re-evaluate when:
 - Two attempted fixes fail.
 - The hypothesis no longer explains the evidence.
 - A fix would require broad architecture changes unrelated to the request.
+

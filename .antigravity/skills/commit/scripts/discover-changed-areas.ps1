@@ -41,7 +41,6 @@ foreach ($file in $fileList) {
     if ([string]::IsNullOrEmpty($trimmedFile)) { continue }
     
     if ($trimmedFile -like "src/app/*") { $areas += "app" }
-    elseif ($trimmedFile -like "src/views/*") { $areas += "views" }
     elseif ($trimmedFile -like "src/widgets/*") { $areas += "widgets" }
     elseif ($trimmedFile -like "src/features/*") { $areas += "features" }
     elseif ($trimmedFile -like "src/entities/*") { $areas += "entities" }
@@ -49,7 +48,7 @@ foreach ($file in $fileList) {
     elseif ($trimmedFile -like ".antigravity/*") { $areas += "harness" }
     elseif ($trimmedFile -like ".github/*") { $areas += "ci" }
     elseif ($trimmedFile -match "^(README|CLAUDE|AGENTS|ANTIGRAVITY|docs/)") { $areas += "docs" }
-    elseif ($trimmedFile -match "^(package\.json|pnpm-lock\.yaml|tsconfig|eslint|next\.config|postcss|\.prettier|\.editorconfig)") { $areas += "config" }
+    elseif ($trimmedFile -match "^(package\.json|pnpm-lock\.yaml|tsconfig|biome|next\.config|postcss|\.editorconfig)") { $areas += "config" }
     else { $areas += "global" }
 }
 

@@ -1,9 +1,9 @@
----
+﻿---
 name: ui-implementation
-description: 'Implement EveryGSM-client-v2 UI with React function components, Tailwind CSS 4, existing assets, modals, forms, responsive layouts, and current visual conventions. Use for pages, widgets, feature UI, form fields, loading and error states, and visual fixes.'
+description: 'Implement Washer-client-v2 UI with React function components, Tailwind CSS 4, existing assets, modals, forms, responsive layouts, and current visual conventions. Use for pages, widgets, feature UI, form fields, loading and error states, and visual fixes.'
 ---
 
-# EveryGSM UI Implementation
+# Washer UI Implementation
 
 Use this skill when building or changing user-facing UI.
 
@@ -50,3 +50,4 @@ For UI work, inspect:
 - Route links introduced or changed by the UI.
 
 Record any visual assumptions in the implementation artifact.
+

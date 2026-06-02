@@ -1,4 +1,4 @@
-# EveryGSM GitHub Review Reply Formats
+﻿# Washer GitHub Review Reply Formats
 
 Use Korean replies for GitHub review comments.
 
@@ -38,3 +38,4 @@ Use Korean replies for GitHub review comments.
 ```text
 검토 중입니다. 확인 후 별도로 반영 여부를 답변드리겠습니다.
 ```
+

@@ -1,9 +1,9 @@
 ---
 name: quality-gate
-description: 'Verify EveryGSM-client-v2 changes with pnpm format:check, pnpm lint, pnpm build, FSD import review, route/link coherence, API-hook-type coherence, form/schema alignment, and client/server boundary checks. Use after implementation, during reviews, for reruns, and whenever a task risks regressions.'
+description: 'Verify Washer-client-v2 changes with pnpm format, pnpm lint, pnpm build, FSD import review, route/link coherence, API-hook-type coherence, form/schema alignment, and client/server boundary checks. Use after implementation, during reviews, for reruns, and whenever a task risks regressions.'
 ---
 
-# EveryGSM Quality Gate
+# Washer Quality Gate
 
 Use this skill to verify changes before final delivery.
 
@@ -22,7 +22,7 @@ Use these files together with `ANTIGRAVITY.md`, `AGENTS.md`, and nearby source p
 Run these when feasible:
 
 ```powershell
-pnpm format:check
+pnpm format
 pnpm lint
 pnpm build
 ```
@@ -33,7 +33,7 @@ If a command fails, inspect whether the failure is caused by the current change,
 
 Check the boundaries affected by the task:
 
-- FSD imports follow `app -> views -> widgets -> features -> entities -> shared`.
+- FSD imports follow `app -> widgets -> features -> entities -> shared`.
 - Same-layer imports were not introduced.
 - Public exports are updated when a new module is meant to be imported externally.
 - Route paths in `src/app` match any changed `href`, `router.push`, or redirects.
@@ -71,3 +71,4 @@ Report findings in this order:
 4. Residual risk
 
 If no issues are found, say so directly and still list the checks that were run.
+

@@ -1,5 +1,5 @@
----
-description: 'Branch, commit, PR text, and change grouping conventions for EveryGSM Git workflow and GitHub metadata.'
+﻿---
+description: 'Branch, commit, PR text, and change grouping conventions for Washer Git workflow and GitHub metadata.'
 paths:
   - '.github/**/*'
   - '.antigravity/skills/commit/**/*'
@@ -58,3 +58,4 @@ Keep each commit focused on one logical change. Do not mix source changes, forma
 - Follow `.github/PULL_REQUEST_TEMPLATE.md`.
 - Describe purpose, summarize work, link related issues, and attach screenshots or videos for UI changes.
 - Mention validation commands and any checks that could not be run.
+

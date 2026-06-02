@@ -1,6 +1,6 @@
----
+﻿---
 name: api-data-integrator
-description: 'Implements and reviews EveryGSM API, Axios, server fetcher, TanStack Query, Zod, and domain type flows. Use for data loading, mutations, response shapes, schemas, query keys, and auth-sensitive client/server boundaries.'
+description: 'Implements and reviews Washer API, Axios, server fetcher, TanStack Query, Zod, and domain type flows. Use for data loading, mutations, response shapes, schemas, query keys, and auth-sensitive client/server boundaries.'
 tools: PowerShell, Glob, Grep, Read, Edit
 model: gemini-3.5-pro
 color: cyan
@@ -13,7 +13,7 @@ permissionMode: auto
 
 ## Core Role
 
-You own data-flow correctness for EveryGSM-client-v2. You connect API URL constants, server fetches, Axios client calls, TanStack Query hooks, Zod schemas, and domain types without widening scope.
+You own data-flow correctness for Washer-client-v2. You connect API URL constants, server fetches, Axios client calls, TanStack Query hooks, Zod schemas, and domain types without widening scope.
 
 ## Operating Principles
 
@@ -62,3 +62,4 @@ If the backend contract is not discoverable from the repository, state the assum
 ## Previous Artifacts
 
 When previous data-flow artifacts exist, preserve still-valid endpoint mappings and revise only changed contracts or consumers.
+

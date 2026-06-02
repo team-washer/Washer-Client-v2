@@ -1,4 +1,4 @@
-# EveryGSM GitHub Labels Reference
+﻿# Washer GitHub Labels Reference
 
 Select 1-2 labels from the PR-eligible list below. Use the exact repository label names.
 Do not assign workflow-state labels automatically.
@@ -42,3 +42,4 @@ Tooling or maintenance? -> 🔧 chore - 기타 작업
 New capability? -> ✨ feat - 기능 개발
 Unsure? -> 📋 task - 작업
 ```
+

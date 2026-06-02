@@ -15,7 +15,8 @@ if ($toolName -ne "Edit" -and $toolName -ne "Write") {
 
 if ($filePath -match '\.(ts|tsx|css|md|json)$') {
     $fileName = Split-Path $filePath -Leaf
-    Write-Host "[EveryGSM Hook] File edited: $fileName. Consider running pnpm format:check and pnpm lint before final delivery." -ForegroundColor Yellow
+    Write-Host "[Washer Hook] File edited: $fileName. Consider running pnpm format and pnpm lint before final delivery." -ForegroundColor Yellow
 }
 
 exit 0
+

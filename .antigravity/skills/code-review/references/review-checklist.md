@@ -1,10 +1,10 @@
-# EveryGSM Review Checklist
+# Washer Review Checklist
 
 Use this checklist after loading `.antigravity/rules/*.md`, `ANTIGRAVITY.md`, and `AGENTS.md`.
 
 ## Architecture
 
-- Changed imports preserve `app -> views -> widgets -> features -> entities -> shared`.
+- Changed imports preserve `app -> widgets -> features -> entities -> shared`.
 - No same-layer imports were introduced.
 - New exports are added only when another layer needs the module.
 - State ownership is correct: server data stays in TanStack Query, lightweight UI state may use Zustand.
@@ -47,5 +47,6 @@ Use this checklist after loading `.antigravity/rules/*.md`, `ANTIGRAVITY.md`, an
 
 ## Validation
 
-- `pnpm format:check`, `pnpm lint`, and `pnpm build` are run when feasible.
+- `pnpm format`, `pnpm lint`, and `pnpm build` are run when feasible.
 - If a check is skipped, the blocker and residual risk are reported.
+

@@ -1,5 +1,5 @@
 ---
-description: 'API URL, fetcher, Axios, TanStack Query, Zod schema, and data contract conventions for EveryGSM data-flow files.'
+description: 'API URL, fetcher, Axios, TanStack Query, Zod schema, and data contract conventions for Washer data-flow files.'
 paths:
   - 'src/shared/api/**/*'
   - 'src/shared/lib/axios.ts'
@@ -14,8 +14,7 @@ Use these rules for API, query, schema, and domain data changes.
 ## Standard Locations
 
 - API URL constants belong in `src/shared/api/apiUrls.ts`.
-- Server-side requests use `src/shared/api/fetcher.ts`.
-- Browser requests use `src/shared/lib/axios.ts`.
+- HTTP requests use wrapper methods (get, post, put, patch, del) from `src/shared/api/http.ts`.
 - Query keys belong in `src/shared/api/queryKeys.ts`.
 - Domain API functions and hooks belong under `src/entities/*`.
 - Feature-specific mutations and schemas belong under `src/features/*`.
@@ -34,3 +33,4 @@ Use these rules for API, query, schema, and domain data changes.
 - Use `z.infer<typeof schema>` for schema-derived form request types.
 - Keep form default values, rendered fields, and Zod schema fields in sync.
 - Preserve nullable fields from backend contracts unless the contract changes.
+

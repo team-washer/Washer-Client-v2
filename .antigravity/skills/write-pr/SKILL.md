@@ -1,10 +1,10 @@
----
+﻿---
 name: write-pr
-description: 'Create an actual GitHub pull request for EveryGSM from the current branch. Gathers commits and diff, generates a Korean PR title/body following the repository template, selects labels, asks for title confirmation, then runs gh pr create. Use only when the user explicitly asks to create/open/write a PR.'
+description: 'Create an actual GitHub pull request for Washer from the current branch. Gathers commits and diff, generates a Korean PR title/body following the repository template, selects labels, asks for title confirmation, then runs gh pr create. Use only when the user explicitly asks to create/open/write a PR.'
 allowed-tools: PowerShell(git *:*), PowerShell(gh pr *:*), PowerShell(gh repo *:*), PowerShell(powershell *create-pr.ps1:*), PowerShell(cat *:*), PowerShell(mkdir:*), PowerShell(rm:*), Read, Write
 ---
 
-# EveryGSM Write PR
+# Washer Write PR
 
 Use this skill only when the user explicitly asks to create or open a PR.
 
@@ -57,3 +57,4 @@ Remove only temporary PR body files created by this skill:
 ```powershell
 rm -f .pr-tmp/PR_BODY.md
 ```
+

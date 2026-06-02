@@ -1,5 +1,5 @@
----
-description: 'Root-cause debugging, boundary tracing, and fix discipline rules for EveryGSM bugs, validation failures, and scripts.'
+﻿---
+description: 'Root-cause debugging, boundary tracing, and fix discipline rules for Washer bugs, validation failures, and scripts.'
 paths:
   - 'src/**/*'
   - '.antigravity/**/*.ps1'
@@ -48,3 +48,4 @@ src/app route file -> href/router.push/redirect -> dynamic params -> guard/layou
 - Do not bundle cleanup with a bug fix.
 - If two fix attempts fail, stop and re-evaluate the hypothesis.
 - If the failure depends on environment variables or external services, separate environment evidence from code evidence.
+

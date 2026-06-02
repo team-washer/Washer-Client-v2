@@ -1,15 +1,15 @@
 ---
 name: frontend-architecture
-description: 'Plan and review EveryGSM-client-v2 architecture, Feature-Sliced Design layering, route ownership, public exports, import direction, client/server boundaries, and minimal implementation scope. Use for any EveryGSM feature, refactor, routing, dependency, or architecture decision.'
+description: 'Plan and review Washer-client-v2 architecture, Feature-Sliced Design layering, route ownership, public exports, import direction, client/server boundaries, and minimal implementation scope. Use for any Washer feature, refactor, routing, dependency, or architecture decision.'
 ---
 
-# EveryGSM Frontend Architecture
+# Washer Frontend Architecture
 
 Use this skill to keep changes aligned with the repository's layered structure and to prevent unnecessary refactors.
 
 ## Repository Shape
 
-EveryGSM-client-v2 is a Next.js App Router frontend using:
+Washer-client-v2 is a Next.js App Router frontend using:
 
 - Next.js 16, React 19, TypeScript
 - Tailwind CSS 4
@@ -20,7 +20,7 @@ EveryGSM-client-v2 is a Next.js App Router frontend using:
 Layer order:
 
 ```text
-app -> views -> widgets -> features -> entities -> shared
+app -> widgets -> features -> entities -> shared
 ```
 
 Imports must move downward through this stack. Do not add same-layer imports.
@@ -29,17 +29,15 @@ Imports must move downward through this stack. Do not add same-layer imports.
 
 1. Identify the user-visible behavior.
 2. Locate the route entrypoint in `src/app`.
-3. Locate page composition in `src/views`.
-4. Locate reusable sections in `src/widgets`.
-5. Locate user actions in `src/features`.
-6. Locate domain types, hooks, and entity UI in `src/entities`.
-7. Locate shared infrastructure in `src/shared`.
-8. Choose the smallest layer that should own the change.
+3. Locate reusable sections in `src/widgets`.
+4. Locate user actions in `src/features`.
+5. Locate domain types, hooks, and entity UI in `src/entities`.
+6. Locate shared infrastructure in `src/shared`.
+7. Choose the smallest layer that should own the change.
 
 ## Ownership Rules
 
 - `app`: route files, layouts, metadata, guards, and server entrypoints.
-- `views`: page-level composition.
 - `widgets`: reusable page sections.
 - `features`: user actions such as registration, sign-in, liking, and filters.
 - `entities`: project and user domain models, API calls, query hooks, and domain UI.
@@ -64,3 +62,4 @@ Write a short plan that includes:
 - Validation steps
 
 Avoid long file inventories unless the task spans many modules.
+

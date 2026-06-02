@@ -1,8 +1,8 @@
-# PreToolUse Hook for Antigravity (PowerShell)
+﻿# PreToolUse Hook for Antigravity (PowerShell)
 # Check for dangerous patterns before executing PowerShell commands.
 
 if (-not (Get-Command jq -ErrorAction SilentlyContinue)) {
-    Write-Error "[EveryGSM Hook] Error: jq is required but not installed."
+    Write-Error "[Washer Hook] Error: jq is required but not installed."
     exit 1
 }
 
@@ -40,9 +40,10 @@ $blockedPatterns = @(
 
 foreach ($pattern in $blockedPatterns) {
     if ($command -match $pattern) {
-        Write-Error "[EveryGSM Hook] Blocked dangerous command: $command"
+        Write-Error "[Washer Hook] Blocked dangerous command: $command"
         exit 2
     }
 }
 
 exit 0
+

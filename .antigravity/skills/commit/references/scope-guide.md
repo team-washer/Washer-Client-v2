@@ -1,4 +1,4 @@
-# EveryGSM Git Scope Guide
+# Washer Git Scope Guide
 
 Use this guide when selecting branch names, commit scopes, PR title scopes, and logical commit groups.
 
@@ -33,12 +33,12 @@ Choose the most specific meaningful scope:
 | `src/features/like-project`                      | `project`       | Like/unlike behavior                                           |
 | `src/entities/project`                           | `project`       | Project types, API, hooks, cards, detail modal                 |
 | `src/entities/user`                              | `user`          | User info type/API/query changes                               |
-| `src/views/admin`, `src/app/admin`               | `admin`         | Admin pages, guards, request detail                            |
-| `src/views/mypage`, `src/app/mypage`             | `mypage`        | My page and my request detail                                  |
-| `.antigravity/**`                                     | `harness`       | Agent, skill, rule, hook, or settings changes                  |
+| `src/app/admin`                                  | `admin`         | Admin pages, guards, request detail                            |
+| `src/app/mypage`                                 | `mypage`        | My page and my request detail                                  |
+| `.antigravity/**`                                | `harness`       | Agent, skill, rule, hook, or settings changes                  |
 | `.github/**`                                     | `ci`            | Workflow or PR template changes                                |
 | `docs/**`, `README.md`, `ANTIGRAVITY.md`, `AGENTS.md` | `docs`          | Documentation-only changes                                     |
-| Tooling config                                   | `config`        | TypeScript, ESLint, Prettier, Next, package config             |
+| Tooling config                                   | `config`        | TypeScript, Biome, Next, package config                        |
 
 ## Commit Type Selection
 
@@ -61,3 +61,4 @@ fix(register): align form defaults with schema
 feat(project): add status filter
 docs: update setup instructions
 ```
+

@@ -1,11 +1,11 @@
 ---
 name: orchestrator
-description: 'Coordinate the EveryGSM-client-v2 agent team for frontend features, bug fixes, refactors, UI work, API/data work, QA, code review, debugging, branch names, actual commits, PR creation, PR review comment replies, routing, forms, TanStack Query, Zod, Axios, and FSD architecture. Use this skill for EveryGSM implementation tasks, reviews, reruns, updates, revisions, partial reruns, follow-up fixes, Git workflow tasks, and requests to improve previous results. Simple one-off questions may be answered directly.'
+description: 'Coordinate the Washer-client-v2 agent team for frontend features, bug fixes, refactors, UI work, API/data work, QA, code review, debugging, branch names, actual commits, PR creation, PR review comment replies, routing, forms, TanStack Query, Zod, Axios, and FSD architecture. Use this skill for Washer implementation tasks, reviews, reruns, updates, revisions, partial reruns, follow-up fixes, Git workflow tasks, and requests to improve previous results. Simple one-off questions may be answered directly.'
 ---
 
-# EveryGSM Orchestrator
+# Washer Orchestrator
 
-Coordinate the EveryGSM-client-v2 harness. This skill routes work to the right specialists and keeps the implementation small, verifiable, and aligned with the repository.
+Coordinate the Washer-client-v2 harness. This skill routes work to the right specialists and keeps the implementation small, verifiable, and aligned with the repository.
 
 ## Execution Mode
 
@@ -124,7 +124,7 @@ Use skill resources only when they help the active task:
 
 Before final delivery, run or request:
 
-- `pnpm format:check`
+- `pnpm format`
 - `pnpm lint`
 - `pnpm build`
 
@@ -162,3 +162,4 @@ Git workflow flow:
 4. For PR creation requests, use `write-pr`.
 5. For PR review comment handling, use `review-pr`.
 6. Do not commit, push, create PRs, or post replies unless the user explicitly requested that side effect.
+

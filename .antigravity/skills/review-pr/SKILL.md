@@ -1,10 +1,10 @@
----
+﻿---
 name: review-pr
-description: 'Collect EveryGSM GitHub PR review comments, assess each comment against project rules, apply valid fixes when safe, optionally commit and push fixes, and post Korean replies with gh api. Use only when the user explicitly asks to address PR review comments or reply to review comments.'
+description: 'Collect Washer GitHub PR review comments, assess each comment against project rules, apply valid fixes when safe, optionally commit and push fixes, and post Korean replies with gh api. Use only when the user explicitly asks to address PR review comments or reply to review comments.'
 allowed-tools: PowerShell(powershell *get-pr-data.ps1:*), PowerShell(powershell *reply-review-comment.ps1:*), PowerShell(gh api:*), PowerShell(gh pr view:*), PowerShell(gh repo view:*), PowerShell(git add:*), PowerShell(git commit:*), PowerShell(git log:*), PowerShell(git push:*), PowerShell(git rev-parse:*), PowerShell(rm:*), Edit, Read
 ---
 
-# EveryGSM Review PR
+# Washer Review PR
 
 Use this skill only when the user explicitly asks to address PR review comments or post review replies.
 
@@ -84,3 +84,4 @@ Clean up only temporary PR files:
 ```powershell
 rm -rf .pr-tmp
 ```
+

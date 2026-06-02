@@ -1,5 +1,5 @@
 ---
-description: 'Feature-Sliced Design layering, project structure, ownership, and client/server architecture rules for EveryGSM frontend source files.'
+description: 'Feature-Sliced Design layering, project structure, ownership, and client/server architecture rules for Washer frontend source files.'
 paths:
   - 'src/**/*'
   - 'ANTIGRAVITY.md'
@@ -8,14 +8,14 @@ paths:
 
 # Frontend Architecture Rules
 
-Use these rules as the authoritative EveryGSM frontend architecture checklist.
+Use these rules as the authoritative Washer frontend architecture checklist.
 
 ## Layering
 
 Follow this dependency direction:
 
 ```text
-app -> views -> widgets -> features -> entities -> shared
+app -> widgets -> features -> entities -> shared
 ```
 
 - Higher layers may import lower layers.
@@ -26,7 +26,6 @@ app -> views -> widgets -> features -> entities -> shared
 ## Ownership
 
 - `src/app`: route entrypoints, layouts, metadata, and route-level guards.
-- `src/views`: page composition.
 - `src/widgets`: reusable page sections.
 - `src/features`: user actions.
 - `src/entities`: domain types, API functions, query hooks, and entity UI.
@@ -44,4 +43,5 @@ app -> views -> widgets -> features -> entities -> shared
 - Use server components for route-level data loading when practical.
 - Mark components with `use client` only when they need hooks, browser APIs, event handlers, or client state.
 - Do not import `server-only` modules into client components.
-- Use `apiFetcher` for server-side fetches and `axiosInstance` for client requests.
+- Use HTTP wrapper methods (get, post, put, patch, del) from src/shared/api/http.ts for data requests.
+

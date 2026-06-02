@@ -1,5 +1,5 @@
----
-description: 'React component, Tailwind CSS, form, and UI interaction conventions for EveryGSM TSX and style files.'
+﻿---
+description: 'React component, Tailwind CSS, form, and UI interaction conventions for Washer TSX and style files.'
 paths:
   - 'src/**/*.tsx'
   - 'src/shared/styles/**/*'
@@ -8,7 +8,7 @@ paths:
 
 # UI Conventions
 
-Use these rules when reviewing or implementing EveryGSM UI.
+Use these rules when reviewing or implementing Washer UI.
 
 ## Components
 
@@ -33,3 +33,4 @@ Use these rules when reviewing or implementing EveryGSM UI.
 - Include pending and disabled states for upload and mutation flows.
 - Use `Link` for navigation unless imperative routing is required.
 - Clean up browser resources such as object URLs when file upload previews are used.
+

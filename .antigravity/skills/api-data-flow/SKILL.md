@@ -1,33 +1,26 @@
 ---
 name: api-data-flow
-description: 'Implement and review EveryGSM-client-v2 API/data flow: apiUrls, server apiFetcher, Axios client, TanStack Query hooks, query keys, Zod schemas, response types, initialData hydration, auth cookies, and client/server data boundaries. Use whenever a task touches backend contracts, requests, mutations, forms, or domain data.'
+description: 'Implement and review Washer-client-v2 API/data flow: apiUrls, HTTP wrappers, Axios client, TanStack Query hooks, query keys, Zod schemas, response types, initialData hydration, auth cookies, and client/server data boundaries. Use whenever a task touches backend contracts, requests, mutations, forms, or domain data.'
 ---
 
-# EveryGSM API Data Flow
+# Washer API Data Flow
 
 Use this skill for any work that touches data contracts, requests, mutations, validation, or query state.
 
 ## Standard Paths
 
 - API URL constants: `src/shared/api/apiUrls.ts`
-- Server fetches: `src/shared/api/fetcher.ts`
+- HTTP wrappers: `src/shared/api/http.ts`
 - Client Axios instance: `src/shared/lib/axios.ts`
 - Query keys: `src/shared/api/queryKeys.ts`
 - Domain API functions: `src/entities/*/api`
 - Domain query hooks and types: `src/entities/*/model`
 - Feature mutation hooks and schemas: `src/features/*/model`
 
-## Server Fetch Rules
+## API Request Rules
 
-- Use `apiFetcher` for server-side requests.
-- Include an explicit `context` and `errorMessage`.
-- Keep cache behavior intentional.
-- Read auth from cookies only on the server through the existing fetcher.
-- Return `undefined` on handled fetch failures unless the local pattern requires error body access.
-
-## Client Request Rules
-
-- Use `axiosInstance` for browser requests.
+- Use `get, post, patch, put, del` from `src/shared/api/http.ts` for data requests.
+- Read auth through interceptors configured in `src/shared/lib/axios.ts`.
 - Rely on the request interceptor for access-token injection.
 - Preserve 401 handling behavior unless the task is specifically about auth.
 - Keep API functions thin: URL, payload, and typed response.
@@ -55,3 +48,4 @@ apiUrls -> API function -> query/mutation hook -> component consumer -> UI state
 ```
 
 If one link is missing or mismatched, treat it as a bug to resolve or explicitly report.
+

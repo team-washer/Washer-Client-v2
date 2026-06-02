@@ -1,11 +1,11 @@
----
+﻿---
 name: code-review
-description: 'Review EveryGSM-client-v2 changed files using dynamically discovered .antigravity/rules, FSD layering, UI conventions, API/data coherence, form/schema alignment, route/link checks, security basics, and validation results. Use for code review requests, staged diff review, pre-PR review, and after multi-file implementation.'
+description: 'Review Washer-client-v2 changed files using dynamically discovered .antigravity/rules, FSD layering, UI conventions, API/data coherence, form/schema alignment, route/link checks, security basics, and validation results. Use for code review requests, staged diff review, pre-PR review, and after multi-file implementation.'
 ---
 
-# EveryGSM Code Review
+# Washer Code Review
 
-Use this skill for structured review of changed EveryGSM frontend code or harness files.
+Use this skill for structured review of changed Washer frontend code or harness files.
 
 ## Step 1: Load Rules
 
@@ -64,3 +64,4 @@ Lead with findings:
 ```
 
 If no issues are found, state that clearly and mention remaining test gaps.
+

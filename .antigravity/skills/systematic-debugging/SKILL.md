@@ -1,9 +1,9 @@
 ---
 name: systematic-debugging
-description: 'Investigate EveryGSM-client-v2 bugs, build failures, lint failures, runtime errors, form issues, route issues, API/query mismatches, and unexpected behavior by finding root cause before fixes. Use whenever debugging, test failure, build failure, regression, or unclear behavior is mentioned.'
+description: 'Investigate Washer-client-v2 bugs, build failures, lint failures, runtime errors, form issues, route issues, API/query mismatches, and unexpected behavior by finding root cause before fixes. Use whenever debugging, test failure, build failure, regression, or unclear behavior is mentioned.'
 ---
 
-# EveryGSM Systematic Debugging
+# Washer Systematic Debugging
 
 Use this skill before fixing bugs or validation failures.
 
@@ -44,9 +44,10 @@ For failures that cross more than one boundary, read `${CLAUDE_SKILL_DIR}/refere
 Run the smallest meaningful check first, then the broader gate:
 
 ```powershell
-pnpm format:check
+pnpm format
 pnpm lint
 pnpm build
 ```
 
 If a check cannot run because of environment constraints, report the constraint separately from code risk.
+
