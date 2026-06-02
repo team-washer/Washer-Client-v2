@@ -1,4 +1,4 @@
-﻿---
+---
 description: 'Branch, commit, PR text, and change grouping conventions for Washer Git workflow and GitHub metadata.'
 paths:
   - '.github/**/*'
@@ -45,13 +45,16 @@ Use short Conventional Commit-style messages:
 <type>: <description>
 ```
 
-Add a scope only when it improves clarity:
+- Write the commit description in Korean.
+- Add a scope only when it improves clarity:
 
 ```text
 feat: 기기관리 페이지에 사용자 요청 필터 추가
 ```
 
 Keep each commit focused on one logical change. Do not mix source changes, formatting churn, and harness configuration unless they are part of the same requested task.
+
+ Write the commit description in Korean.
 
 ## Pull Requests
 
