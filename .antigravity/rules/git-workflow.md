@@ -48,7 +48,7 @@ Use short Conventional Commit-style messages:
 Add a scope only when it improves clarity:
 
 ```text
-feat(project): add pending request filter
+feat: 기기관리 페이지에 사용자 요청 필터 추가
 ```
 
 Keep each commit focused on one logical change. Do not mix source changes, formatting churn, and harness configuration unless they are part of the same requested task.
