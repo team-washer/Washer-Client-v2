@@ -1,4 +1,4 @@
-export type ReservationStatusLabel = "예약중" | "사용중" | "확인필요";
+export type ReservationStatusLabel = "예약중" | "사용중" | "확인필요" | "사용 완료" | "취소됨";
 
 export type ReservationMachineType = "WASHER" | "DRYER";
 
