@@ -57,15 +57,16 @@ export default function UsersPage() {
     <div className="admin-page-grid xl:grid-cols-[1.9fr_0.62fr]">
       <div className="admin-page-item relative min-h-[300px]">
         {isLoading ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/50 z-10 text-sm font-medium text-gray-500">
+          <div className="flex h-full items-center justify-center text-sm font-medium text-gray-500">
             사용자 정보를 불러오는 중입니다...
           </div>
         ) : isError ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/50 z-10 text-sm font-medium text-red-500">
+          <div className="flex h-full items-center justify-center text-sm font-medium text-red-500">
             사용자 정보를 불러오지 못했습니다.
           </div>
-        ) : null}
-        <UserStatusPanel users={users} />
+        ) : (
+          <UserStatusPanel users={users} />
+        )}
       </div>
 
       <div className="admin-page-item">
