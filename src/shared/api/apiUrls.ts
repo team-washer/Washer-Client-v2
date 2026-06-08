@@ -5,6 +5,7 @@ export const authUrl = {
 
 export const reportUrl = {
   getMalfunctionReports: () => "/api/v2/admin/malfunction-reports",
+  updateMalfunctionReportStatus: (id: number) => `/api/v2/admin/malfunction-reports/${id}/status`,
 } as const;
 
 // 개별 상수로 분리하여 확실하게 정의

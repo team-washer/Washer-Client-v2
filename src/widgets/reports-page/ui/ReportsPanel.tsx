@@ -1,7 +1,10 @@
+"use client";
+
 import { TriangleAlert } from "lucide-react";
 import Image from "next/image";
-import type { ReportItemType } from "@/entities/report";
-import { ReportStatusBadge } from "@/entities/report";
+import { cn } from "@/shared/lib/cn";
+import type { ReportItemType, ReportStatusType } from "@/entities/report";
+import { useUpdateReportStatus, reportStatusLabelMap, reportStatusStyleMap, ReportStatusBadge } from "@/entities/report";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import { Button } from "@/shared/ui/button";
 
@@ -66,8 +69,46 @@ const ReportRow = ({
 
       <div className="flex shrink-0 items-center gap-2">
         <ReportStatusBadge status={item.status} />
+        <ReportActionButton item={item} />
       </div>
     </div>
+  );
+};
+
+const ReportActionButton = ({ item }: { item: ReportItemType }) => {
+  const { mutate: updateStatus, isPending } = useUpdateReportStatus();
+
+  if (item.status === "RESOLVED") {
+    return null;
+  }
+
+  const handleNextStatus = () => {
+    if (item.status === "PENDING") {
+      const confirmed = window.confirm(
+        "처리중으로 변경된다면 기기가 고장 상태로 변경되고 처리 완료 상태가 되기 전까지는 사용이 불가능 합니다. 계속하시겠습니까?"
+      );
+      if (!confirmed) return;
+      updateStatus({ id: item.id, status: "IN_PROGRESS" });
+    } else if (item.status === "IN_PROGRESS") {
+      updateStatus({ id: item.id, status: "RESOLVED" });
+    }
+  };
+
+  const buttonText = item.status === "PENDING" ? "처리 시작" : "완료 처리";
+  const buttonBg = item.status === "PENDING" ? "bg-[#4D83F6]" : "bg-[#20C997]";
+
+  return (
+    <button
+      type="button"
+      onClick={handleNextStatus}
+      disabled={isPending}
+      className={cn(
+        "inline-flex h-7 min-w-[64px] cursor-pointer items-center justify-center rounded-full px-3 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed",
+        buttonBg
+      )}
+    >
+      {buttonText}
+    </button>
   );
 };
 
