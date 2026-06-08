@@ -16,10 +16,16 @@ export default function UsersPage() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
       setDebouncedRoomSearch(roomSearch);
     }, 300);
     return () => clearTimeout(handler);
-  }, [search, roomSearch]);
+  }, [roomSearch]);
 
   const queryParams = useMemo(() => {
     const params: UserParamsType = {};
