@@ -3,8 +3,8 @@
 import { TriangleAlert } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/shared/lib/cn";
-import type { ReportItemType, ReportStatusType } from "@/entities/report";
-import { useUpdateReportStatus, reportStatusLabelMap, reportStatusStyleMap, ReportStatusBadge } from "@/entities/report";
+import type { ReportItemType } from "@/entities/report";
+import { useUpdateReportStatus, ReportStatusBadge } from "@/entities/report";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import { Button } from "@/shared/ui/button";
 
