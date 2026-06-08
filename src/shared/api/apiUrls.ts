@@ -5,6 +5,7 @@ export const authUrl = {
 
 export const reportUrl = {
   getMalfunctionReports: () => "/api/v2/admin/malfunction-reports",
+  updateMalfunctionReportStatus: (id: number) => `/api/v2/admin/malfunction-reports/${id}/status`,
 } as const;
 
 // 개별 상수로 분리하여 확실하게 정의
@@ -29,4 +30,5 @@ export const reservationUrl = {
 export const userUrl = {
   getUsers: () => "/api/v2/admin/users",
   getMyInfo: () => "/api/v2/users/my",
+  deleteUserPenalty: (userId: number) => `/api/v2/admin/reservations/users/${userId}/penalty`,
 } as const;

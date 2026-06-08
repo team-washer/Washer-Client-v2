@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { userQueryKeys } from "@/shared/api";
 import type { ManagedUserItem, UserParamsType } from "../model/types";
 import { getUsers as fetchUsers } from "./getUsers";
@@ -13,5 +13,6 @@ export const useGetUsers = (
     queryKey,
     queryFn: () => fetchUsers(params),
     initialData,
+    placeholderData: keepPreviousData,
   });
 };

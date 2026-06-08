@@ -17,6 +17,14 @@ function getMachineType(machineName: string): ReservationMachineType {
 }
 
 function mapBadgeStatus(dto: ReservationDTO): ReservationStatusLabel {
+  if (dto.status === "CANCELLED") {
+    return "취소됨";
+  }
+
+  if (dto.status === "COMPLETED") {
+    return "사용 완료";
+  }
+
   if (dto.machineAvailability === "UNAVAILABLE") {
     return "확인필요";
   }
