@@ -85,15 +85,11 @@ export default function ReservationRow({
           )}
 
           {item.badgeStatus === "사용 완료" && (
-            <p className="mt-1 text-sm text-[#969696]">
-              완료된 예약입니다.
-            </p>
+            <p className="mt-1 text-sm text-[#969696]">완료된 기기입니다.</p>
           )}
 
           {item.badgeStatus === "취소됨" && (
-            <p className="mt-1 text-sm text-[#EA3B42]">
-              취소된 예약입니다.
-            </p>
+            <p className="mt-1 text-sm text-[#EA3B42]">취소된 예약입니다.</p>
           )}
         </div>
       </div>
