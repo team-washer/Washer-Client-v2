@@ -47,7 +47,9 @@ export default function UsersPage() {
 
   const handleReset = () => {
     setSearch("");
+    setDebouncedSearch("");
     setRoomSearch("");
+    setDebouncedRoomSearch("");
     setFloor(undefined);
   };
 
