@@ -48,9 +48,22 @@ export default function UserStatusPanel({ users }: UserStatusPanelProps) {
       title="사용자 관리"
       icon={<User size={18} className="translate-y-px text-[#A4A4AA]" />}
     >
-      {users.map((item) => (
-        <UserRow key={item.id} item={item} />
-      ))}
+      {users.length === 0 ? (
+        <div className="flex h-40 flex-col items-center justify-center text-center">
+          <p className="text-[15px] font-medium text-[#4A4A4F]">
+            적합한 사용자가 존재하지 않습니다.
+          </p>
+          <p className="mt-1 text-sm text-[#9A9AA0]">
+            필터 요소를 잘 확인해주세요.
+          </p>
+        </div>
+      ) : (
+        <div className="sidebar-scrollbar max-h-full overflow-y-auto">
+          {users.map((item) => (
+            <UserRow key={item.id} item={item} />
+          ))}
+        </div>
+      )}
     </StatusPanelShell>
   );
 }
