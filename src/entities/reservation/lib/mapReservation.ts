@@ -47,6 +47,7 @@ export function mapReservation(dto: ReservationDTO): ReservationItem {
     id: dto.id,
     machineId: dto.machineId,
     machine: dto.machineName,
+    userRoomNumber: dto.userRoomNumber,
     type: getMachineType(dto.machineName),
     badgeStatus,
     reserveAt:
