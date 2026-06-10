@@ -30,6 +30,7 @@ export interface ReservationItem {
   id: number;
   machineId: number;
   machine: string;
+  userRoomNumber: string;
   type: ReservationMachineType;
   badgeStatus: ReservationStatusLabel;
   reserveAt?: string;
