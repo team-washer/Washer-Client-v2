@@ -24,15 +24,7 @@ export default function Header() {
     window.location.reload();
   }, [queryClient]);
 
-  useEffect(() => {
-    if (myInfo && myInfo.role === "USER") {
-      toast.error("관리자만 접근 가능합니다.");
-      queryClient.clear();
-      deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
-      deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
-      window.location.href = "/app-download";
-    }
-  }, [myInfo, queryClient]);
+
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E9E9EE] bg-[#FDFDFD]">
