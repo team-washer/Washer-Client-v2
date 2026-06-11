@@ -3,7 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { toast } from "sonner";
 import { useGetMyInfo } from "@/entities/user";
 import { COOKIE_KEYS } from "@/shared";
