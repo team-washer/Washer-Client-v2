@@ -13,10 +13,19 @@ import SummaryCards from "../SummaryCards";
 
 export default function AdminLayout({ children }: PropsWithChildren) {
   const queryClient = useQueryClient();
-  const { data: myInfoData, isLoading: isMyInfoLoading } = useGetMyInfo();
+  const { data: myInfoData, isLoading: isMyInfoLoading, isError: isMyInfoError } = useGetMyInfo();
   const myInfo = myInfoData?.data;
 
   useEffect(() => {
+    if (isMyInfoError) {
+      toast.error("로그인이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.");
+      queryClient.clear();
+      deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
+      deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
+      window.location.href = "/sign-in";
+      return;
+    }
+
     if (myInfo && myInfo.role === "USER") {
       toast.error("관리자만 접근 가능합니다.");
       queryClient.clear();
@@ -24,17 +33,17 @@ export default function AdminLayout({ children }: PropsWithChildren) {
       deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
       window.location.href = "/app-download";
     }
-  }, [myInfo, queryClient]);
+  }, [myInfo, isMyInfoError, queryClient]);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["dashboard", "summary"],
     queryFn: getDashboardSummary,
-    enabled: !!myInfo && myInfo.role !== "USER",
+    enabled: !!myInfo && myInfo.role !== "USER" && !isMyInfoError,
   });
 
   const summaryItems = data ? mapDashboard(data) : [];
 
-  if (isMyInfoLoading || (myInfo && myInfo.role === "USER")) {
+  if (isMyInfoLoading || isMyInfoError || (myInfo && myInfo.role === "USER") || (!myInfo && !isMyInfoError)) {
     return (
       <div className="flex min-h-screen w-full items-center justify-center bg-[#F4F5F9]">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#E9E9EE] border-t-blue-500" />
