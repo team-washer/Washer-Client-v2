@@ -3,7 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { toast } from "sonner";
 import { useGetMyInfo } from "@/entities/user";
 import { COOKIE_KEYS } from "@/shared";
@@ -24,12 +24,7 @@ export default function Header() {
     window.location.reload();
   }, [queryClient]);
 
-  useEffect(() => {
-    if (myInfo && myInfo.role === "USER") {
-      toast.error("관리자만 접근 가능합니다.");
-      handleLogout();
-    }
-  }, [myInfo, handleLogout]);
+
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E9E9EE] bg-[#FDFDFD]">
