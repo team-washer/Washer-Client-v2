@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-
-import type {
-  ReservationItem,
-  ReservationMachineType,
-} from "@/entities/reservation/model/types";
+import {
+  type ReservationItem,
+  type ReservationMachineType,
+  useDeleteReservation,
+} from "@/entities/reservation";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
+import { useRemainingTime } from "@/shared/hooks/useRemainingTime";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
-import { useDeleteReservation } from "@/features/reservation/model/useDeleteReservation";
 
 interface ReservationRowProps {
   item: ReservationItem;
@@ -32,8 +32,11 @@ export default function ReservationRow({
 }: ReservationRowProps) {
   const { mutate: deleteReservation, isPending } = useDeleteReservation();
 
+  const remainText = useRemainingTime(item.expectedCompletionTime);
+  const expiredText = useRemainingTime(item.startTime);
+
   const handleHistory = () => {
-    onOpenHistory?.(item.machine);
+    onOpenHistory(item.machine);
   };
 
   const handleDelete = () => {
@@ -49,12 +52,15 @@ export default function ReservationRow({
         <ReservationMachineIcon type={item.type} />
 
         <div className="min-w-0">
-          <p className="truncate text-[15px] text-[#4A4A4F]">{item.machine}</p>
+          <p className="truncate text-[15px] text-[#4A4A4F]">
+            {item.machine}
+            <span className="ml-2 text-[14px] text-[#8E8E93]">{item.userRoomNumber}호</span>
+          </p>
 
           {item.badgeStatus === "사용중" && (
             <>
               <p className="mt-1 text-sm text-[#969696]">
-                남은 시간: {item.remain}
+                남은 시간: {remainText}
               </p>
               {item.deviceStatus && (
                 <p className="mt-1 text-sm text-[#969696]">
@@ -70,7 +76,7 @@ export default function ReservationRow({
                 예약 시간: {item.reserveAt}
               </p>
               <p className="mt-1 text-sm text-[#EA3B42]">
-                예약 만료까지: {item.expired}
+                예약 만료까지: {expiredText}
               </p>
             </>
           )}
@@ -79,6 +85,14 @@ export default function ReservationRow({
             <p className="mt-1 text-sm text-[#EA3B42]">
               기기를 현재 사용할 수 없습니다.
             </p>
+          )}
+
+          {item.badgeStatus === "사용 완료" && (
+            <p className="mt-1 text-sm text-[#969696]">완료된 기기입니다.</p>
+          )}
+
+          {item.badgeStatus === "취소됨" && (
+            <p className="mt-1 text-sm text-[#EA3B42]">취소된 예약입니다.</p>
           )}
         </div>
       </div>

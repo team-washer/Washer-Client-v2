@@ -10,12 +10,11 @@ import type {
 export async function getMachineReservationHistory(
   params?: MachineReservationHistoryParamsType,
 ): Promise<MachineReservationHistory | null> {
-  const response = await get<BaseResponseType<MachineReservationHistoryResponseType>>(
-    reservationUrl.getMachineReservationHistory(),
-    {
-      params,
-    },
-  );
+  const response = await get<
+    BaseResponseType<MachineReservationHistoryResponseType>
+  >(reservationUrl.getMachineReservationHistory(), {
+    params,
+  });
 
   const machine = response.data.machines[0];
 

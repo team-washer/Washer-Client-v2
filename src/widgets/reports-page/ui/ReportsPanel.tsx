@@ -1,7 +1,10 @@
+"use client";
+
 import { TriangleAlert } from "lucide-react";
 import Image from "next/image";
+import { cn } from "@/shared/lib/cn";
 import type { ReportItemType } from "@/entities/report";
-import { ReportStatusBadge } from "@/entities/report";
+import { useUpdateReportStatus, ReportStatusBadge } from "@/entities/report";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import { Button } from "@/shared/ui/button";
 
@@ -20,7 +23,12 @@ const ReportMachineIcon = ({ machineName }: { machineName: string }) => {
 
   return (
     <div className="flex h-10 w-10 shrink-0 items-center justify-center translate-y-0.5">
-      <Image src={src} alt={isWasher ? "WASHER" : "DRYER"} width={28} height={28} />
+      <Image
+        src={src}
+        alt={isWasher ? "WASHER" : "DRYER"}
+        width={28}
+        height={28}
+      />
     </div>
   );
 };
@@ -48,7 +56,9 @@ const ReportRow = ({
             </p>
           ) : (
             <>
-              <p className="mt-1 text-sm text-[#9A9AA0]">신고자: {item.reporterName}</p>
+              <p className="mt-1 text-sm text-[#9A9AA0]">
+                신고자: {item.reporterName}
+              </p>
               <p className="mt-1 text-sm text-[#9A9AA0]">
                 신고 사유: {item.description}
               </p>
@@ -59,8 +69,46 @@ const ReportRow = ({
 
       <div className="flex shrink-0 items-center gap-2">
         <ReportStatusBadge status={item.status} />
+        <ReportActionButton item={item} />
       </div>
     </div>
+  );
+};
+
+const ReportActionButton = ({ item }: { item: ReportItemType }) => {
+  const { mutate: updateStatus, isPending } = useUpdateReportStatus();
+
+  if (item.status === "RESOLVED") {
+    return null;
+  }
+
+  const handleNextStatus = () => {
+    if (item.status === "PENDING") {
+      const confirmed = window.confirm(
+        "처리중으로 변경된다면 기기가 고장 상태로 변경되고 처리 완료 상태가 되기 전까지는 사용이 불가능 합니다. 계속하시겠습니까?"
+      );
+      if (!confirmed) return;
+      updateStatus({ id: item.id, status: "IN_PROGRESS" });
+    } else if (item.status === "IN_PROGRESS") {
+      updateStatus({ id: item.id, status: "RESOLVED" });
+    }
+  };
+
+  const buttonText = item.status === "PENDING" ? "처리 시작" : "완료 처리";
+  const buttonBg = item.status === "PENDING" ? "bg-[#4D83F6]" : "bg-[#20C997]";
+
+  return (
+    <button
+      type="button"
+      onClick={handleNextStatus}
+      disabled={isPending}
+      className={cn(
+        "inline-flex h-7 min-w-[64px] cursor-pointer items-center justify-center rounded-full px-3 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed",
+        buttonBg
+      )}
+    >
+      {buttonText}
+    </button>
   );
 };
 
@@ -80,13 +128,17 @@ const ReportsPanel = ({
       <div className="relative min-h-[200px]">
         {isLoading && (
           <div className="flex h-[200px] items-center justify-center">
-            <p className="text-sm text-gray-500 font-medium animate-pulse">데이터를 불러오는 중...</p>
+            <p className="text-sm text-gray-500 font-medium animate-pulse">
+              데이터를 불러오는 중...
+            </p>
           </div>
         )}
 
         {isError && (
           <div className="flex h-[200px] flex-col items-center justify-center gap-4">
-            <p className="text-sm text-red-500 font-medium">데이터를 불러오는 중 오류가 발생했습니다.</p>
+            <p className="text-sm text-red-500 font-medium">
+              데이터를 불러오는 중 오류가 발생했습니다.
+            </p>
             {onRetry && (
               <Button variant="outline" size="sm" onClick={onRetry}>
                 다시 시도
@@ -97,7 +149,9 @@ const ReportsPanel = ({
 
         {!isLoading && !isError && reports.length === 0 && (
           <div className="flex h-[200px] items-center justify-center">
-            <p className="text-sm text-gray-500 font-medium">신고 내역이 없습니다.</p>
+            <p className="text-sm text-gray-500 font-medium">
+              신고 내역이 없습니다.
+            </p>
           </div>
         )}
 
@@ -108,7 +162,6 @@ const ReportsPanel = ({
             ))}
           </div>
         )}
-
       </div>
     </StatusPanelShell>
   );

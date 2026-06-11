@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Droplet, Waves } from "lucide-react";
-import { useGetReservations } from "@/entities/reservation/api/useGetReservations";
+import { useState } from "react";
+import { useGetReservations } from "@/entities/reservation";
 import ReservationHistoryModal from "./ui/ReservationHistoryModal";
 import ReservationStatusPanel from "./ui/ReservationStatusPanel";
 
@@ -58,9 +58,7 @@ export default function ReservationsPage() {
       <div className="relative admin-page-item">
         <ReservationStatusPanel
           title="세탁기 예약 현황"
-          icon={
-            <Droplet size={18} className="translate-y-px text-[#A4A4AA]" />
-          }
+          icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={washerReservations}
           onOpenHistory={(machineName) =>
             setHistoryOverlay({ machineName, side: "left" })

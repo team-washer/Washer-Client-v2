@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { COOKIE_KEYS, authUrl } from "@/shared";
+import { authUrl, COOKIE_KEYS } from "@/shared";
 
 export async function GET(request: NextRequest) {
   try {

@@ -1,10 +1,10 @@
 import axios from "axios";
+import { authUrl } from "../api/apiUrls";
 import { COOKIE_KEYS } from "../constants/cookies";
 import { getCookie, setCookie } from "../utils/cookies";
-import { authUrl } from "../api/apiUrls";
 
 export const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "/api",
 });
 
 type RefreshResponse = {

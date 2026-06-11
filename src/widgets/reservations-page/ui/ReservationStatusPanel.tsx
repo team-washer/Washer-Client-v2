@@ -16,7 +16,7 @@ export default function ReservationStatusPanel({
   title,
   icon,
   reservations,
-  onOpenHistory
+  onOpenHistory,
 }: ReservationStatusPanelProps) {
   return (
     <StatusPanelShell title={title} icon={icon}>

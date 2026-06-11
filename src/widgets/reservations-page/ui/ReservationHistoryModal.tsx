@@ -2,7 +2,7 @@
 
 import { History, X } from "lucide-react";
 import { useRef } from "react";
-import { useGetMachineReservationHistory } from "@/entities/reservation/api/useGetMachineReservationHistory";
+import { useGetMachineReservationHistory } from "@/entities/reservation";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import ReservationHistoryCard from "./ReservationHistoryCard";
 
@@ -23,7 +23,7 @@ export default function ReservationHistoryModal({
   const { data, isLoading, isError } = useGetMachineReservationHistory(
     machineName ? { machineName } : undefined,
   );
-  
+
   useOutsideClick(panelRef, onClose, isOpen);
 
   if (!isOpen || !machineName) return null;
@@ -66,9 +66,13 @@ export default function ReservationHistoryModal({
             </p>
           )}
 
-          {!isLoading && !isError && (!data || data.reservations.length === 0) && (
-            <p className="py-8 text-sm text-[#9A9AA0]">히스토리가 없습니다.</p>
-          )}
+          {!isLoading &&
+            !isError &&
+            (!data || data.reservations.length === 0) && (
+              <p className="py-8 text-sm text-[#9A9AA0]">
+                히스토리가 없습니다.
+              </p>
+            )}
 
           {!isLoading && !isError && data && data.reservations.length > 0 && (
             <div className="flex flex-col gap-4">
