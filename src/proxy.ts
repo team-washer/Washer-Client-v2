@@ -5,7 +5,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get(COOKIE_KEYS.ACCESS_TOKEN)?.value;
 
-  if (pathname.startsWith("/api/") || pathname === "/sign-in") {
+  if (pathname.startsWith("/api/") || pathname === "/sign-in" || pathname === "/app-download") {
     return NextResponse.next();
   }
 

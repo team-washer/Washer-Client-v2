@@ -27,9 +27,12 @@ export default function Header() {
   useEffect(() => {
     if (myInfo && myInfo.role === "USER") {
       toast.error("관리자만 접근 가능합니다.");
-      handleLogout();
+      queryClient.clear();
+      deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
+      deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
+      window.location.href = "/app-download";
     }
-  }, [myInfo, handleLogout]);
+  }, [myInfo, queryClient]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E9E9EE] bg-[#FDFDFD]">
