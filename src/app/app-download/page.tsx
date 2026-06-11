@@ -28,6 +28,8 @@ export default function AppDownloadPage() {
         <div className="flex flex-col sm:flex-row gap-3 w-full">
           <a
             href="https://apps.apple.com/app/6760886865"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-4  rounded-xl bg-[#1D1D1F] hover:bg-black text-white py-3.5 px-4 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
           >
             <svg viewBox="0 0 384 512" className="w-5 h-5 fill-current" role="img" aria-label="Apple Logo">
@@ -45,6 +47,8 @@ export default function AppDownloadPage() {
 
           <a
             href="https://play.google.com/store/apps/details?id=com.washer.v2&pli=1"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-4 rounded-xl bg-[#1D1D1F] hover:bg-black text-white py-3.5 px-4 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5"
           >
             <svg
