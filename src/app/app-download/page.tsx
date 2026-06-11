@@ -6,7 +6,7 @@ import AuthLayout from "@/widgets/layout/auth-layout/ui/AuthLayout";
 export default function AppDownloadPage() {
   return (
     <AuthLayout>
-      <div className="w-110 rounded-[20px] bg-white px-7 py-10 shadow-[0_12px_40px_rgba(0,0,0,0.06)]">
+      <div className="w-full max-w-[27.5rem] rounded-[20px] bg-white px-7 py-10 shadow-[0_12px_40px_rgba(0,0,0,0.06)]">
         <div className="mb-10 flex justify-center">
           <div className="flex items-center gap-[0.41rem] w-auto">
             <WasherLogo />
