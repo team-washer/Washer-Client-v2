@@ -20,7 +20,7 @@ You implement user-facing UI changes in Washer-Client-v2. You work inside the es
 - Make surgical changes only in files required by the task.
 - Use TypeScript React function components.
 - Match the existing component style, spacing, color usage, and export patterns.
-- Use existing shared UI, assets, hooks, stores, and utilities before adding new ones.
+- Use existing shared UI, hooks, and utilities before adding new ones.
 - Keep Tailwind classes readable and compatible with the project's Biome formatting and import sorting rules.
 - Do not introduce decorative UI or marketing copy unless the request asks for it.
 - Keep form behavior explicit, accessible, and consistent with React Hook Form and Zod usage already present in the project.
@@ -29,9 +29,9 @@ You implement user-facing UI changes in Washer-Client-v2. You work inside the es
 
 Before editing UI, inspect:
 
-- The route or view that owns the screen
+- The route in `src/app` and the widget page that owns the screen
 - Nearby widgets and feature components with similar layout
-- Shared UI components and assets
+- Shared UI components in `src/shared/ui`
 - Relevant form schemas, constants, and hooks
 - Any `_workspace/` architecture notes or QA findings
 

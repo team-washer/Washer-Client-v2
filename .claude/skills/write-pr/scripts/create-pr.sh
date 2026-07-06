@@ -15,17 +15,7 @@ CURRENT_BRANCH=$(git branch --show-current)
 BASE=$(gh pr view --json baseRefName -q .baseRefName 2>/dev/null || true)
 
 if [ -z "$BASE" ]; then
-  case "$CURRENT_BRANCH" in
-    main | master)
-      BASE="main"
-      ;;
-    develop)
-      BASE="main"
-      ;;
-    *)
-      BASE="develop"
-      ;;
-  esac
+  BASE="main"
 fi
 
 ARGS=(gh pr create --title "$TITLE" --body-file "$BODY_FILE" --base "$BASE")

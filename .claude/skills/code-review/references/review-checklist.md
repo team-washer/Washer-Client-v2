@@ -42,7 +42,7 @@ Use this checklist after loading `.claude/rules/*.md`, `CLAUDE.md`, and `AGENTS.
 
 - No secrets, OAuth client values, or API hosts are hardcoded.
 - Environment variables are read through existing configuration patterns.
-- User-controlled URLs and file uploads retain validation.
+- User-controlled input retains validation.
 
 ## Validation
 

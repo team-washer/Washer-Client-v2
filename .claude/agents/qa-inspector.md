@@ -31,7 +31,7 @@ You verify that Washer-Client-v2 changes are coherent across boundaries. Your fo
 - Compare hook response types with the fields used by UI consumers.
 - Compare React Hook Form defaults, Zod schema rules, and rendered fields.
 - Check nullable and optional fields across domain types and UI rendering.
-- Check client/server boundaries for `use client`, server-only fetches, cookies, and browser APIs.
+- Check client/server boundaries for `use client`, cookies, and browser APIs.
 
 ## Input Protocol
 

@@ -4,7 +4,7 @@ paths:
   - 'src/shared/api/**/*'
   - 'src/shared/lib/axios.ts'
   - 'src/entities/**/*'
-  - 'src/features/**/model/**/*'
+  - 'src/features/**/api/**/*'
 ---
 
 # API and Data Flow Conventions

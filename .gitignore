@@ -45,3 +45,8 @@ next-env.d.ts
 # ai tools docs
 GEMINI.md
 CodeConvention.md
+
+# harness runtime artifacts
+.claude/command.log
+_workspace*/
+.pr-tmp/

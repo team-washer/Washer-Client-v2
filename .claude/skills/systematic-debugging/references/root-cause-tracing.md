@@ -31,7 +31,6 @@ Check:
 - Every schema field has a matching default and input path.
 - Value transforms such as number parsing are intentional.
 - Array field add/remove/update handlers validate after mutation.
-- File upload state is reset when upload fails or file is removed.
 
 ## Routing Failures
 

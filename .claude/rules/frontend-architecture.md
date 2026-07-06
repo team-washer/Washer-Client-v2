@@ -29,7 +29,7 @@ app -> widgets -> features -> entities -> shared
 - `src/widgets`: page-level compositions (`*-page`) and shared layout sections (`layout`).
 - `src/features`: user actions.
 - `src/entities`: domain types, API functions, query hooks, and entity UI.
-- `src/shared`: reusable clients, hooks, stores, styles, constants, assets, and utilities.
+- `src/shared`: api clients, hooks, lib helpers, styles, constants, UI primitives, and utilities.
 
 ## Change Scope
 

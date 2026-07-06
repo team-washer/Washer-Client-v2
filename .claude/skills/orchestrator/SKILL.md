@@ -34,7 +34,7 @@ Before starting work:
    - No `_workspace/`: initial run.
    - `_workspace/` exists and the user asks for a narrow correction: partial rerun. Read the relevant previous artifacts and update only the affected area.
    - `_workspace/` exists and the user provides a new broad request: fresh run. Preserve the old workspace by moving it to `_workspace_{YYYYMMDD_HHMMSS}/`, then create a new `_workspace/`.
-3. Read `CLAUDE.md`, `AGENTS.md`, `package.json`, dynamically discovered `.claude/rules/*.md`, and the relevant source files before assigning work.
+3. Read `package.json`, dynamically discovered `.claude/rules/*.md`, root instruction files (`CLAUDE.md`, `AGENTS.md`) when present, and the relevant source files before assigning work.
 
 ## Phase 1: Classify the Task
 
@@ -42,7 +42,7 @@ Classify the request into one or more tracks:
 
 - Architecture or routing: assign `frontend-architect`.
 - UI, forms, modals, or layout: assign `ui-implementation-engineer`.
-- API calls, server fetches, queries, mutations, schemas, or response types: assign `api-data-integrator`.
+- API calls, queries, mutations, schemas, or response types: assign `api-data-integrator`.
 - Review, regression, or final acceptance: assign `qa-inspector`.
 - Explicit code review, staged diff review, or pre-PR review: assign `code-reviewer`.
 - Bugs, build failures, lint failures, runtime failures, or unclear behavior: assign `bug-investigator` before implementation.

@@ -1,6 +1,6 @@
 ---
 name: ui-implementation
-description: 'Implement Washer-Client-v2 UI with React function components, Tailwind CSS 4, existing assets, modals, forms, responsive layouts, and current visual conventions. Use for pages, widgets, feature UI, form fields, loading and error states, and visual fixes.'
+description: 'Implement Washer-Client-v2 UI with React function components, Tailwind CSS 4, shared UI primitives, modals, forms, responsive layouts, and current visual conventions. Use for pages, widgets, feature UI, form fields, loading and error states, and visual fixes.'
 ---
 
 # Washer UI Implementation
@@ -9,12 +9,12 @@ Use this skill when building or changing user-facing UI.
 
 ## Component Rules
 
-- Use TypeScript React function components.
-- Prefer arrow functions, destructured props, and `default export` when matching local component style.
+- Use TypeScript React function components with `export default function` declarations, matching local component style.
+- Type props with `interface` (e.g. `interface Props`, `interface MachineStatusPanelProps`).
 - Keep component-local variables and hooks near the top.
 - Put handlers before effects.
 - Keep `useEffect` close to the return block when following the local convention.
-- Use existing shared assets and UI utilities before adding new ones.
+- Use existing shared UI components and utilities before adding new ones.
 
 ## Styling Rules
 
@@ -29,13 +29,12 @@ Use this skill when building or changing user-facing UI.
 
 - Keep React Hook Form defaults aligned with the Zod schema.
 - Validate rendered fields against schema fields.
-- Preserve existing error message components and toast patterns.
-- Keep file upload, crop, and modal state explicit.
-- Handle disabled and pending states when a mutation or upload is in progress.
+- Preserve existing error message components and the `sonner` toast pattern.
+- Handle disabled and pending states when a mutation is in progress.
 
 ## Interaction Rules
 
-- Use existing modal store patterns for modals.
+- Manage modal open/close with local `useState`, matching existing modal components.
 - Use Next.js `Link` for navigation where possible.
 - Use router navigation only when behavior requires imperative routing.
 - Keep client-only browser APIs inside client components.

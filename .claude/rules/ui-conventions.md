@@ -3,7 +3,6 @@ description: 'React component, Tailwind CSS, form, and UI interaction convention
 paths:
   - 'src/**/*.tsx'
   - 'src/shared/styles/**/*'
-  - 'src/shared/assets/**/*'
 ---
 
 # UI Conventions
@@ -30,6 +29,6 @@ Use these rules when reviewing or implementing Washer UI.
 
 - Keep React Hook Form defaults aligned with Zod schemas.
 - Render errors through existing field error patterns when available.
-- Include pending and disabled states for upload and mutation flows.
+- Include pending and disabled states for mutation flows.
 - Use `Link` for navigation unless imperative routing is required.
-- Clean up browser resources such as object URLs when file upload previews are used.
+- Surface user feedback through the existing `sonner` toast pattern.

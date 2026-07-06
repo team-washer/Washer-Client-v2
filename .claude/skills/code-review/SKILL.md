@@ -29,7 +29,7 @@ Use the user's requested scope:
 
 - Staged review: `git diff --staged`
 - Working tree review: `git diff`
-- Branch review: compare with `develop` when available
+- Branch review: compare with `main` when available
 - File-specific review: inspect the named files and direct dependencies
 
 ## Step 3: Review Checklist

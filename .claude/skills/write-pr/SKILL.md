@@ -12,9 +12,9 @@ Use this skill only when the user explicitly asks to create or open a PR.
 
 ```bash
 git branch --show-current
-git log origin/develop..HEAD --oneline 2>/dev/null || git log --oneline -15
-git diff origin/develop...HEAD --stat 2>/dev/null || git diff HEAD~5...HEAD --stat
-git diff origin/develop...HEAD 2>/dev/null || git diff HEAD~5...HEAD
+git log origin/main..HEAD --oneline 2>/dev/null || git log --oneline -15
+git diff origin/main...HEAD --stat 2>/dev/null || git diff HEAD~5...HEAD --stat
+git diff origin/main...HEAD 2>/dev/null || git diff HEAD~5...HEAD
 cat .github/PULL_REQUEST_TEMPLATE.md
 ```
 
@@ -32,10 +32,10 @@ Title:
 
 Body:
 
-- Follow `.github/PULL_REQUEST_TEMPLATE.md`.
+- Follow `.github/PULL_REQUEST_TEMPLATE.md` (개요 / 작업내용 / 관련 issue sections).
 - Write Korean prose.
-- Remove screenshot/video section when there is no UI change.
-- Include validation commands and skipped checks.
+- Remove the 관련 issue section when there is no related issue, as the template instructs.
+- Include validation commands and skipped checks in 작업내용.
 - Create `.pr-tmp/` if needed, then write body to `.pr-tmp/PR_BODY.md`.
 
 Show a preview and ask the user which title to use before creating the PR.

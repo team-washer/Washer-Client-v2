@@ -27,7 +27,7 @@ Before changing code:
 For frontend integration issues, trace data through the full boundary:
 
 ```text
-route -> server fetch -> API function -> query hook -> component -> rendered state
+route -> API function -> query hook -> component -> rendered state
 ```
 
 For form issues, trace:
