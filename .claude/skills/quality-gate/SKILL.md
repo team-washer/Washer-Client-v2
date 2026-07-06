@@ -33,7 +33,7 @@ If a command fails, inspect whether the failure is caused by the current change,
 
 Check the boundaries affected by the task:
 
-- FSD imports follow `app -> views -> widgets -> features -> entities -> shared`.
+- FSD imports follow `app -> widgets -> features -> entities -> shared`.
 - Same-layer imports were not introduced.
 - Public exports are updated when a new module is meant to be imported externally.
 - Route paths in `src/app` match any changed `href`, `router.push`, or redirects.
@@ -47,7 +47,6 @@ For data changes, compare both sides:
 - API URL constants match API functions.
 - API functions match query or mutation hooks.
 - Hook response types match UI field usage.
-- Server `initialData` shape matches the client query's expected shape.
 - Form defaults match the Zod schema and rendered fields.
 - Nullable fields are handled where rendered.
 

@@ -15,19 +15,18 @@ Use these rules as the authoritative Washer frontend architecture checklist.
 Follow this dependency direction:
 
 ```text
-app -> views -> widgets -> features -> entities -> shared
+app -> widgets -> features -> entities -> shared
 ```
 
 - Higher layers may import lower layers.
 - Lower layers must not import higher layers.
 - Same-layer imports are not allowed.
-- Prefer each slice's public `index.ts` or `index.server.ts` export when it exists.
+- Prefer each slice's public `index.ts` export when it exists.
 
 ## Ownership
 
-- `src/app`: route entrypoints, layouts, metadata, and route-level guards.
-- `src/views`: page composition.
-- `src/widgets`: reusable page sections.
+- `src/app`: route entrypoints, layouts, metadata, and the `(admin)` route group; route protection lives in `src/proxy.ts`.
+- `src/widgets`: page-level compositions (`*-page`) and shared layout sections (`layout`).
 - `src/features`: user actions.
 - `src/entities`: domain types, API functions, query hooks, and entity UI.
 - `src/shared`: reusable clients, hooks, stores, styles, constants, assets, and utilities.
@@ -41,7 +40,6 @@ app -> views -> widgets -> features -> entities -> shared
 
 ## Client and Server Boundaries
 
-- Use server components for route-level data loading when practical.
 - Mark components with `use client` only when they need hooks, browser APIs, event handlers, or client state.
 - Do not import `server-only` modules into client components.
-- Use `apiFetcher` for server-side fetches and `axiosInstance` for client requests.
+- Use the `get`/`post`/`patch`/`put`/`del` helpers from `src/shared/api/http.ts` (wrapping `axiosInstance`, base URL `/api`) for client requests; do not create ad-hoc axios instances.

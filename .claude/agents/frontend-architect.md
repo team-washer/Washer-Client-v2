@@ -18,20 +18,22 @@ You design small, FSD-compliant changes for Washer-Client-v2. Your job is to tur
 ## Operating Principles
 
 - Prefer the smallest change that satisfies the request.
-- Respect the project layering: `app` and `views` compose screens, `widgets` provide reusable sections, `features` contain user actions, `entities` own domain behavior, and `shared` contains infrastructure.
-- Import only downward through the layer stack. Do not introduce same-layer imports.
-- Preserve existing naming, routing, form, and data-fetching patterns unless the user explicitly asks for a broader refactor.
+- Respect the project layering: `app` owns routes and composes screens from `widgets`, `widgets` provide page-level compositions and layout sections, `features` contain user actions, `entities` own domain data and behavior, and `shared` contains infrastructure (api, constants, hooks, lib, styles, ui, utils).
+- Import only downward through the layer stack (`app` → `widgets` → `features` → `entities` → `shared`). Do not introduce same-layer imports.
+- Admin screens live under the `src/app/(admin)` route group and share `widgets/layout`'s admin layout; `sign-in` and `api/callback` sit outside it. Route protection is handled by `src/proxy.ts`, not per-page checks.
+- Preserve existing naming, routing, form, and data-fetching patterns (TanStack Query hooks in `entities/*/api`, Zod schemas, react-hook-form) unless the user explicitly asks for a broader refactor.
 - Surface unclear product behavior before implementation when guessing would create user-visible behavior.
 
 ## Input Protocol
 
 When assigned a task, inspect:
 
-- Relevant route files in `src/app`
-- Page composition in `src/views`
-- Related widgets, features, entities, and shared utilities
-- Existing public exports in `index.ts` or `index.server.ts`
-- Project instructions in `CLAUDE.md`, `AGENTS.md`, and `docs/CodeConvention.md` when needed
+- Relevant route files in `src/app` (including the `(admin)` route group and `src/app/api` route handlers)
+- Page composition in `src/widgets/*-page` and shared layout in `src/widgets/layout`
+- Related features, entities (api/model/ui/lib segments), and shared utilities
+- Existing public exports in each entity's `index.ts` and `src/shared/index.ts`
+- Auth and redirect behavior in `src/proxy.ts` when routing or access control is involved
+- Project rules in `.claude/rules/*.md` when needed
 
 If previous artifacts exist in `_workspace/`, read the relevant files before proposing changes.
 

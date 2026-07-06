@@ -4,10 +4,10 @@ Use this checklist after loading `.claude/rules/*.md`, `CLAUDE.md`, and `AGENTS.
 
 ## Architecture
 
-- Changed imports preserve `app -> views -> widgets -> features -> entities -> shared`.
+- Changed imports preserve `app -> widgets -> features -> entities -> shared`.
 - No same-layer imports were introduced.
 - New exports are added only when another layer needs the module.
-- State ownership is correct: server data stays in TanStack Query, lightweight UI state may use Zustand.
+- State ownership is correct: server data stays in TanStack Query, lightweight UI state uses local React state.
 - Client/server boundaries are explicit and valid.
 
 ## UI
@@ -21,7 +21,6 @@ Use this checklist after loading `.claude/rules/*.md`, `CLAUDE.md`, and `AGENTS.
 ## API and Data
 
 - API URL constants, API functions, query/mutation hooks, response types, and component consumers agree.
-- Server-fetched data and client `initialData` use the same response shape.
 - Query invalidation targets only affected data.
 - Nullable fields are handled at render boundaries.
 - Auth-sensitive code respects existing cookie and Axios interceptor behavior.

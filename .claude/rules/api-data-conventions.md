@@ -1,5 +1,5 @@
 ---
-description: 'API URL, fetcher, Axios, TanStack Query, Zod schema, and data contract conventions for Washer data-flow files.'
+description: 'API URL, Axios, TanStack Query, Zod schema, and data contract conventions for Washer data-flow files.'
 paths:
   - 'src/shared/api/**/*'
   - 'src/shared/lib/axios.ts'
@@ -14,17 +14,15 @@ Use these rules for API, query, schema, and domain data changes.
 ## Standard Locations
 
 - API URL constants belong in `src/shared/api/apiUrls.ts`.
-- Server-side requests use `src/shared/api/fetcher.ts`.
-- Browser requests use `src/shared/lib/axios.ts`.
+- Requests use the `get`/`post`/`patch`/`put`/`del` helpers in `src/shared/api/http.ts`, backed by `src/shared/lib/axios.ts`.
 - Query keys belong in `src/shared/api/queryKeys.ts`.
-- Domain API functions and hooks belong under `src/entities/*`.
-- Feature-specific mutations and schemas belong under `src/features/*`.
+- Domain query/mutation hooks belong under `src/entities/*/api`, exported through the entity's `index.ts`.
+- Feature-specific API calls and schemas belong under `src/features/*`.
 
 ## Query and Mutation Rules
 
-- Use method-based TanStack Query hook names: `useGet*`, `usePost*`, `usePatch*`, `usePut*`, and `useDelete*`.
-- Keep server data in TanStack Query, not Zustand.
-- Pass server-fetched `initialData` into client queries when the route already fetches the same data.
+- Use method-based TanStack Query hook names: `useGet*`, `usePost*`, `useUpdate*`, and `useDelete*`.
+- Keep server data in TanStack Query; do not mirror it into separate client state.
 - Invalidate only the query keys affected by a mutation.
 
 ## Type and Schema Rules

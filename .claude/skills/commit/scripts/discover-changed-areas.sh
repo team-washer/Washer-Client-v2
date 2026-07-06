@@ -30,7 +30,6 @@ fi
 
 printf '%s\n' "$FILES" | awk '
   /^src\/app\// { print "app"; next }
-  /^src\/views\// { print "views"; next }
   /^src\/widgets\// { print "widgets"; next }
   /^src\/features\// { print "features"; next }
   /^src\/entities\// { print "entities"; next }

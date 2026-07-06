@@ -15,12 +15,11 @@ Washer-Client-v2 is a Next.js App Router frontend using:
 - Tailwind CSS 4
 - Axios and TanStack Query
 - React Hook Form and Zod
-- Zustand for lightweight UI state only
 
 Layer order:
 
 ```text
-app -> views -> widgets -> features -> entities -> shared
+app -> widgets -> features -> entities -> shared
 ```
 
 Imports must move downward through this stack. Do not add same-layer imports.
@@ -28,30 +27,27 @@ Imports must move downward through this stack. Do not add same-layer imports.
 ## Planning Workflow
 
 1. Identify the user-visible behavior.
-2. Locate the route entrypoint in `src/app`.
-3. Locate page composition in `src/views`.
-4. Locate reusable sections in `src/widgets`.
-5. Locate user actions in `src/features`.
-6. Locate domain types, hooks, and entity UI in `src/entities`.
-7. Locate shared infrastructure in `src/shared`.
-8. Choose the smallest layer that should own the change.
+2. Locate the route entrypoint in `src/app` (including the `(admin)` route group).
+3. Locate page composition in `src/widgets/*-page` and shared layout in `src/widgets/layout`.
+4. Locate user actions in `src/features`.
+5. Locate domain types, hooks, and entity UI in `src/entities`.
+6. Locate shared infrastructure in `src/shared`.
+7. Choose the smallest layer that should own the change.
 
 ## Ownership Rules
 
-- `app`: route files, layouts, metadata, guards, and server entrypoints.
-- `views`: page-level composition.
-- `widgets`: reusable page sections.
-- `features`: user actions such as registration, sign-in, liking, and filters.
-- `entities`: project and user domain models, API calls, query hooks, and domain UI.
-- `shared`: reusable clients, hooks, stores, utilities, styles, constants, and assets.
+- `app`: route files, layouts, metadata, and the `api/callback` route handler; route protection lives in `src/proxy.ts`.
+- `widgets`: page-level compositions (`machines-page`, `main-page`, `reports-page`, `reservations-page`, `sign-in-page`, `users-page`) and the shared admin layout (`layout`).
+- `features`: user actions such as sign-in.
+- `entities`: machine, reservation, report, user, and dashboard domain models, API calls, query hooks, and domain UI.
+- `shared`: api clients (`apiUrls`, `http`, `queryKeys`), hooks, utilities, styles, constants, and UI primitives.
 
 ## Decision Rules
 
 - Add a new abstraction only when it removes repeated complexity or matches an existing pattern.
 - Prefer existing exports over direct deep imports when a public index exists.
 - Do not move files only to make the structure look cleaner.
-- Keep server data out of Zustand.
-- When a server component fetches data, pass it as `initialData` to the relevant client query if the existing pattern supports it.
+- Keep server data in TanStack Query; do not mirror it into separate client state.
 
 ## Output
 

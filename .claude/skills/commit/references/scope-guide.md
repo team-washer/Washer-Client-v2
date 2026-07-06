@@ -20,7 +20,7 @@ bash "${CLAUDE_SKILL_DIR}/scripts/discover-changed-areas.sh" staged
 
 Choose the most specific meaningful scope:
 
-1. Feature/domain area such as `project`, `auth`, `admin`, `mypage`, or `register`
+1. Feature/domain area such as `machine`, `reservation`, `report`, `user`, `auth`, or `admin`
 2. FSD layer such as `features`, `entities`, `widgets`, or `shared`
 3. Cross-cutting scope such as `harness`, `docs`, `ci`, `config`, or `global`
 
@@ -28,13 +28,13 @@ Choose the most specific meaningful scope:
 
 | Changed Area                                     | Preferred Scope | When to Use                                                    |
 | ------------------------------------------------ | --------------- | -------------------------------------------------------------- |
-| `src/features/register-project`                  | `register`      | Project registration form, upload, schema, or mutation changes |
-| `src/features/oauth-sign-in`                     | `auth`          | OAuth sign-in flow                                             |
-| `src/features/like-project`                      | `project`       | Like/unlike behavior                                           |
-| `src/entities/project`                           | `project`       | Project types, API, hooks, cards, detail modal                 |
-| `src/entities/user`                              | `user`          | User info type/API/query changes                               |
-| `src/views/admin`, `src/app/admin`               | `admin`         | Admin pages, guards, request detail                            |
-| `src/views/mypage`, `src/app/mypage`             | `mypage`        | My page and my request detail                                  |
+| `src/features/auth`, `src/app/sign-in`, `src/app/api/callback`, `src/widgets/sign-in-page` | `auth` | Sign-in flow, OAuth callback, auth cookies |
+| `src/entities/machine`, `src/widgets/machines-page` | `machine`    | Machine types, API, hooks, cards, status display               |
+| `src/entities/reservation`, `src/widgets/reservations-page` | `reservation` | Reservation types, API, hooks, list/detail UI          |
+| `src/entities/report`, `src/widgets/reports-page` | `report`       | Report types, API, hooks, list/detail UI                       |
+| `src/entities/user`, `src/widgets/users-page`    | `user`          | User info type/API/query changes, user management UI           |
+| `src/entities/dashboard`, `src/widgets/main-page` | `dashboard`    | Dashboard summary data and main page UI                        |
+| `src/app/(admin)`, `src/widgets/layout`          | `admin`         | Admin route group, shared admin layout, tabs, guards           |
 | `.claude/**`                                     | `harness`       | Agent, skill, rule, hook, or settings changes                  |
 | `.github/**`                                     | `ci`            | Workflow or PR template changes                                |
 | `docs/**`, `README.md`, `CLAUDE.md`, `AGENTS.md` | `docs`          | Documentation-only changes                                     |
@@ -56,8 +56,8 @@ Choose the most specific meaningful scope:
 ## Examples
 
 ```text
-chore(harness): add Git workflow automation
-fix(register): align form defaults with schema
-feat(project): add status filter
-docs: update setup instructions
+chore(harness): Git 워크플로 자동화 추가
+fix(reservation): 예약 폼 기본값을 스키마와 일치시킴
+feat(machine): 기기 상태 필터 추가
+docs: 설치 안내 문서 업데이트
 ```

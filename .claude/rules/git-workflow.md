@@ -33,22 +33,22 @@ Recommended types:
 
 Examples:
 
-- `feat/add-project-filter`
-- `fix/register-form-validation`
+- `feat/add-machine-filter`
+- `fix/reservation-form-validation`
 - `chore/setup-claude-harness`
 
 ## Commit Messages
 
-Use short Conventional Commit-style messages:
+Use short Conventional Commit-style messages. Write the description in Korean:
 
 ```text
-<type>: <description>
+<type>: <한국어 설명>
 ```
 
 Add a scope only when it improves clarity:
 
 ```text
-feat(project): add pending request filter
+feat(reservation): 대기 중 예약 필터 추가
 ```
 
 Keep each commit focused on one logical change. Do not mix source changes, formatting churn, and harness configuration unless they are part of the same requested task.
