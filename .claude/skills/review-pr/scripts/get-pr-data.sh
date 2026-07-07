@@ -28,5 +28,11 @@ git diff "origin/$BASE...HEAD" > .pr-tmp/pr_diff.txt
   echo "BASE=$BASE"
 } > .pr-tmp/pr_meta.env
 
+if command -v jq >/dev/null 2>&1; then
+  COMMENTS_COUNT=$(jq length .pr-tmp/pr_comments.json)
+else
+  COMMENTS_COUNT=$(grep -o '"id":' .pr-tmp/pr_comments.json 2>/dev/null | wc -l | tr -d ' ' || echo "0")
+fi
+
 echo "PR #$PR_NUMBER | Repo: $REPO | Base: $BASE"
-echo "Comments: $(jq length .pr-tmp/pr_comments.json), Changed files: $(wc -l < .pr-tmp/pr_changed_files.txt | tr -d ' ')"
+echo "Comments: $COMMENTS_COUNT, Changed files: $(wc -l < .pr-tmp/pr_changed_files.txt | tr -d ' ')"
