@@ -3,6 +3,7 @@
     "commit": "",
     "pr": ""
   },
+  "includeCoAuthoredBy": false,
   "includeGitInstructions": false,
   "permissions": {
     "allow": [
