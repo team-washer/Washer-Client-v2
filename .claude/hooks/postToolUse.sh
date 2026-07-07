@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Degrade gracefully when jq is unavailable.
+if ! command -v jq >/dev/null 2>&1; then
+  exit 0
+fi
+
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 

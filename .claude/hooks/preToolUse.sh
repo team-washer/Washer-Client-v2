@@ -1,8 +1,8 @@
 #!/bin/bash
 
+# Degrade gracefully when jq is unavailable: skip logging/blocking instead of failing every tool call.
 if ! command -v jq >/dev/null 2>&1; then
-  echo "[Washer Hook] Error: jq is required but not installed." >&2
-  exit 1
+  exit 0
 fi
 
 INPUT=$(cat)
