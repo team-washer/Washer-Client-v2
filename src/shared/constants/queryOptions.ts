@@ -15,4 +15,7 @@ export const STALE_TIME = {
 } as const;
 
 export const DEFAULT_STALE_TIME = MINUTE;
-export const DEFAULT_GC_TIME = 10 * MINUTE;
+
+// gcTime이 가장 긴 staleTime보다 짧으면 비활성 쿼리의 캐시가 먼저 수거되어
+// staleTime이 무의미해지므로, STALE_TIME의 최댓값(MY_INFO) 이상으로 잡는다.
+export const DEFAULT_GC_TIME = 30 * MINUTE;
