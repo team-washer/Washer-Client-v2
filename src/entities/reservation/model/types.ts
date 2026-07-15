@@ -1,30 +1,21 @@
-export type ReservationStatusLabel = "예약중" | "사용중" | "확인필요" | "사용 완료" | "취소됨";
+
+import { z } from "zod";
+import {
+  machineAvailabilityStatusSchema,
+  reservationDTOSchema,
+  reservationResponseSchema,
+  reservationStatusSchema,
+} from "../api/schemas";
+
+// UI 모델 타입
+export type ReservationStatusLabel =
+  | "예약중"
+  | "사용중"
+  | "확인필요"
+  | "사용 완료"
+  | "취소됨";
 
 export type ReservationMachineType = "WASHER" | "DRYER";
-
-export type ReservationDTOStatus =
-  | "RESERVED"
-  | "RUNNING"
-  | "COMPLETED"
-  | "CANCELLED";
-
-export type MachineAvailabilityStatus =
-  | "IN_USE"
-  | "RESERVED"
-  | "AVAILABLE"
-  | "UNAVAILABLE";
-
-export interface ReservationParamsType {
-  userName?: string;
-  machineName?: string;
-  status?: ReservationDTOStatus;
-  startDate?: string;
-  endDate?: string;
-  machineType?: ReservationMachineType;
-  page?: number;
-  size?: number;
-  sort?: string[];
-}
 
 export interface ReservationItem {
   id: number;
@@ -39,26 +30,30 @@ export interface ReservationItem {
   startTime?: string;
 }
 
-export type ReservationDTO = {
-  id: number;
-  userId: number;
-  userName: string;
-  userRoomNumber: string;
-  userStudentId: string;
-  machineId: number;
-  machineName: string;
-  reservedAt: string;
-  startTime: string;
-  expectedCompletionTime: string;
-  actualCompletionTime: string | null;
-  cancelledAt: string | null;
-  status: ReservationDTOStatus;
-  machineAvailability: MachineAvailabilityStatus;
-};
+// API 응답 타입
+export type ReservationDTOStatus = z.infer<
+  typeof reservationStatusSchema
+>;
 
-export interface ReservationResponseType {
-  reservations: ReservationDTO[];
-  totalCount: number;
-  totalPages: number;
-  currentPage: number;
+export type MachineAvailabilityStatus = z.infer<
+  typeof machineAvailabilityStatusSchema
+>;
+
+export type ReservationDTO = z.infer<typeof reservationDTOSchema>;
+
+export type ReservationResponseType = z.infer<
+  typeof reservationResponseSchema
+>;
+
+// 예약 목록 조회 요청 파라미터
+export interface ReservationParamsType {
+  userName?: string;
+  machineName?: string;
+  status?: ReservationDTOStatus;
+  startDate?: string;
+  endDate?: string;
+  machineType?: ReservationMachineType;
+  page?: number;
+  size?: number;
+  sort?: string[];
 }

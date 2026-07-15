@@ -1,32 +1,40 @@
 import { get, reservationUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapReservations } from "../lib/mapReservation";
+import { reservationResponseSchema } from './schemas';
+
 import type {
   ReservationItem,
+  ReservationMachineType,
   ReservationParamsType,
-  ReservationResponseType,
 } from "../model/types";
+
+async function getReservationsByMachineType(
+  machineType: ReservationMachineType,
+  params?: ReservationParamsType,
+): Promise<ReservationItem[]> {
+  const response = await get<BaseResponseType<unknown>>(
+    reservationUrl.getReservations(),
+    {
+      params: {
+        ...params,
+        machineType,
+      },
+    },
+  );
+
+  const parsedData = reservationResponseSchema.parse(response.data);
+
+  return mapReservations(parsedData.reservations);
+}
 
 export async function getReservations(
   params?: ReservationParamsType,
 ): Promise<ReservationItem[]> {
-  const [washersResponse, dryersResponse] = await Promise.all([
-    get<BaseResponseType<ReservationResponseType>>(
-      reservationUrl.getReservations(),
-      {
-        params: { ...params, machineType: "WASHER" },
-      },
-    ),
-    get<BaseResponseType<ReservationResponseType>>(
-      reservationUrl.getReservations(),
-      {
-        params: { ...params, machineType: "DRYER" },
-      },
-    ),
+  const [washers, dryers] = await Promise.all([
+    getReservationsByMachineType("WASHER", params),
+    getReservationsByMachineType("DRYER", params),
   ]);
-
-  const washers = mapReservations(washersResponse.data.reservations);
-  const dryers = mapReservations(dryersResponse.data.reservations);
 
   return [...washers, ...dryers];
 }

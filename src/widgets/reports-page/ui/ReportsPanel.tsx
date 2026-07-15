@@ -103,7 +103,7 @@ const ReportActionButton = ({ item }: { item: ReportItemType }) => {
       onClick={handleNextStatus}
       disabled={isPending}
       className={cn(
-        "inline-flex h-7 min-w-[64px] cursor-pointer items-center justify-center rounded-full px-3 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex h-7 min-w-16 cursor-pointer items-center justify-center rounded-full px-3 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed",
         buttonBg
       )}
     >
