@@ -38,3 +38,4 @@ export async function getReservations(
 
   return [...washers, ...dryers];
 }
+
