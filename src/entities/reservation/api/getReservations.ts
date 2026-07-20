@@ -25,7 +25,7 @@ async function getReservationsByMachineType(
 
   const parsedData = reservationResponseSchema.parse(response.data);
 
-  return mapReservations(parsedData.reservations);
+  return mapReservations(parsedData.reservations, machineType);
 }
 
 export async function getReservations(
