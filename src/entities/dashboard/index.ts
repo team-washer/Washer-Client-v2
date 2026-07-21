@@ -1,3 +1,6 @@
-export * from "./api";
+export { useGetDashboardSummary } from "./api";
 export { mapDashboard } from "./lib/mapDashboard";
-export * from "./model/types";
+export type {
+  DashboardItem,
+  DashboardSummaryDTO,
+} from "./model/types";

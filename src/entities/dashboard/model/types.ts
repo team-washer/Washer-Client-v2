@@ -1,14 +1,9 @@
-export type DashboardSummaryDTO = {
-  activeReservations: number;
-  pendingMalfunctionReports: number;
-  processingMalfunctionReports: number;
-  completedMalfunctionReports: number;
-  totalMachines: number;
-  malfunctionMachines: number;
-  suspendedStudents: number;
-};
+import type { z } from "zod";
+import type { dashboardSummarySchema } from "../api/schemas";
 
-export type DashboardItem = {
+export type DashboardSummaryDTO = z.infer<typeof dashboardSummarySchema>;
+
+export interface DashboardItem {
   label: string;
   value: string;
-};
+}
