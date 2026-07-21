@@ -1,32 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { get, machineQueryKeys, machineUrl } from "@/shared/api";
-import type { BaseResponseType } from "@/shared/api/types";
+import { machineQueryKeys } from "@/shared/api";
 import { STALE_TIME } from "@/shared/constants/queryOptions";
-import type { MachineResponseType } from "../model/types";
+import type { MachineParamsType } from "../model/types";
+import { getMachines as fetchMachines } from "./getMachines";
 
-export const useGetMachines = (params: { floor?: number } = {}) => {
+export const useGetMachines = (params?: MachineParamsType) => {
+  const queryKey = machineQueryKeys.getMachines(params || {});
+
   return useQuery({
     staleTime: STALE_TIME.MACHINE,
-    queryKey: machineQueryKeys.getMachines(params),
-    queryFn: async () => {
-      const [washers, dryers] = await Promise.all([
-        get<BaseResponseType<MachineResponseType>>(machineUrl.getMachines(), {
-          params: { ...params, type: "WASHER" },
-        }),
-        get<BaseResponseType<MachineResponseType>>(machineUrl.getMachines(), {
-          params: { ...params, type: "DRYER" },
-        }),
-      ]);
-
-      return {
-        ...washers,
-        data: {
-          machines: [...washers.data.machines, ...dryers.data.machines],
-          totalCount: washers.data.totalCount + dryers.data.totalCount,
-          totalPages: Math.max(washers.data.totalPages, dryers.data.totalPages),
-          currentPage: washers.data.currentPage,
-        },
-      };
-    },
+    queryKey,
+    queryFn: () => fetchMachines(params),
   });
 };

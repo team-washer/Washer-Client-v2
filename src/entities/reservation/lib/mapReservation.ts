@@ -50,8 +50,11 @@ export function mapReservation(
         ? mapAvailabilityDeviceStatus(dto.machineAvailability)
         : undefined,
     expectedCompletionTime:
-      badgeStatus === "사용중" ? dto.expectedCompletionTime : undefined,
-    startTime: badgeStatus === "예약중" ? dto.startTime : undefined,
+      badgeStatus === "사용중"
+        ? dto.expectedCompletionTime ?? undefined
+        : undefined,
+    startTime:
+      badgeStatus === "예약중" ? dto.startTime ?? undefined : undefined,
   };
 }
 

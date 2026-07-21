@@ -26,10 +26,12 @@ export const reservationDTOSchema = z.object({
   machineId: z.number(),
   machineName: z.string(),
   reservedAt: z.string(),
-  startTime: z.string(),
-  expectedCompletionTime: z.string(),
+
+  startTime: z.string().nullable(),
+  expectedCompletionTime: z.string().nullable(),
   actualCompletionTime: z.string().nullable(),
   cancelledAt: z.string().nullable(),
+
   status: reservationStatusSchema,
   machineAvailability: machineAvailabilityStatusSchema,
 });
