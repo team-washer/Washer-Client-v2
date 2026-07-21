@@ -1,11 +1,13 @@
 import type { z } from "zod";
 import type {
+  myInfoSchema,
   userDTOSchema,
   userResponseSchema,
+  userRoleSchema,
 } from "../api/schemas";
 
 // 사용자 권한 타입
-export type UserRole = "ADMIN" | "USER" | "DORMITORY_COUNCIL";
+export type UserRole = z.infer<typeof userRoleSchema>;
 
 // 사용자 목록 조회 요청 파라미터
 export interface UserParamsType {
@@ -24,6 +26,8 @@ export type UserDTO = z.infer<typeof userDTOSchema>;
 
 export type UserResponseType = z.infer<typeof userResponseSchema>;
 
+export type MyInfoType = z.infer<typeof myInfoSchema>;
+
 // UI 모델 타입
 export interface ManagedUserItem {
   id: number;
@@ -33,20 +37,4 @@ export interface ManagedUserItem {
   warningCount: number;
   reason?: string;
   remain?: string;
-}
-
-// 내 정보 API 응답 타입
-export interface MyInfoType {
-  id: number;
-  name: string;
-  studentId: string;
-  roomNumber: string;
-  grade: number;
-  floor: number;
-  penaltyCount: number;
-  createdAt: string;
-  updatedAt: string;
-  canReserve: boolean;
-  penaltyExpiresAt: string;
-  role: UserRole;
 }

@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+// 사용자 권한
+export const userRoleSchema = z.enum([
+  "ADMIN",
+  "USER",
+  "DORMITORY_COUNCIL",
+]);
+
 // 사용자 한 명의 API 응답 구조
 export const userDTOSchema = z.object({
   id: z.number(),
@@ -21,4 +28,20 @@ export const userResponseSchema = z.object({
   totalCount: z.number(),
   totalPages: z.number(),
   currentPage: z.number(),
+});
+
+// 내 정보 API의 data 응답 구조
+export const myInfoSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  studentId: z.string(),
+  roomNumber: z.string(),
+  grade: z.number(),
+  floor: z.number(),
+  penaltyCount: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  canReserve: z.boolean(),
+  penaltyExpiresAt: z.string().nullable(),
+  role: userRoleSchema,
 });
