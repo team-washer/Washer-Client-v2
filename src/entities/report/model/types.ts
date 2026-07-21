@@ -1,27 +1,18 @@
-export type ReportStatusType = "PENDING" | "IN_PROGRESS" | "RESOLVED";
+import type { z } from "zod";
+import type {
+  reportItemSchema,
+  reportResponseSchema,
+  reportStatusSchema,
+} from "../api/schemas";
 
-export interface ReportItemType {
-  id: number;
-  machineId: number;
-  machineName: string;
-  reporterId: number;
-  reporterName: string;
-  description: string;
-  status: ReportStatusType;
-  reportedAt: string;
-  processingStartedAt: string | null;
-  resolvedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+// API 응답 타입
+export type ReportStatusType = z.infer<typeof reportStatusSchema>;
 
+export type ReportItemType = z.infer<typeof reportItemSchema>;
+
+export type ReportResponseType = z.infer<typeof reportResponseSchema>;
+
+// 고장 신고 목록 조회 요청 파라미터
 export interface ReportParamsType {
   status?: ReportStatusType;
-}
-
-export interface ReportResponseType {
-  reports: ReportItemType[];
-  totalCount: number;
-  totalPages: number;
-  currentPage: number;
 }
