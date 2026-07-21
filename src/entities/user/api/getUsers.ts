@@ -4,18 +4,20 @@ import { mapUsers } from "../lib/mapUser";
 import type {
   ManagedUserItem,
   UserParamsType,
-  UserResponseType,
 } from "../model/types";
+import { userResponseSchema } from "./schemas";
 
 export async function getUsers(
   params?: UserParamsType,
 ): Promise<ManagedUserItem[]> {
-  const response = await get<BaseResponseType<UserResponseType>>(
+  const response = await get<BaseResponseType<unknown>>(
     userUrl.getUsers(),
     {
       params,
     },
   );
 
-  return mapUsers(response.data.users);
+  const parsedData = userResponseSchema.parse(response.data);
+
+  return mapUsers(parsedData.users);
 }
