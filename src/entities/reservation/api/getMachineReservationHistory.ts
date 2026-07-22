@@ -8,20 +8,24 @@ import { mapMachineReservationHistory } from "../lib/mapReservationHistory";
 import type {
   MachineReservationHistory,
   MachineReservationHistoryParamsType,
-  MachineReservationHistoryResponseType,
 } from "../model/historyTypes";
+import { machineReservationHistoryResponseSchema } from "./schemas";
 
 export async function getMachineReservationHistory(
   params?: MachineReservationHistoryParamsType,
 ): Promise<MachineReservationHistory | null> {
   try {
-    const response = await get<
-      BaseResponseType<MachineReservationHistoryResponseType>
-    >(reservationUrl.getMachineReservationHistory(), {
-      params,
-    });
+    const response = await get<BaseResponseType<unknown>>(
+      reservationUrl.getMachineReservationHistory(),
+      {
+        params,
+      },
+    );
 
-    const machine = response.data.machines[0];
+    const parsedData =
+      machineReservationHistoryResponseSchema.parse(response.data);
+
+    const machine = parsedData.machines[0];
 
     if (!machine) return null;
 
