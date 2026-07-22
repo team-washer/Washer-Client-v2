@@ -11,9 +11,8 @@ import { useGetMyInfo } from "@/entities/user";
 import {
   APP_ERROR_TYPE,
   AppError,
-  COOKIE_KEYS,
+  clearAuthSession,
 } from "@/shared";
-import { deleteCookie } from "@/shared/utils/cookies";
 import DashboardTabs from "../DashboardTabs";
 import Header from "../Header";
 import SummaryCards from "../SummaryCards";
@@ -39,10 +38,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
     ) {
       toast.error(myInfoError.message);
 
-      queryClient.clear();
-      deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
-      deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
-
+      clearAuthSession(queryClient);
       window.location.replace("/sign-in");
       return;
     }
