@@ -1,7 +1,7 @@
 import { get, reservationUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapReservations } from "../lib/mapReservation";
-import { reservationResponseSchema } from './schemas';
+import { reservationResponseSchema } from "./schemas";
 
 import type {
   ReservationItem,
