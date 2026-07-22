@@ -8,7 +8,11 @@ import {
   useGetDashboardSummary,
 } from "@/entities/dashboard";
 import { useGetMyInfo } from "@/entities/user";
-import { COOKIE_KEYS } from "@/shared";
+import {
+  APP_ERROR_TYPE,
+  AppError,
+  COOKIE_KEYS,
+} from "@/shared";
 import { deleteCookie } from "@/shared/utils/cookies";
 import DashboardTabs from "../DashboardTabs";
 import Header from "../Header";
@@ -19,36 +23,40 @@ export default function AdminLayout({ children }: PropsWithChildren) {
 
   const {
     data: myInfoData,
+    error: myInfoError,
     isLoading: isMyInfoLoading,
     isError: isMyInfoError,
+    refetch: refetchMyInfo,
   } = useGetMyInfo();
 
   const myInfo = myInfoData?.data;
 
   useEffect(() => {
-    if (isMyInfoError) {
-      toast.error(
-        "로그인이 만료되었거나 유효하지 않습니다. 다시 로그인해주세요.",
-      );
+    if (
+      isMyInfoError &&
+      myInfoError instanceof AppError &&
+      myInfoError.type === APP_ERROR_TYPE.AUTHENTICATION
+    ) {
+      toast.error(myInfoError.message);
 
       queryClient.clear();
       deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
       deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
 
-      window.location.href = "/sign-in";
+      window.location.replace("/sign-in");
       return;
     }
 
     if (myInfo?.role === "USER") {
       toast.error("관리자만 접근 가능합니다.");
-
-      queryClient.clear();
-      deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
-      deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
-
-      window.location.href = "/app-download";
+      window.location.replace("/app-download");
     }
-  }, [myInfo, isMyInfoError, queryClient]);
+  }, [
+    myInfo,
+    myInfoError,
+    isMyInfoError,
+    queryClient,
+  ]);
 
   const {
     data: dashboardSummary,
@@ -66,9 +74,13 @@ export default function AdminLayout({ children }: PropsWithChildren) {
     ? mapDashboard(dashboardSummary)
     : [];
 
+  const isAuthenticationError =
+    myInfoError instanceof AppError &&
+    myInfoError.type === APP_ERROR_TYPE.AUTHENTICATION;
+
   const isCheckingAccess =
     isMyInfoLoading ||
-    isMyInfoError ||
+    isAuthenticationError ||
     myInfo?.role === "USER" ||
     (!myInfo && !isMyInfoError);
 
@@ -76,6 +88,31 @@ export default function AdminLayout({ children }: PropsWithChildren) {
     return (
       <div className="flex min-h-screen w-full items-center justify-center bg-[#F4F5F9]">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#E9E9EE] border-t-blue-500" />
+      </div>
+    );
+  }
+
+  if (isMyInfoError) {
+    const errorMessage =
+      myInfoError instanceof AppError
+        ? myInfoError.message
+        : "사용자 정보를 불러오지 못했습니다.";
+
+    return (
+      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-4 bg-[#F4F5F9]">
+        <p className="text-sm text-gray-600">
+          {errorMessage}
+        </p>
+
+        <button
+          type="button"
+          className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white"
+          onClick={() => {
+            void refetchMyInfo();
+          }}
+        >
+          다시 시도
+        </button>
       </div>
     );
   }
@@ -101,7 +138,9 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           </div>
         </div>
 
-        <div className="xl:min-h-0 xl:flex-1">{children}</div>
+        <div className="xl:min-h-0 xl:flex-1">
+          {children}
+        </div>
       </section>
     </main>
   );
