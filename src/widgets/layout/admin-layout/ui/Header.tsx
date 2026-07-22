@@ -6,25 +6,18 @@ import Image from "next/image";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { useGetMyInfo } from "@/entities/user";
-import { COOKIE_KEYS } from "@/shared";
-import { deleteCookie } from "@/shared/utils/cookies";
+import { clearAuthSession } from "@/shared";
 
 export default function Header() {
   const queryClient = useQueryClient();
   const { data: myInfoData } = useGetMyInfo();
+
   const myInfo = myInfoData?.data;
 
   const handleLogout = useCallback(() => {
-    queryClient.clear();
-
-    deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
-    deleteCookie(COOKIE_KEYS.REFRESH_TOKEN);
-
-    // 페이지 새로고침
-    window.location.reload();
+    clearAuthSession(queryClient);
+    window.location.replace("/sign-in");
   }, [queryClient]);
-
-
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E9E9EE] bg-[#FDFDFD]">
@@ -37,17 +30,19 @@ export default function Header() {
               <p className="text-[14px] font-semibold text-[#4A4A4F]">
                 {myInfo.studentId} {myInfo.name}
               </p>
+
               <p className="mt-1 text-[14px] font-semibold text-[#EF4B4F]">
                 {myInfo.roomNumber}호 |{" "}
                 {myInfo.role !== "USER" ? "관리자" : "사용자"}
               </p>
             </div>
           )}
+
           <button
             type="button"
             onClick={() => {
-              handleLogout();
               toast.success("로그아웃 되었습니다.");
+              handleLogout();
             }}
             className="flex h-9 w-9 items-center justify-center rounded-full bg-[#EA3B4240] text-[#EF4B4F] transition-colors hover:bg-[#FFEAEA]"
             aria-label="로그아웃"
