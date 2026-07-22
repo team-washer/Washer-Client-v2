@@ -23,21 +23,30 @@ const ReportsPage = () => {
     status,
   });
 
-  const { data: machinesData, isLoading: isMachinesLoading } = useGetMachines({
-    floor,
-  });
+  const { data: machines = [], isLoading: isMachinesLoading } =
+    useGetMachines(
+      {
+        floor,
+      },
+      {
+        enabled: floor !== undefined,
+      },
+    );
 
-  const isLoading = isReportsLoading || isMachinesLoading;
+  const isLoading =
+    isReportsLoading || (floor !== undefined && isMachinesLoading);
 
   const reports = reportsData?.data.reports ?? [];
-  const machines = machinesData?.data.machines ?? [];
 
   const filteredReports = useMemo(() => {
     let result = reports;
 
     // Filter by floor if selected
     if (floor !== undefined) {
-      const machineIdsOnFloor = new Set(machines.map((m) => m.id));
+      const machineIdsOnFloor = new Set(
+        machines.map((machine) => machine.id),
+      );
+
       result = result.filter((report) =>
         machineIdsOnFloor.has(report.machineId),
       );
@@ -45,8 +54,10 @@ const ReportsPage = () => {
 
     // Filter by search
     if (search) {
+      const normalizedSearch = search.toLowerCase();
+
       result = result.filter((report) =>
-        report.reporterName.toLowerCase().includes(search.toLowerCase()),
+        report.reporterName.toLowerCase().includes(normalizedSearch),
       );
     }
 

@@ -1,15 +1,25 @@
 import { get, reportUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
-import type { ReportParamsType, ReportResponseType } from "../model/types";
+import type {
+  ReportParamsType,
+  ReportResponseType,
+} from "../model/types";
+import { reportResponseSchema } from "./schemas";
 
 export const getMalfunctionReports = async (
   params?: ReportParamsType,
 ): Promise<BaseResponseType<ReportResponseType>> => {
-  const response = await get<BaseResponseType<ReportResponseType>>(
+  const response = await get<BaseResponseType<unknown>>(
     reportUrl.getMalfunctionReports(),
     {
       params,
     },
   );
-  return response;
+
+  const parsedData = reportResponseSchema.parse(response.data);
+
+  return {
+    ...response,
+    data: parsedData,
+  };
 };

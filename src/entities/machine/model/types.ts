@@ -1,13 +1,14 @@
-export type MachineType = "WASHER" | "DRYER";
+import type { z } from "zod";
+import type {
+  adminMachineDTOSchema,
+  machineAvailabilityStatusSchema,
+  machineConditionStatusSchema,
+  machinePositionSchema,
+  machineResponseSchema,
+  machineTypeSchema,
+} from "../api/schemas";
 
-export type MachineConditionStatusDTO = "NORMAL" | "MALFUNCTION";
-
-export type MachineAvailabilityStatusDTO =
-  | "AVAILABLE"
-  | "IN_USE"
-  | "RESERVED"
-  | "UNAVAILABLE";
-
+// UI 타입
 export type MachineStatusLabel =
   | "사용중"
   | "미사용"
@@ -15,8 +16,6 @@ export type MachineStatusLabel =
   | "예약"
   | "확인필요"
   | "고장";
-
-export type MachinePosition = "LEFT" | "RIGHT";
 
 export interface MachineItem {
   id: number;
@@ -28,27 +27,30 @@ export interface MachineItem {
   deviceStatus?: string;
 }
 
-export interface AdminMachineDTO {
-  id: number;
-  name: string;
-  type: MachineType;
-  floor: number;
-  position: MachinePosition;
-  number: number;
-  status: MachineConditionStatusDTO;
-  availability: MachineAvailabilityStatusDTO;
-  deviceId: string;
-}
-
-export interface MachineResponseType {
-  machines: AdminMachineDTO[];
-  totalCount: number;
-  totalPages: number;
-  currentPage: number;
-}
-
 export interface MachineStatusOption {
   value: MachineConditionStatusDTO;
   title: string;
   description: string;
+}
+
+// API 응답 타입
+export type MachineType = z.infer<typeof machineTypeSchema>;
+
+export type MachineConditionStatusDTO = z.infer<
+  typeof machineConditionStatusSchema
+>;
+
+export type MachineAvailabilityStatusDTO = z.infer<
+  typeof machineAvailabilityStatusSchema
+>;
+
+export type MachinePosition = z.infer<typeof machinePositionSchema>;
+
+export type AdminMachineDTO = z.infer<typeof adminMachineDTOSchema>;
+
+export type MachineResponseType = z.infer<typeof machineResponseSchema>;
+
+// 조회 파라미터
+export interface MachineParamsType {
+  floor?: number;
 }

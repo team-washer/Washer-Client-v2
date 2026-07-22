@@ -28,3 +28,8 @@ export const reservationQueryKeys = {
   getMachineReservationHistory: (machineName: string | null) =>
     ["reservations", "history", machineName] as const,
 } as const;
+
+export const dashboardQueryKeys = {
+  all: ["dashboard"] as const,
+  summary: () => ["dashboard", "summary"] as const,
+} as const;

@@ -6,16 +6,6 @@ import type {
   ReservationStatusLabel,
 } from "../model/types";
 
-function getMachineType(machineName: string): ReservationMachineType {
-  const upper = machineName.toUpperCase();
-
-  if (upper.startsWith("D") || upper.includes("DRYER")) {
-    return "DRYER";
-  }
-
-  return "WASHER";
-}
-
 function mapBadgeStatus(dto: ReservationDTO): ReservationStatusLabel {
   if (dto.status === "CANCELLED") {
     return "취소됨";
@@ -40,7 +30,10 @@ function mapBadgeStatus(dto: ReservationDTO): ReservationStatusLabel {
   return "확인필요";
 }
 
-export function mapReservation(dto: ReservationDTO): ReservationItem {
+export function mapReservation(
+  dto: ReservationDTO,
+  machineType: ReservationMachineType,
+): ReservationItem {
   const badgeStatus = mapBadgeStatus(dto);
 
   return {
@@ -48,7 +41,7 @@ export function mapReservation(dto: ReservationDTO): ReservationItem {
     machineId: dto.machineId,
     machine: dto.machineName,
     userRoomNumber: dto.userRoomNumber,
-    type: getMachineType(dto.machineName),
+    type: machineType,
     badgeStatus,
     reserveAt:
       badgeStatus === "예약중" ? formatDateTime(dto.reservedAt) : undefined,
@@ -57,11 +50,17 @@ export function mapReservation(dto: ReservationDTO): ReservationItem {
         ? mapAvailabilityDeviceStatus(dto.machineAvailability)
         : undefined,
     expectedCompletionTime:
-      badgeStatus === "사용중" ? dto.expectedCompletionTime : undefined,
-    startTime: badgeStatus === "예약중" ? dto.startTime : undefined,
+      badgeStatus === "사용중"
+        ? dto.expectedCompletionTime ?? undefined
+        : undefined,
+    startTime:
+      badgeStatus === "예약중" ? dto.startTime ?? undefined : undefined,
   };
 }
 
-export function mapReservations(dtos: ReservationDTO[]): ReservationItem[] {
-  return dtos.map(mapReservation);
+export function mapReservations(
+  dtos: ReservationDTO[],
+  machineType: ReservationMachineType,
+): ReservationItem[] {
+  return dtos.map((dto) => mapReservation(dto, machineType));
 }

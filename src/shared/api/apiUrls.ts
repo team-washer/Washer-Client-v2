@@ -32,3 +32,7 @@ export const userUrl = {
   getMyInfo: () => "/api/v2/users/my",
   deleteUserPenalty: (userId: number) => `/api/v2/admin/reservations/users/${userId}/penalty`,
 } as const;
+
+export const dashboardUrl = {
+  getSummary: () => "/api/v2/admin/dashboard",
+} as const;

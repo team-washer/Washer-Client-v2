@@ -4,6 +4,7 @@ export const setCookie = (name: string, value: string): void => {
   const isSecure = window.location.protocol === "https:";
   const cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; Path=/; SameSite=Lax${isSecure ? "; Secure" : ""}`;
 
+  // biome-ignore lint/suspicious/noDocumentCookie: 브라우저 쿠키 저장을 위해 document.cookie 사용
   document.cookie = cookieString;
 };
 
@@ -15,6 +16,7 @@ export const getCookie = (name: string): string | null => {
 
   for (const cookie of cookies) {
     const c = cookie.trim();
+
     if (c.indexOf(nameEQ) === 0) {
       return decodeURIComponent(c.substring(nameEQ.length));
     }
@@ -29,6 +31,7 @@ export const deleteCookie = (name: string): void => {
   const isSecure = window.location.protocol === "https:";
   const cookieString = `${encodeURIComponent(name)}=; Path=/; SameSite=Lax; Expires=Thu, 01 Jan 1970 00:00:00 GMT${isSecure ? "; Secure" : ""}`;
 
+  // biome-ignore lint/suspicious/noDocumentCookie: 브라우저 쿠키 삭제를 위해 document.cookie 사용
   document.cookie = cookieString;
 };
 
@@ -40,6 +43,7 @@ export const getAllCookies = (): Record<string, string> => {
 
   for (const cookie of cookieArray) {
     const [name, value] = cookie.trim().split("=");
+
     if (name && value) {
       cookies[decodeURIComponent(name)] = decodeURIComponent(value);
     }
