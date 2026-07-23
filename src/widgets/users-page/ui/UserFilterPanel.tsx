@@ -27,10 +27,10 @@ export default function UserFilterPanel({
     <FilterPanelShell onReset={onReset}>
       <div className="flex flex-col gap-3">
         <FilterSearchField value={search} onChange={onSearchChange} />
-        <FilterSearchField 
-          placeholder="호실을 입력해주세요 (예: 420)" 
-          value={roomSearch} 
-          onChange={onRoomSearchChange} 
+        <FilterSearchField
+          placeholder="호실을 입력해주세요 (예: 420)"
+          value={roomSearch}
+          onChange={onRoomSearchChange}
         />
       </div>
       <FloorGenderFilters selectedFloor={floor} onFloorChange={onFloorChange} />

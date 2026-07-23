@@ -10,8 +10,7 @@ export const APP_ERROR_TYPE = {
   UNKNOWN: "UNKNOWN",
 } as const;
 
-export type AppErrorType =
-  (typeof APP_ERROR_TYPE)[keyof typeof APP_ERROR_TYPE];
+export type AppErrorType = (typeof APP_ERROR_TYPE)[keyof typeof APP_ERROR_TYPE];
 
 type AppErrorOptions = {
   type: AppErrorType;

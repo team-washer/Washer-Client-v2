@@ -1,8 +1,4 @@
-import {
-  get,
-  normalizeApiError,
-  reservationUrl,
-} from "@/shared/api";
+import { get, normalizeApiError, reservationUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapMachineReservationHistory } from "../lib/mapReservationHistory";
 import type {
@@ -22,8 +18,9 @@ export async function getMachineReservationHistory(
       },
     );
 
-    const parsedData =
-      machineReservationHistoryResponseSchema.parse(response.data);
+    const parsedData = machineReservationHistoryResponseSchema.parse(
+      response.data,
+    );
 
     const machine = parsedData.machines[0];
 

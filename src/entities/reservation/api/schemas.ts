@@ -50,12 +50,7 @@ export const machineReservationHistoryItemSchema = z.object({
   reservedAt: z.string(),
   actualCompletionTime: z.string().nullable(),
   cancelledAt: z.string().nullable(),
-  status: z.enum([
-    "COMPLETED",
-    "CANCELLED",
-    "RESERVED",
-    "IN_USE",
-  ]),
+  status: z.enum(["COMPLETED", "CANCELLED", "RESERVED", "IN_USE"]),
 });
 
 // 기기별 예약 히스토리 응답 구조

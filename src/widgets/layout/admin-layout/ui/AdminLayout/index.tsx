@@ -3,16 +3,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, type PropsWithChildren } from "react";
 import { toast } from "sonner";
-import {
-  mapDashboard,
-  useGetDashboardSummary,
-} from "@/entities/dashboard";
+import { mapDashboard, useGetDashboardSummary } from "@/entities/dashboard";
 import { useGetMyInfo } from "@/entities/user";
-import {
-  APP_ERROR_TYPE,
-  AppError,
-  clearAuthSession,
-} from "@/shared";
+import { APP_ERROR_TYPE, AppError, clearAuthSession } from "@/shared";
 import DashboardTabs from "../DashboardTabs";
 import Header from "../Header";
 import SummaryCards from "../SummaryCards";
@@ -47,28 +40,17 @@ export default function AdminLayout({ children }: PropsWithChildren) {
       toast.error("관리자만 접근 가능합니다.");
       window.location.replace("/app-download");
     }
-  }, [
-    myInfo,
-    myInfoError,
-    isMyInfoError,
-    queryClient,
-  ]);
+  }, [myInfo, myInfoError, isMyInfoError, queryClient]);
 
   const {
     data: dashboardSummary,
     isLoading: isDashboardLoading,
     isError: isDashboardError,
   } = useGetDashboardSummary({
-    enabled: Boolean(
-      myInfo &&
-        myInfo.role !== "USER" &&
-        !isMyInfoError,
-    ),
+    enabled: Boolean(myInfo && myInfo.role !== "USER" && !isMyInfoError),
   });
 
-  const summaryItems = dashboardSummary
-    ? mapDashboard(dashboardSummary)
-    : [];
+  const summaryItems = dashboardSummary ? mapDashboard(dashboardSummary) : [];
 
   const isAuthenticationError =
     myInfoError instanceof AppError &&
@@ -96,9 +78,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
 
     return (
       <div className="flex min-h-screen w-full flex-col items-center justify-center gap-4 bg-[#F4F5F9]">
-        <p className="text-sm text-gray-600">
-          {errorMessage}
-        </p>
+        <p className="text-sm text-gray-600">{errorMessage}</p>
 
         <button
           type="button"
@@ -134,9 +114,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           </div>
         </div>
 
-        <div className="xl:min-h-0 xl:flex-1">
-          {children}
-        </div>
+        <div className="xl:min-h-0 xl:flex-1">{children}</div>
       </section>
     </main>
   );

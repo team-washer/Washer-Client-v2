@@ -1,11 +1,7 @@
 import { z } from "zod";
 
 // 사용자 권한
-export const userRoleSchema = z.enum([
-  "ADMIN",
-  "USER",
-  "DORMITORY_COUNCIL",
-]);
+export const userRoleSchema = z.enum(["ADMIN", "USER", "DORMITORY_COUNCIL"]);
 
 // 사용자 한 명의 API 응답 구조
 export const userDTOSchema = z.object({

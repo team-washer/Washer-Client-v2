@@ -85,7 +85,7 @@ const ReportActionButton = ({ item }: { item: ReportItemType }) => {
   const handleNextStatus = () => {
     if (item.status === "PENDING") {
       const confirmed = window.confirm(
-        "처리중으로 변경된다면 기기가 고장 상태로 변경되고 처리 완료 상태가 되기 전까지는 사용이 불가능 합니다. 계속하시겠습니까?"
+        "처리중으로 변경된다면 기기가 고장 상태로 변경되고 처리 완료 상태가 되기 전까지는 사용이 불가능 합니다. 계속하시겠습니까?",
       );
       if (!confirmed) return;
       updateStatus({ id: item.id, status: "IN_PROGRESS" });
@@ -104,7 +104,7 @@ const ReportActionButton = ({ item }: { item: ReportItemType }) => {
       disabled={isPending}
       className={cn(
         "inline-flex h-7 min-w-16 cursor-pointer items-center justify-center rounded-full px-3 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed",
-        buttonBg
+        buttonBg,
       )}
     >
       {buttonText}

@@ -1,8 +1,4 @@
-import {
-  dashboardUrl,
-  get,
-  normalizeApiError,
-} from "@/shared/api";
+import { dashboardUrl, get, normalizeApiError } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import type { DashboardSummaryDTO } from "../model/types";
 import { dashboardSummarySchema } from "./schemas";

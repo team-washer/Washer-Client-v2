@@ -10,11 +10,7 @@ const getServerErrorMessage = (
   data: unknown,
   fallbackMessage: string,
 ): string => {
-  if (
-    typeof data === "object" &&
-    data !== null &&
-    "message" in data
-  ) {
+  if (typeof data === "object" && data !== null && "message" in data) {
     const { message } = data as ErrorResponse;
 
     if (typeof message === "string") {

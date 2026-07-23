@@ -1,13 +1,6 @@
-import {
-  get,
-  normalizeApiError,
-  reportUrl,
-} from "@/shared/api";
+import { get, normalizeApiError, reportUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
-import type {
-  ReportParamsType,
-  ReportResponseType,
-} from "../model/types";
+import type { ReportParamsType, ReportResponseType } from "../model/types";
 import { reportResponseSchema } from "./schemas";
 
 export const getMalfunctionReports = async (

@@ -23,15 +23,14 @@ const ReportsPage = () => {
     status,
   });
 
-  const { data: machines = [], isLoading: isMachinesLoading } =
-    useGetMachines(
-      {
-        floor,
-      },
-      {
-        enabled: floor !== undefined,
-      },
-    );
+  const { data: machines = [], isLoading: isMachinesLoading } = useGetMachines(
+    {
+      floor,
+    },
+    {
+      enabled: floor !== undefined,
+    },
+  );
 
   const isLoading =
     isReportsLoading || (floor !== undefined && isMachinesLoading);
@@ -43,9 +42,7 @@ const ReportsPage = () => {
 
     // Filter by floor if selected
     if (floor !== undefined) {
-      const machineIdsOnFloor = new Set(
-        machines.map((machine) => machine.id),
-      );
+      const machineIdsOnFloor = new Set(machines.map((machine) => machine.id));
 
       result = result.filter((report) =>
         machineIdsOnFloor.has(report.machineId),

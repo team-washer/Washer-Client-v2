@@ -30,9 +30,7 @@ export interface ReservationItem {
 }
 
 // API 응답 타입
-export type ReservationDTOStatus = z.infer<
-  typeof reservationStatusSchema
->;
+export type ReservationDTOStatus = z.infer<typeof reservationStatusSchema>;
 
 export type MachineAvailabilityStatus = z.infer<
   typeof machineAvailabilityStatusSchema
@@ -40,9 +38,7 @@ export type MachineAvailabilityStatus = z.infer<
 
 export type ReservationDTO = z.infer<typeof reservationDTOSchema>;
 
-export type ReservationResponseType = z.infer<
-  typeof reservationResponseSchema
->;
+export type ReservationResponseType = z.infer<typeof reservationResponseSchema>;
 
 // 예약 목록 조회 요청 파라미터
 export interface ReservationParamsType {
