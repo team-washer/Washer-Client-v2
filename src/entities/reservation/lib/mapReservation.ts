@@ -51,10 +51,10 @@ export function mapReservation(
         : undefined,
     expectedCompletionTime:
       badgeStatus === "사용중"
-        ? dto.expectedCompletionTime ?? undefined
+        ? (dto.expectedCompletionTime ?? undefined)
         : undefined,
     startTime:
-      badgeStatus === "예약중" ? dto.startTime ?? undefined : undefined,
+      badgeStatus === "예약중" ? (dto.startTime ?? undefined) : undefined,
   };
 }
 

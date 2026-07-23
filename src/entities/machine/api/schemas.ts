@@ -4,10 +4,7 @@ import { z } from "zod";
 export const machineTypeSchema = z.enum(["WASHER", "DRYER"]);
 
 // 기기 고장 상태
-export const machineConditionStatusSchema = z.enum([
-  "NORMAL",
-  "MALFUNCTION",
-]);
+export const machineConditionStatusSchema = z.enum(["NORMAL", "MALFUNCTION"]);
 
 // 기기 사용 가능 상태
 export const machineAvailabilityStatusSchema = z.enum([

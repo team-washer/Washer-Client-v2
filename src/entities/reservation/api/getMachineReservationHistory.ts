@@ -1,24 +1,33 @@
-import { get, reservationUrl } from "@/shared/api";
+import { get, normalizeApiError, reservationUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapMachineReservationHistory } from "../lib/mapReservationHistory";
 import type {
   MachineReservationHistory,
   MachineReservationHistoryParamsType,
-  MachineReservationHistoryResponseType,
 } from "../model/historyTypes";
+import { machineReservationHistoryResponseSchema } from "./schemas";
 
 export async function getMachineReservationHistory(
   params?: MachineReservationHistoryParamsType,
 ): Promise<MachineReservationHistory | null> {
-  const response = await get<
-    BaseResponseType<MachineReservationHistoryResponseType>
-  >(reservationUrl.getMachineReservationHistory(), {
-    params,
-  });
+  try {
+    const response = await get<BaseResponseType<unknown>>(
+      reservationUrl.getMachineReservationHistory(),
+      {
+        params,
+      },
+    );
 
-  const machine = response.data.machines[0];
+    const parsedData = machineReservationHistoryResponseSchema.parse(
+      response.data,
+    );
 
-  if (!machine) return null;
+    const machine = parsedData.machines[0];
 
-  return mapMachineReservationHistory(machine);
+    if (!machine) return null;
+
+    return mapMachineReservationHistory(machine);
+  } catch (error) {
+    throw normalizeApiError(error);
+  }
 }

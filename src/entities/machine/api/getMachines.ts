@@ -1,4 +1,4 @@
-import { get, machineUrl } from "@/shared/api";
+import { get, machineUrl, normalizeApiError } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapMachines } from "../lib/mapMachine";
 import type {
@@ -30,10 +30,14 @@ async function getMachinesByType(
 export async function getMachines(
   params?: MachineParamsType,
 ): Promise<MachineItem[]> {
-  const [washers, dryers] = await Promise.all([
-    getMachinesByType("WASHER", params),
-    getMachinesByType("DRYER", params),
-  ]);
+  try {
+    const [washers, dryers] = await Promise.all([
+      getMachinesByType("WASHER", params),
+      getMachinesByType("DRYER", params),
+    ]);
 
-  return [...washers, ...dryers];
+    return [...washers, ...dryers];
+  } catch (error) {
+    throw normalizeApiError(error);
+  }
 }

@@ -20,7 +20,9 @@ export default function UserRowActions({
   };
 
   const handleRelease = () => {
-    const confirmed = window.confirm("이 사용자의 세탁 정지(패널티)를 해제하시겠습니까?");
+    const confirmed = window.confirm(
+      "이 사용자의 세탁 정지(패널티)를 해제하시겠습니까?",
+    );
     if (!confirmed) return;
 
     deleteUserPenalty(userId);

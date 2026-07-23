@@ -54,7 +54,9 @@ export default function ReservationRow({
         <div className="min-w-0">
           <p className="truncate text-[15px] text-[#4A4A4F]">
             {item.machine}
-            <span className="ml-2 text-[14px] text-[#8E8E93]">{item.userRoomNumber}호</span>
+            <span className="ml-2 text-[14px] text-[#8E8E93]">
+              {item.userRoomNumber}호
+            </span>
           </p>
 
           {item.badgeStatus === "사용중" && (

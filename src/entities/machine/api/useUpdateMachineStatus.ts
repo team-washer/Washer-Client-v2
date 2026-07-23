@@ -1,18 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { machineQueryKeys, machineUrl, put } from "@/shared/api";
-import type { MachineConditionStatusDTO } from "../model/types";
+import { machineQueryKeys } from "@/shared/api";
+import { updateMachineStatus } from "./updateMachineStatus";
 
 export const useUpdateMachineStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      id,
-      status,
-    }: {
-      id: number;
-      status: MachineConditionStatusDTO;
-    }) => put(machineUrl.updateMachineStatus(id), { status }),
+    mutationFn: updateMachineStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: machineQueryKeys.all,

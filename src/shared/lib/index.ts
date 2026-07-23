@@ -1,3 +1,4 @@
+export { clearAuthSession } from "./auth";
 export { axiosInstance } from "./axios";
 export { cn } from "./cn";
 export { formatDateTime } from "./formatDateTime";

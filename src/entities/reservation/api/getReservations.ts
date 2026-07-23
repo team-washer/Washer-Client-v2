@@ -1,13 +1,12 @@
-import { get, reservationUrl } from "@/shared/api";
+import { get, normalizeApiError, reservationUrl } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
 import { mapReservations } from "../lib/mapReservation";
-import { reservationResponseSchema } from "./schemas";
-
 import type {
   ReservationItem,
   ReservationMachineType,
   ReservationParamsType,
 } from "../model/types";
+import { reservationResponseSchema } from "./schemas";
 
 async function getReservationsByMachineType(
   machineType: ReservationMachineType,
@@ -31,11 +30,14 @@ async function getReservationsByMachineType(
 export async function getReservations(
   params?: ReservationParamsType,
 ): Promise<ReservationItem[]> {
-  const [washers, dryers] = await Promise.all([
-    getReservationsByMachineType("WASHER", params),
-    getReservationsByMachineType("DRYER", params),
-  ]);
+  try {
+    const [washers, dryers] = await Promise.all([
+      getReservationsByMachineType("WASHER", params),
+      getReservationsByMachineType("DRYER", params),
+    ]);
 
-  return [...washers, ...dryers];
+    return [...washers, ...dryers];
+  } catch (error) {
+    throw normalizeApiError(error);
+  }
 }
-

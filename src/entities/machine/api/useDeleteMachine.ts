@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { del, machineQueryKeys, machineUrl } from "@/shared/api";
+import { machineQueryKeys } from "@/shared/api";
+import { deleteMachine } from "./deleteMachine";
 
 export const useDeleteMachine = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => del(machineUrl.deleteMachine(id)),
+    mutationFn: deleteMachine,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: machineQueryKeys.all,
