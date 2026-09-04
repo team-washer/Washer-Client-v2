@@ -78,9 +78,7 @@ export default function CreateProxyReservationModal({
       { userId: selectedUser.id, machineId: machine.id },
       {
         onSuccess: () => {
-          toast.success(
-            `${selectedUser.name}님의 ${machine.name} 대리 예약이 생성되었습니다.`,
-          );
+          toast.success("대리 예약에 성공했습니다.");
           onClose();
         },
         onError: (error) => {
