@@ -5,15 +5,17 @@ import { X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import type { MachineItem } from "@/entities/machine";
-import { useCreateProxyReservation } from "@/entities/reservation";
-import { getUsers } from "@/entities/user";
+import { usePostProxyReservation } from "@/entities/reservation";
+import { getUsers, type ManagedUserItem } from "@/entities/user";
 import { userQueryKeys } from "@/shared/api";
 import { STALE_TIME } from "@/shared/constants/queryOptions";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import { FilterSearchField } from "@/shared/ui/admin/Filter";
 import {
   getProxyReservationUserParams,
+  isProxyReservationRoomPrefixSearch,
   mergeProxyReservationUsers,
+  PROXY_RESERVATION_USER_PAGE_SIZE,
 } from "../lib/getProxyReservationUserParams";
 
 interface CreateProxyReservationModalProps {
@@ -36,7 +38,7 @@ export default function CreateProxyReservationModal({
     () =>
       getProxyReservationUserParams(debouncedSearch).map((params) => ({
         ...params,
-        size: params.size ?? 20,
+        size: params.size ?? PROXY_RESERVATION_USER_PAGE_SIZE,
       })),
     [debouncedSearch],
   );
@@ -52,8 +54,29 @@ export default function CreateProxyReservationModal({
       queryParams,
     ] as const,
     queryFn: async () => {
+      const isRoomPrefixSearch =
+        isProxyReservationRoomPrefixSearch(debouncedSearch);
       const groups = await Promise.all(
-        queryParams.map((params) => getUsers(params)),
+        queryParams.map(async (params, index) => {
+          if (!isRoomPrefixSearch || index !== 0) {
+            return getUsers(params);
+          }
+
+          const floorUsers: ManagedUserItem[] = [];
+
+          for (let page = 0; ; page += 1) {
+            const pageUsers = await getUsers({
+              ...params,
+              page,
+              size: PROXY_RESERVATION_USER_PAGE_SIZE,
+            });
+            floorUsers.push(...pageUsers);
+
+            if (pageUsers.length < PROXY_RESERVATION_USER_PAGE_SIZE) {
+              return floorUsers;
+            }
+          }
+        }),
       );
 
       return mergeProxyReservationUsers(groups, debouncedSearch);
@@ -61,7 +84,7 @@ export default function CreateProxyReservationModal({
     placeholderData: keepPreviousData,
   });
   const { mutate: createProxyReservation, isPending } =
-    useCreateProxyReservation();
+    usePostProxyReservation();
 
   const selectedUser = users.find((user) => user.id === selectedUserId);
   const machineTypeLabel = machine.type === "WASHER" ? "세탁기" : "건조기";

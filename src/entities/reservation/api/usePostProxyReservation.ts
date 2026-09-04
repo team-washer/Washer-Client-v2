@@ -6,7 +6,7 @@ import {
 } from "@/shared/api";
 import { createProxyReservation } from "./createProxyReservation";
 
-export const useCreateProxyReservation = () => {
+export const usePostProxyReservation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

@@ -1,5 +1,11 @@
 import type { ManagedUserItem, UserParamsType } from "@/entities/user";
 
+export const PROXY_RESERVATION_USER_PAGE_SIZE = 20;
+
+export function isProxyReservationRoomPrefixSearch(search: string): boolean {
+  return /^\d{1,2}$/.test(search.trim());
+}
+
 export function getProxyReservationUserParams(
   search: string,
 ): UserParamsType[] {
@@ -10,9 +16,7 @@ export function getProxyReservationUserParams(
   if (/^\d+$/.test(term)) {
     if (term.length <= 3) {
       const roomParams: UserParamsType =
-        term.length === 3
-          ? { roomNumber: term }
-          : { floor: Number(term[0]), size: 200 };
+        term.length === 3 ? { roomNumber: term } : { floor: Number(term[0]) };
 
       return [roomParams, { studentId: term }];
     }
