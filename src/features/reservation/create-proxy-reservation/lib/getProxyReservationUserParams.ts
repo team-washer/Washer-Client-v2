@@ -1,17 +1,29 @@
-import type { UserParamsType } from "@/entities/user";
+import type { ManagedUserItem, UserParamsType } from "@/entities/user";
 
-export function getProxyReservationUserParams(search: string): UserParamsType {
+export function getProxyReservationUserParams(
+  search: string,
+): UserParamsType[] {
   const term = search.trim();
 
-  if (!term) return {};
-
-  if (/^\d{3}$/.test(term)) {
-    return { roomNumber: term };
-  }
+  if (!term) return [{}];
 
   if (/^\d+$/.test(term)) {
-    return { studentId: term };
+    const params: UserParamsType[] = [{ studentId: term }];
+
+    if (/^\d{3}$/.test(term)) {
+      params.push({ roomNumber: term });
+    }
+
+    return params;
   }
 
-  return { name: term };
+  return [{ name: term }];
+}
+
+export function mergeProxyReservationUsers(
+  groups: ManagedUserItem[][],
+): ManagedUserItem[] {
+  return Array.from(
+    new Map(groups.flat().map((user) => [user.id, user])).values(),
+  );
 }

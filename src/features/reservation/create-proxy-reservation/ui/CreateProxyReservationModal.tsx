@@ -1,14 +1,20 @@
 "use client";
 
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import type { MachineItem } from "@/entities/machine";
 import { useCreateProxyReservation } from "@/entities/reservation";
-import { useGetUsers } from "@/entities/user";
+import { getUsers } from "@/entities/user";
+import { userQueryKeys } from "@/shared/api";
+import { STALE_TIME } from "@/shared/constants/queryOptions";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import { FilterSearchField } from "@/shared/ui/admin/Filter";
-import { getProxyReservationUserParams } from "../lib/getProxyReservationUserParams";
+import {
+  getProxyReservationUserParams,
+  mergeProxyReservationUsers,
+} from "../lib/getProxyReservationUserParams";
 
 interface CreateProxyReservationModalProps {
   machine: MachineItem;
@@ -27,10 +33,33 @@ export default function CreateProxyReservationModal({
   const panelRef = useRef<HTMLDivElement>(null);
 
   const queryParams = useMemo(
-    () => ({ ...getProxyReservationUserParams(debouncedSearch), size: 20 }),
+    () =>
+      getProxyReservationUserParams(debouncedSearch).map((params) => ({
+        ...params,
+        size: 20,
+      })),
     [debouncedSearch],
   );
-  const { data: users = [], isLoading, isError } = useGetUsers(queryParams);
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    staleTime: STALE_TIME.USER,
+    queryKey: [
+      ...userQueryKeys.all,
+      "proxy-reservation-search",
+      queryParams,
+    ] as const,
+    queryFn: async () => {
+      const groups = await Promise.all(
+        queryParams.map((params) => getUsers(params)),
+      );
+
+      return mergeProxyReservationUsers(groups);
+    },
+    placeholderData: keepPreviousData,
+  });
   const { mutate: createProxyReservation, isPending } =
     useCreateProxyReservation();
 
