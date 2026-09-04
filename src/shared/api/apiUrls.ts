@@ -22,6 +22,7 @@ export const machineUrl = {
 
 export const reservationUrl = {
   getReservations: () => "/api/v2/admin/reservations",
+  createProxyReservation: () => "/api/v2/admin/reservations",
   getReservationDetail: (id: number) => `/api/v2/reservations/${id}`,
   getMachineReservationHistory: () =>
     "/api/v2/admin/reservations/machines/history",
