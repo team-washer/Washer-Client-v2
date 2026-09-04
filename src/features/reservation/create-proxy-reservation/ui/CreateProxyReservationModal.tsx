@@ -36,7 +36,7 @@ export default function CreateProxyReservationModal({
     () =>
       getProxyReservationUserParams(debouncedSearch).map((params) => ({
         ...params,
-        size: 20,
+        size: params.size ?? 20,
       })),
     [debouncedSearch],
   );
@@ -56,7 +56,7 @@ export default function CreateProxyReservationModal({
         queryParams.map((params) => getUsers(params)),
       );
 
-      return mergeProxyReservationUsers(groups);
+      return mergeProxyReservationUsers(groups, debouncedSearch);
     },
     placeholderData: keepPreviousData,
   });
