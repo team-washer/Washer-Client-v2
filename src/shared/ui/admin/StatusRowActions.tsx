@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 interface StatusRowActionsProps {
   badge: ReactNode;
+  extraAction?: ReactNode;
   onHistory?: () => void;
   onDelete?: () => void;
   disabled?: boolean;
@@ -10,6 +11,7 @@ interface StatusRowActionsProps {
 
 export default function StatusRowActions({
   badge,
+  extraAction,
   onHistory,
   onDelete,
   disabled = false,
@@ -26,6 +28,8 @@ export default function StatusRowActions({
       >
         <History size={16} strokeWidth={2.2} />
       </button>
+
+      {extraAction}
 
       <button
         type="button"
