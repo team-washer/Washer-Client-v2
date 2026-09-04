@@ -1,8 +1,10 @@
 import { Gavel, History } from "lucide-react";
 import type { ReactNode } from "react";
+import StatusRowActionButton from "./StatusRowActionButton";
 
 interface StatusRowActionsProps {
   badge: ReactNode;
+  extraAction?: ReactNode;
   onHistory?: () => void;
   onDelete?: () => void;
   disabled?: boolean;
@@ -10,6 +12,7 @@ interface StatusRowActionsProps {
 
 export default function StatusRowActions({
   badge,
+  extraAction,
   onHistory,
   onDelete,
   disabled = false,
@@ -18,23 +21,25 @@ export default function StatusRowActions({
     <div className="flex shrink-0 items-center gap-1">
       {badge}
 
-      <button
-        type="button"
+      <StatusRowActionButton
+        ariaLabel="예약 히스토리"
         onClick={onHistory}
         disabled={disabled}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border-2 cursor-pointer border-[#B7B7BD] text-[#9A9AA0] disabled:cursor-not-allowed disabled:opacity-50"
+        className="border-[#B7B7BD] text-[#9A9AA0]"
       >
         <History size={16} strokeWidth={2.2} />
-      </button>
+      </StatusRowActionButton>
 
-      <button
-        type="button"
+      {extraAction}
+
+      <StatusRowActionButton
+        ariaLabel="기기 관리"
         onClick={onDelete}
         disabled={disabled}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full cursor-pointer border-2 border-[#EF4B4F] text-[#EF4B4F] disabled:cursor-not-allowed disabled:opacity-50"
+        className="border-[#EF4B4F] text-[#EF4B4F]"
       >
         <Gavel size={16} strokeWidth={2.2} />
-      </button>
+      </StatusRowActionButton>
     </div>
   );
 }
