@@ -1,5 +1,5 @@
 import { User } from "lucide-react";
-import type { ManagedUserItem } from "@/entities/user/model/types";
+import { useGetMyInfo, type ManagedUserItem, type UserRole } from "@/entities/user";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import UserRowActions from "./UserRowActions";
 
@@ -7,7 +7,7 @@ interface UserStatusPanelProps {
   users: ManagedUserItem[];
 }
 
-function UserRow({ item }: { item: ManagedUserItem }) {
+function UserRow({ item, role }: { item: ManagedUserItem; role?: UserRole }) {
   const isRestrictedCase = Boolean(item.remain);
 
   return (
@@ -37,12 +37,14 @@ function UserRow({ item }: { item: ManagedUserItem }) {
         )}
       </div>
 
-      <UserRowActions userId={item.id} userName={item.name} room={item.room} isRestrictedCase={isRestrictedCase} />
+      <UserRowActions userId={item.id} userName={item.name} room={item.room} role={role} isRestrictedCase={isRestrictedCase} />
     </div>
   );
 }
 
 export default function UserStatusPanel({ users }: UserStatusPanelProps) {
+  const { data: myInfoData } = useGetMyInfo();
+  const role = myInfoData?.data.role;
   return (
     <StatusPanelShell
       title="사용자 관리"
@@ -60,7 +62,7 @@ export default function UserStatusPanel({ users }: UserStatusPanelProps) {
       ) : (
         <div className="sidebar-scrollbar max-h-full overflow-y-auto">
           {users.map((item) => (
-            <UserRow key={item.id} item={item} />
+            <UserRow key={item.id} item={item} role={role} />
           ))}
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useDeleteUserPenalty, useGetMyInfo } from "@/entities/user";
+import { useDeleteUserPenalty } from "@/entities/user";
+import type { UserRole } from "@/entities/user";
 import { ApplyUserPenaltyModal } from "@/features/user/apply-penalty";
 import { ExtendUserPenaltyModal } from "@/features/user/extend-penalty";
 
@@ -7,15 +8,14 @@ interface UserRowActionsProps {
   userId: number;
   userName: string;
   room: string;
+  role?: UserRole;
   isRestrictedCase?: boolean;
 }
 
-export default function UserRowActions({ userId, userName, room, isRestrictedCase = false }: UserRowActionsProps) {
+export default function UserRowActions({ userId, userName, room, role, isRestrictedCase = false }: UserRowActionsProps) {
   const { mutate: deleteUserPenalty, isPending } = useDeleteUserPenalty();
-  const { data: myInfoData } = useGetMyInfo();
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [isExtendModalOpen, setIsExtendModalOpen] = useState(false);
-  const role = myInfoData?.data.role;
   const canApplyPenalty = role === "ADMIN" || role === "DORMITORY_COUNCIL";
   const canManagePenalty = role === "ADMIN";
 
