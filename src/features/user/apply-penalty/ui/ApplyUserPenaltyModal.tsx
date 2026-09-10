@@ -45,9 +45,9 @@ export default function ApplyUserPenaltyModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4" role="presentation">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4" role="dialog" aria-modal="true" aria-labelledby="apply-penalty-title">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl" noValidate>
-        <h2 className="text-lg font-semibold text-[#4A4A4F]">세탁 패널티 부과</h2>
+        <h2 id="apply-penalty-title" className="text-lg font-semibold text-[#4A4A4F]">세탁 패널티 부과</h2>
         <p className="mt-2 text-sm text-[#71717A]">
           {userName} · {room}호실에 48시간 세탁 예약 차단을 부과합니다.
         </p>
