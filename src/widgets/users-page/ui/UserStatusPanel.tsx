@@ -37,7 +37,7 @@ function UserRow({ item }: { item: ManagedUserItem }) {
         )}
       </div>
 
-      <UserRowActions userId={item.id} isRestrictedCase={isRestrictedCase} />
+      <UserRowActions userId={item.id} userName={item.name} room={item.room} isRestrictedCase={isRestrictedCase} />
     </div>
   );
 }
