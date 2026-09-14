@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useExtendUserPenalty } from "@/entities/user";
@@ -15,7 +16,11 @@ interface ExtendUserPenaltyModalProps {
 
 export default function ExtendUserPenaltyModal({ open, userId, userName, onClose }: ExtendUserPenaltyModalProps) {
   const { mutateAsync, isPending } = useExtendUserPenalty();
-  const { register, handleSubmit, formState: { errors } } = useForm<ExtendUserPenaltyFormValues>({ resolver: zodResolver(extendUserPenaltySchema), defaultValues: { days: 1 } });
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<ExtendUserPenaltyFormValues>({ resolver: zodResolver(extendUserPenaltySchema), defaultValues: { days: 1 } });
+
+  useEffect(() => {
+    if (!open) reset();
+  }, [open, reset]);
 
   if (!open) return null;
 
