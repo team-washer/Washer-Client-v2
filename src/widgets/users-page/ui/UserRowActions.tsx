@@ -29,11 +29,9 @@ export default function UserRowActions({ userId, userName, room, role, isRestric
   return (
     <>
       <div className="flex shrink-0 items-center gap-2">
-        {!isRestrictedCase && (
-          <button type="button" onClick={() => setIsApplyModalOpen(true)} className="inline-flex h-7 min-w-[76px] cursor-pointer items-center justify-center rounded-full bg-[#EF4B4F] px-3 text-xs font-semibold text-white transition-opacity hover:opacity-90">
+        <button type="button" onClick={() => setIsApplyModalOpen(true)} className="inline-flex h-7 min-w-[76px] cursor-pointer items-center justify-center rounded-full bg-[#EF4B4F] px-3 text-xs font-semibold text-white transition-opacity hover:opacity-90">
             세탁 정지
-          </button>
-        )}
+        </button>
         {isRestrictedCase && canManagePenalty && (
           <>
             <button type="button" onClick={() => setIsExtendModalOpen(true)} className="inline-flex h-7 min-w-[54px] cursor-pointer items-center justify-center rounded-full bg-[#EF4B4F] px-3 text-xs font-semibold text-white">연장</button>
