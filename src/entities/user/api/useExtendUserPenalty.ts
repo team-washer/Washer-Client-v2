@@ -8,6 +8,7 @@ export function useExtendUserPenalty() {
   return useMutation({
     mutationFn: ({ userId, days }: { userId: number; days: number }) =>
       extendUserPenalty(userId, days),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: userQueryKeys.all }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: userQueryKeys.lists() }),
   });
 }
