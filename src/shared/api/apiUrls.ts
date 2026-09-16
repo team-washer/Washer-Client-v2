@@ -34,6 +34,10 @@ export const userUrl = {
   getMyInfo: () => "/api/v2/users/my",
   deleteUserPenalty: (userId: number) =>
     `/api/v2/admin/reservations/users/${userId}/penalty`,
+  applyUserPenalty: (userId: number) =>
+    `/api/v2/admin/reservations/users/${userId}/penalty`,
+  extendUserPenalty: (userId: number) =>
+    `/api/v2/admin/reservations/users/${userId}/penalty/block`,
 } as const;
 
 export const dashboardUrl = {
