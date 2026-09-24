@@ -13,9 +13,12 @@ export function useOutsideClick<T extends HTMLElement>(
     const handleClick = (event: MouseEvent) => {
       if (!ref.current) return;
 
-      if (!ref.current.contains(event.target as Node)) {
-        onClose();
-      }
+      const target = event.target as HTMLElement;
+
+      if (ref.current.contains(target)) return;
+      if (target.closest("[data-panel-trigger]")) return;
+
+      onClose();
     };
 
     document.addEventListener("mousedown", handleClick);

@@ -42,7 +42,11 @@ export default function ReservationsPage() {
           icon={<Waves size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={dryerReservations}
           onOpenHistory={(machineName) =>
-            setHistoryOverlay({ machineName, side: "right" })
+            setHistoryOverlay((prev) =>
+              prev?.side === "right" && prev.machineName === machineName
+                ? null
+                : { machineName, side: "right" },
+            )
           }
         />
 
@@ -61,7 +65,11 @@ export default function ReservationsPage() {
           icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={washerReservations}
           onOpenHistory={(machineName) =>
-            setHistoryOverlay({ machineName, side: "left" })
+            setHistoryOverlay((prev) =>
+              prev?.side === "left" && prev.machineName === machineName
+                ? null
+                : { machineName, side: "left" },
+            )
           }
         />
 

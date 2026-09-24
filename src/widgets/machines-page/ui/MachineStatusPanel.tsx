@@ -116,16 +116,19 @@ export default function MachineStatusPanel({
             key={machine.id}
             machine={machine}
             reservations={reservations ?? []}
-            onHistory={() =>
-              setSelectedHistoryMachineName((prev) =>
-                prev === machine.name ? null : machine.name,
-              )
-            }
-            onManage={() =>
-              setSelectedMachine((prev) =>
-                prev?.id === machine.id ? null : machine,
-              )
-            }
+            onHistory={() => {
+              const next =
+                selectedHistoryMachineName === machine.name
+                  ? null
+                  : machine.name;
+              setSelectedHistoryMachineName(next);
+              if (next !== null) setSelectedMachine(null);
+            }}
+            onManage={() => {
+              const next = selectedMachine?.id === machine.id ? null : machine;
+              setSelectedMachine(next);
+              if (next !== null) setSelectedHistoryMachineName(null);
+            }}
           />
         ))}
       </StatusPanelShell>
