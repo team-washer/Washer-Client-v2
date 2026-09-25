@@ -140,6 +140,7 @@ export default function MachineStatusPanel({
       />
 
       <MachineStatusModal
+        key={selectedMachine?.id ?? "none"}
         machine={selectedMachine}
         onClose={() => setSelectedMachine(null)}
         side={side}
