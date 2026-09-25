@@ -22,6 +22,7 @@ export const machineUrl = {
 
 export const reservationUrl = {
   getReservations: () => "/api/v2/admin/reservations",
+  createProxyReservation: () => "/api/v2/admin/reservations",
   getReservationDetail: (id: number) => `/api/v2/reservations/${id}`,
   getMachineReservationHistory: () =>
     "/api/v2/admin/reservations/machines/history",
@@ -33,6 +34,10 @@ export const userUrl = {
   getMyInfo: () => "/api/v2/users/my",
   deleteUserPenalty: (userId: number) =>
     `/api/v2/admin/reservations/users/${userId}/penalty`,
+  applyUserPenalty: (userId: number) =>
+    `/api/v2/admin/reservations/users/${userId}/penalty`,
+  extendUserPenalty: (userId: number) =>
+    `/api/v2/admin/reservations/users/${userId}/penalty/block`,
 } as const;
 
 export const dashboardUrl = {

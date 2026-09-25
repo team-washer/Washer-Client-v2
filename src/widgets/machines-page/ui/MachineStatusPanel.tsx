@@ -8,6 +8,10 @@ import {
   type ReservationItem,
   useGetReservations,
 } from "@/entities/reservation";
+import {
+  CreateProxyReservationModal,
+  ProxyReservationButton,
+} from "@/features/reservation/create-proxy-reservation";
 import { useRemainingTime } from "@/shared/hooks/useRemainingTime";
 import StatusPanelShell from "@/shared/ui/admin/StatusPanelShell";
 import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
@@ -37,11 +41,13 @@ function MachineRow({
   machine,
   reservations,
   onHistory,
+  onProxyReservation,
   onManage,
 }: {
   machine: MachineItem;
   reservations: ReservationItem[];
   onHistory: () => void;
+  onProxyReservation: () => void;
   onManage: () => void;
 }) {
   const { warningMessage, timeTarget, secondaryInfo } =
@@ -87,6 +93,13 @@ function MachineRow({
       <StatusRowActions
         badge={<MachineStatusBadge status={machine.status} />}
         onHistory={onHistory}
+        extraAction={
+          <ProxyReservationButton
+            machineName={machine.name}
+            disabled={machine.availability !== "AVAILABLE"}
+            onClick={onProxyReservation}
+          />
+        }
         onDelete={onManage}
       />
     </div>
@@ -105,6 +118,8 @@ export default function MachineStatusPanel({
   const [selectedMachine, setSelectedMachine] = useState<MachineItem | null>(
     null,
   );
+  const [selectedProxyMachine, setSelectedProxyMachine] =
+    useState<MachineItem | null>(null);
 
   const { data: reservations } = useGetReservations();
 
@@ -117,17 +132,25 @@ export default function MachineStatusPanel({
             machine={machine}
             reservations={reservations ?? []}
             onHistory={() => {
-              const next =
-                selectedHistoryMachineName === machine.name
-                  ? null
-                  : machine.name;
-              setSelectedHistoryMachineName(next);
-              if (next !== null) setSelectedMachine(null);
+              setSelectedMachine(null);
+              setSelectedProxyMachine(null);
+              setSelectedHistoryMachineName((prev) =>
+                prev === machine.name ? null : machine.name,
+              );
+            }}
+            onProxyReservation={() => {
+              setSelectedHistoryMachineName(null);
+              setSelectedMachine(null);
+              setSelectedProxyMachine((prev) =>
+                prev?.id === machine.id ? null : machine,
+              );
             }}
             onManage={() => {
-              const next = selectedMachine?.id === machine.id ? null : machine;
-              setSelectedMachine(next);
-              if (next !== null) setSelectedHistoryMachineName(null);
+              setSelectedHistoryMachineName(null);
+              setSelectedProxyMachine(null);
+              setSelectedMachine((prev) =>
+                prev?.id === machine.id ? null : machine,
+              );
             }}
           />
         ))}
@@ -138,6 +161,14 @@ export default function MachineStatusPanel({
         onClose={() => setSelectedHistoryMachineName(null)}
         side={side}
       />
+
+      {selectedProxyMachine && (
+        <CreateProxyReservationModal
+          machine={selectedProxyMachine}
+          onClose={() => setSelectedProxyMachine(null)}
+          side={side}
+        />
+      )}
 
       <MachineStatusModal
         key={selectedMachine?.id ?? "none"}
