@@ -24,7 +24,7 @@ export default function ReservationHistoryModal({
     machineName ? { machineName } : undefined,
   );
 
-  useOutsideClick(panelRef, onClose, isOpen);
+  useOutsideClick(panelRef, onClose, isOpen, side);
 
   if (!isOpen || !machineName) return null;
 

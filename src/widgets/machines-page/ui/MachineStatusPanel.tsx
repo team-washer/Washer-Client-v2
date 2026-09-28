@@ -43,12 +43,14 @@ function MachineRow({
   onHistory,
   onProxyReservation,
   onManage,
+  triggerGroup,
 }: {
   machine: MachineItem;
   reservations: ReservationItem[];
   onHistory: () => void;
   onProxyReservation: () => void;
   onManage: () => void;
+  triggerGroup: string;
 }) {
   const { warningMessage, timeTarget, secondaryInfo } =
     getMachineReservationInfo({
@@ -98,9 +100,11 @@ function MachineRow({
             machineName={machine.name}
             disabled={machine.availability !== "AVAILABLE"}
             onClick={onProxyReservation}
+            triggerGroup={triggerGroup}
           />
         }
         onDelete={onManage}
+        triggerGroup={triggerGroup}
       />
     </div>
   );
@@ -131,6 +135,7 @@ export default function MachineStatusPanel({
             key={machine.id}
             machine={machine}
             reservations={reservations ?? []}
+            triggerGroup={side}
             onHistory={() => {
               setSelectedMachine(null);
               setSelectedProxyMachine(null);
@@ -171,6 +176,7 @@ export default function MachineStatusPanel({
       )}
 
       <MachineStatusModal
+        key={selectedMachine?.id ?? "none"}
         machine={selectedMachine}
         onClose={() => setSelectedMachine(null)}
         side={side}

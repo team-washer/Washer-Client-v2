@@ -8,6 +8,7 @@ interface StatusRowActionButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  triggerGroup?: string;
 }
 
 export default function StatusRowActionButton({
@@ -17,10 +18,12 @@ export default function StatusRowActionButton({
   onClick,
   disabled = false,
   className,
+  triggerGroup,
 }: StatusRowActionButtonProps) {
   return (
     <button
       type="button"
+      data-panel-trigger={triggerGroup}
       onClick={onClick}
       disabled={disabled}
       aria-label={ariaLabel}

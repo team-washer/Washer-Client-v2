@@ -10,6 +10,7 @@ interface ReservationStatusPanelProps {
   icon: ReactNode;
   reservations: ReservationItem[];
   onOpenHistory: (machineName: string) => void;
+  side: "left" | "right";
 }
 
 export default function ReservationStatusPanel({
@@ -17,6 +18,7 @@ export default function ReservationStatusPanel({
   icon,
   reservations,
   onOpenHistory,
+  side,
 }: ReservationStatusPanelProps) {
   return (
     <StatusPanelShell title={title} icon={icon}>
@@ -30,6 +32,7 @@ export default function ReservationStatusPanel({
             key={item.id}
             item={item}
             onOpenHistory={onOpenHistory}
+            triggerGroup={side}
           />
         ))
       )}

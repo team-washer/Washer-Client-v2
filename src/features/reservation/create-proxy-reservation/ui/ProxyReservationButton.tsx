@@ -5,12 +5,14 @@ interface ProxyReservationButtonProps {
   machineName: string;
   disabled?: boolean;
   onClick: () => void;
+  triggerGroup?: string;
 }
 
 export default function ProxyReservationButton({
   machineName,
   disabled = false,
   onClick,
+  triggerGroup,
 }: ProxyReservationButtonProps) {
   return (
     <StatusRowActionButton
@@ -19,6 +21,7 @@ export default function ProxyReservationButton({
       onClick={onClick}
       disabled={disabled}
       className="border-[#4D83F6] text-[#4D83F6]"
+      triggerGroup={triggerGroup}
     >
       <UserPlus size={16} strokeWidth={2.2} />
     </StatusRowActionButton>

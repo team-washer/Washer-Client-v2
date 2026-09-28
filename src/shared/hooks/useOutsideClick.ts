@@ -6,6 +6,7 @@ export function useOutsideClick<T extends HTMLElement>(
   ref: React.RefObject<T | null>,
   onClose: () => void,
   enabled: boolean = true,
+  triggerGroup?: string,
 ) {
   useEffect(() => {
     if (!enabled) return;
@@ -13,9 +14,19 @@ export function useOutsideClick<T extends HTMLElement>(
     const handleClick = (event: MouseEvent) => {
       if (!ref.current) return;
 
-      if (!ref.current.contains(event.target as Node)) {
-        onClose();
+      const target = event.target as HTMLElement;
+
+      if (ref.current.contains(target)) return;
+
+      const trigger = target.closest("[data-panel-trigger]");
+      if (
+        trigger &&
+        trigger.getAttribute("data-panel-trigger") === triggerGroup
+      ) {
+        return;
       }
+
+      onClose();
     };
 
     document.addEventListener("mousedown", handleClick);
@@ -23,5 +34,5 @@ export function useOutsideClick<T extends HTMLElement>(
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, [ref, onClose, enabled]);
+  }, [ref, onClose, enabled, triggerGroup]);
 }

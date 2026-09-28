@@ -41,8 +41,13 @@ export default function ReservationsPage() {
           title="건조기 예약 현황"
           icon={<Waves size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={dryerReservations}
+          side="right"
           onOpenHistory={(machineName) =>
-            setHistoryOverlay({ machineName, side: "right" })
+            setHistoryOverlay((prev) =>
+              prev?.side === "right" && prev.machineName === machineName
+                ? null
+                : { machineName, side: "right" },
+            )
           }
         />
 
@@ -60,8 +65,13 @@ export default function ReservationsPage() {
           title="세탁기 예약 현황"
           icon={<Droplet size={18} className="translate-y-px text-[#A4A4AA]" />}
           reservations={washerReservations}
+          side="left"
           onOpenHistory={(machineName) =>
-            setHistoryOverlay({ machineName, side: "left" })
+            setHistoryOverlay((prev) =>
+              prev?.side === "left" && prev.machineName === machineName
+                ? null
+                : { machineName, side: "left" },
+            )
           }
         />
 
