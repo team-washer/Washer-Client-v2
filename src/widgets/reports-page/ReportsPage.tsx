@@ -8,6 +8,7 @@ import {
   useGetMalfunctionReports,
 } from "@/entities/report";
 import {
+  createQuerySyncTracker,
   getQueryParamNumber,
   updateQueryParams,
 } from "@/shared/lib/queryParams";
@@ -18,14 +19,22 @@ const ReportsPage = () => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const hasHydratedFromQuery = useRef(false);
+  const querySyncTracker = useRef(createQuerySyncTracker());
   const skipQuerySync = useRef(false);
+  const [queryHydrationVersion, setQueryHydrationVersion] = useState(0);
   const [status, setStatus] = useState<ReportStatusType | undefined>();
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [floor, setFloor] = useState<number | undefined>();
 
   useEffect(() => {
+    const query = searchParams.toString();
+    const navigationSource = querySyncTracker.current.observe(query);
+
+    if (navigationSource === "internal") {
+      return;
+    }
+
     const queryStatus = searchParams.get("status");
     const nextStatus: ReportStatusType | undefined =
       queryStatus === "PENDING" ||
@@ -40,8 +49,8 @@ const ReportsPage = () => {
     setSearch(querySearch);
     setDebouncedSearch(querySearch);
     setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
-    hasHydratedFromQuery.current = true;
     skipQuerySync.current = true;
+    setQueryHydrationVersion((version) => version + 1);
   }, [searchParams]);
 
   useEffect(() => {
@@ -58,23 +67,27 @@ const ReportsPage = () => {
       return;
     }
 
-    if (!hasHydratedFromQuery.current) {
+    if (queryHydrationVersion === 0) {
       return;
     }
 
-    const nextSearchParams = updateQueryParams(searchParams, {
-      search: debouncedSearch,
-      status,
-      floor,
-    });
+    const currentQuery = querySyncTracker.current.getCurrentQuery();
+    const nextSearchParams = updateQueryParams(
+      new URLSearchParams(currentQuery),
+      {
+        search: debouncedSearch,
+        status,
+        floor,
+      },
+    );
     const nextQuery = nextSearchParams.toString();
 
-    if (nextQuery !== searchParams.toString()) {
+    if (querySyncTracker.current.request(nextQuery)) {
       router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, {
         scroll: false,
       });
     }
-  }, [debouncedSearch, floor, pathname, router, searchParams, status]);
+  }, [debouncedSearch, floor, pathname, queryHydrationVersion, router, status]);
 
   const {
     data: reportsData,

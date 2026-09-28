@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { UserParamsType } from "@/entities/user";
 import { useGetUsers } from "@/entities/user";
 import {
+  createQuerySyncTracker,
   getQueryParamNumber,
   updateQueryParams,
 } from "@/shared/lib/queryParams";
@@ -15,8 +16,9 @@ export default function UsersPage() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const hasHydratedFromQuery = useRef(false);
+  const querySyncTracker = useRef(createQuerySyncTracker());
   const skipQuerySync = useRef(false);
+  const [queryHydrationVersion, setQueryHydrationVersion] = useState(0);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [roomSearch, setRoomSearch] = useState("");
@@ -24,6 +26,13 @@ export default function UsersPage() {
   const [floor, setFloor] = useState<number | undefined>();
 
   useEffect(() => {
+    const query = searchParams.toString();
+    const navigationSource = querySyncTracker.current.observe(query);
+
+    if (navigationSource === "internal") {
+      return;
+    }
+
     const querySearch = searchParams.get("search") ?? "";
     const queryRoomSearch = searchParams.get("room") ?? "";
     const queryFloor = getQueryParamNumber(searchParams, "floor");
@@ -33,8 +42,8 @@ export default function UsersPage() {
     setRoomSearch(queryRoomSearch);
     setDebouncedRoomSearch(queryRoomSearch);
     setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
-    hasHydratedFromQuery.current = true;
     skipQuerySync.current = true;
+    setQueryHydrationVersion((version) => version + 1);
   }, [searchParams]);
 
   useEffect(() => {
@@ -57,18 +66,22 @@ export default function UsersPage() {
       return;
     }
 
-    if (!hasHydratedFromQuery.current) {
+    if (queryHydrationVersion === 0) {
       return;
     }
 
-    const nextSearchParams = updateQueryParams(searchParams, {
-      search: debouncedSearch,
-      room: debouncedRoomSearch,
-      floor,
-    });
+    const currentQuery = querySyncTracker.current.getCurrentQuery();
+    const nextSearchParams = updateQueryParams(
+      new URLSearchParams(currentQuery),
+      {
+        search: debouncedSearch,
+        room: debouncedRoomSearch,
+        floor,
+      },
+    );
     const nextQuery = nextSearchParams.toString();
 
-    if (nextQuery !== searchParams.toString()) {
+    if (querySyncTracker.current.request(nextQuery)) {
       router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, {
         scroll: false,
       });
@@ -78,8 +91,8 @@ export default function UsersPage() {
     debouncedSearch,
     floor,
     pathname,
+    queryHydrationVersion,
     router,
-    searchParams,
   ]);
 
   const queryParams = useMemo(() => {

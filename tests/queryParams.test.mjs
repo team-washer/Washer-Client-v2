@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  createQuerySyncTracker,
   getQueryParamNumber,
   updateQueryParams,
 } from "../src/shared/lib/queryParams.ts";
@@ -25,4 +26,17 @@ test("getQueryParamNumber returns only finite integer values", () => {
   assert.equal(getQueryParamNumber(params, "invalid"), undefined);
   assert.equal(getQueryParamNumber(params, "empty"), undefined);
   assert.equal(getQueryParamNumber(params, "missing"), undefined);
+});
+
+test("createQuerySyncTracker keeps the latest query when an older navigation completes", () => {
+  const tracker = createQuerySyncTracker();
+
+  assert.equal(tracker.observe(""), "external");
+  assert.equal(tracker.request("search=first"), true);
+  assert.equal(tracker.request("search=latest"), true);
+
+  assert.equal(tracker.observe("search=first"), "internal");
+  assert.equal(tracker.getCurrentQuery(), "search=latest");
+  assert.equal(tracker.observe("search=latest"), "internal");
+  assert.equal(tracker.getCurrentQuery(), "search=latest");
 });

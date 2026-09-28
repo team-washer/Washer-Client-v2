@@ -1,5 +1,34 @@
 export type QueryParamValue = string | number | undefined;
 
+export type QueryNavigationSource = "external" | "internal";
+
+export const createQuerySyncTracker = (initialQuery = "") => {
+  let currentQuery = initialQuery;
+  const pendingQueries = new Set<string>();
+
+  return {
+    getCurrentQuery: () => currentQuery,
+    request: (query: string) => {
+      if (query === currentQuery) {
+        return false;
+      }
+
+      pendingQueries.add(query);
+      currentQuery = query;
+      return true;
+    },
+    observe: (query: string): QueryNavigationSource => {
+      if (pendingQueries.delete(query)) {
+        return "internal";
+      }
+
+      pendingQueries.clear();
+      currentQuery = query;
+      return "external";
+    },
+  };
+};
+
 export const updateQueryParams = (
   current: URLSearchParams,
   values: Record<string, QueryParamValue>,
