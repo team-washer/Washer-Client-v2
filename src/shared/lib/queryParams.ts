@@ -4,7 +4,6 @@ export type QueryNavigationSource = "external" | "internal";
 
 export const createQuerySyncTracker = (initialQuery = "") => {
   let currentQuery = initialQuery;
-  const pendingQueries = new Set<string>();
 
   return {
     getCurrentQuery: () => currentQuery,
@@ -13,18 +12,13 @@ export const createQuerySyncTracker = (initialQuery = "") => {
         return false;
       }
 
-      pendingQueries.add(query);
       currentQuery = query;
       return true;
     },
     observe: (query: string): QueryNavigationSource => {
-      if (pendingQueries.delete(query)) {
-        return "internal";
-      }
-
-      pendingQueries.clear();
+      const navigationSource = query === currentQuery ? "internal" : "external";
       currentQuery = query;
-      return "external";
+      return navigationSource;
     },
   };
 };

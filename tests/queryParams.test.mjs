@@ -28,15 +28,13 @@ test("getQueryParamNumber returns only finite integer values", () => {
   assert.equal(getQueryParamNumber(params, "missing"), undefined);
 });
 
-test("createQuerySyncTracker keeps the latest query when an older navigation completes", () => {
+test("createQuerySyncTracker does not keep completed older queries as internal", () => {
   const tracker = createQuerySyncTracker();
 
-  assert.equal(tracker.observe(""), "external");
   assert.equal(tracker.request("search=first"), true);
   assert.equal(tracker.request("search=latest"), true);
 
-  assert.equal(tracker.observe("search=first"), "internal");
-  assert.equal(tracker.getCurrentQuery(), "search=latest");
   assert.equal(tracker.observe("search=latest"), "internal");
-  assert.equal(tracker.getCurrentQuery(), "search=latest");
+  assert.equal(tracker.observe("search=first"), "external");
+  assert.equal(tracker.getCurrentQuery(), "search=first");
 });
