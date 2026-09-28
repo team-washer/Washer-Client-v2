@@ -1,17 +1,41 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useGetUsers } from "@/entities/user";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { UserParamsType } from "@/entities/user";
+import { useGetUsers } from "@/entities/user";
+import {
+  getQueryParamNumber,
+  updateQueryParams,
+} from "@/shared/lib/queryParams";
 import UserFilterPanel from "./ui/UserFilterPanel";
 import UserStatusPanel from "./ui/UserStatusPanel";
 
 export default function UsersPage() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const hasHydratedFromQuery = useRef(false);
+  const skipQuerySync = useRef(false);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [roomSearch, setRoomSearch] = useState("");
   const [debouncedRoomSearch, setDebouncedRoomSearch] = useState("");
   const [floor, setFloor] = useState<number | undefined>();
+
+  useEffect(() => {
+    const querySearch = searchParams.get("search") ?? "";
+    const queryRoomSearch = searchParams.get("room") ?? "";
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+
+    setSearch(querySearch);
+    setDebouncedSearch(querySearch);
+    setRoomSearch(queryRoomSearch);
+    setDebouncedRoomSearch(queryRoomSearch);
+    setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
+    hasHydratedFromQuery.current = true;
+    skipQuerySync.current = true;
+  }, [searchParams]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -26,6 +50,37 @@ export default function UsersPage() {
     }, 300);
     return () => clearTimeout(handler);
   }, [roomSearch]);
+
+  useEffect(() => {
+    if (skipQuerySync.current) {
+      skipQuerySync.current = false;
+      return;
+    }
+
+    if (!hasHydratedFromQuery.current) {
+      return;
+    }
+
+    const nextSearchParams = updateQueryParams(searchParams, {
+      search: debouncedSearch,
+      room: debouncedRoomSearch,
+      floor,
+    });
+    const nextQuery = nextSearchParams.toString();
+
+    if (nextQuery !== searchParams.toString()) {
+      router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, {
+        scroll: false,
+      });
+    }
+  }, [
+    debouncedRoomSearch,
+    debouncedSearch,
+    floor,
+    pathname,
+    router,
+    searchParams,
+  ]);
 
   const queryParams = useMemo(() => {
     const params: UserParamsType = {};
