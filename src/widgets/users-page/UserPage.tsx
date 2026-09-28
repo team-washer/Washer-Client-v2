@@ -19,11 +19,20 @@ export default function UsersPage() {
   const querySyncTracker = useRef(createQuerySyncTracker());
   const skipQuerySync = useRef(false);
   const [queryHydrationVersion, setQueryHydrationVersion] = useState(0);
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [roomSearch, setRoomSearch] = useState("");
-  const [debouncedRoomSearch, setDebouncedRoomSearch] = useState("");
-  const [floor, setFloor] = useState<number | undefined>();
+  const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
+  const [debouncedSearch, setDebouncedSearch] = useState(
+    () => searchParams.get("search") ?? "",
+  );
+  const [roomSearch, setRoomSearch] = useState(
+    () => searchParams.get("room") ?? "",
+  );
+  const [debouncedRoomSearch, setDebouncedRoomSearch] = useState(
+    () => searchParams.get("room") ?? "",
+  );
+  const [floor, setFloor] = useState<number | undefined>(() => {
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+    return queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined;
+  });
 
   useEffect(() => {
     const query = searchParams.toString();
