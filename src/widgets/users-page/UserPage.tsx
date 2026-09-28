@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { UserParamsType } from "@/entities/user";
 import { useGetUsers } from "@/entities/user";
@@ -14,11 +14,11 @@ import UserStatusPanel from "./ui/UserStatusPanel";
 
 export default function UsersPage() {
   const pathname = usePathname();
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const querySyncTracker = useRef(createQuerySyncTracker());
+  const querySyncTracker = useRef(
+    createQuerySyncTracker(searchParams.toString()),
+  );
   const skipQuerySync = useRef(false);
-  const [queryHydrationVersion, setQueryHydrationVersion] = useState(0);
   const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
   const [debouncedSearch, setDebouncedSearch] = useState(
     () => searchParams.get("search") ?? "",
@@ -52,7 +52,6 @@ export default function UsersPage() {
     setDebouncedRoomSearch(queryRoomSearch);
     setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
     skipQuerySync.current = true;
-    setQueryHydrationVersion((version) => version + 1);
   }, [searchParams]);
 
   useEffect(() => {
@@ -75,34 +74,21 @@ export default function UsersPage() {
       return;
     }
 
-    if (queryHydrationVersion === 0) {
-      return;
-    }
-
-    const currentQuery = querySyncTracker.current.getCurrentQuery();
-    const nextSearchParams = updateQueryParams(
-      new URLSearchParams(currentQuery),
-      {
-        search: debouncedSearch,
-        room: debouncedRoomSearch,
-        floor,
-      },
-    );
+    const nextSearchParams = updateQueryParams(searchParams, {
+      search: debouncedSearch,
+      room: debouncedRoomSearch,
+      floor,
+    });
     const nextQuery = nextSearchParams.toString();
 
     if (querySyncTracker.current.request(nextQuery)) {
-      router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, {
-        scroll: false,
-      });
+      window.history.replaceState(
+        null,
+        "",
+        nextQuery ? `${pathname}?${nextQuery}` : pathname,
+      );
     }
-  }, [
-    debouncedRoomSearch,
-    debouncedSearch,
-    floor,
-    pathname,
-    queryHydrationVersion,
-    router,
-  ]);
+  }, [debouncedRoomSearch, debouncedSearch, floor, pathname, searchParams]);
 
   const queryParams = useMemo(() => {
     const params: UserParamsType = {};

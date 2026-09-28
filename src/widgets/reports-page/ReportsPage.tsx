@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useGetMachines } from "@/entities/machine";
 import {
@@ -27,11 +27,11 @@ const getReportStatus = (
 
 const ReportsPage = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const querySyncTracker = useRef(createQuerySyncTracker());
+  const querySyncTracker = useRef(
+    createQuerySyncTracker(searchParams.toString()),
+  );
   const skipQuerySync = useRef(false);
-  const [queryHydrationVersion, setQueryHydrationVersion] = useState(0);
   const [status, setStatus] = useState<ReportStatusType | undefined>(() =>
     getReportStatus(searchParams.get("status")),
   );
@@ -61,7 +61,6 @@ const ReportsPage = () => {
     setDebouncedSearch(querySearch);
     setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
     skipQuerySync.current = true;
-    setQueryHydrationVersion((version) => version + 1);
   }, [searchParams]);
 
   useEffect(() => {
@@ -78,27 +77,21 @@ const ReportsPage = () => {
       return;
     }
 
-    if (queryHydrationVersion === 0) {
-      return;
-    }
-
-    const currentQuery = querySyncTracker.current.getCurrentQuery();
-    const nextSearchParams = updateQueryParams(
-      new URLSearchParams(currentQuery),
-      {
-        search: debouncedSearch,
-        status,
-        floor,
-      },
-    );
+    const nextSearchParams = updateQueryParams(searchParams, {
+      search: debouncedSearch,
+      status,
+      floor,
+    });
     const nextQuery = nextSearchParams.toString();
 
     if (querySyncTracker.current.request(nextQuery)) {
-      router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, {
-        scroll: false,
-      });
+      window.history.replaceState(
+        null,
+        "",
+        nextQuery ? `${pathname}?${nextQuery}` : pathname,
+      );
     }
-  }, [debouncedSearch, floor, pathname, queryHydrationVersion, router, status]);
+  }, [debouncedSearch, floor, pathname, searchParams, status]);
 
   const {
     data: reportsData,
