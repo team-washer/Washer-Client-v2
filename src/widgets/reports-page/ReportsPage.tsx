@@ -1,18 +1,80 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGetMachines } from "@/entities/machine";
 import {
   type ReportStatusType,
   useGetMalfunctionReports,
 } from "@/entities/report";
+import {
+  getQueryParamNumber,
+  updateQueryParams,
+} from "@/shared/lib/queryParams";
 import ReportFilterPanel from "./ui/ReportFilterPanel";
 import ReportsPanel from "./ui/ReportsPanel";
 
 const ReportsPage = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const hasHydratedFromQuery = useRef(false);
+  const skipQuerySync = useRef(false);
   const [status, setStatus] = useState<ReportStatusType | undefined>();
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [floor, setFloor] = useState<number | undefined>();
+
+  useEffect(() => {
+    const queryStatus = searchParams.get("status");
+    const nextStatus: ReportStatusType | undefined =
+      queryStatus === "PENDING" ||
+      queryStatus === "IN_PROGRESS" ||
+      queryStatus === "RESOLVED"
+        ? queryStatus
+        : undefined;
+    const querySearch = searchParams.get("search") ?? "";
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+
+    setStatus(nextStatus);
+    setSearch(querySearch);
+    setDebouncedSearch(querySearch);
+    setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
+    hasHydratedFromQuery.current = true;
+    skipQuerySync.current = true;
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  useEffect(() => {
+    if (skipQuerySync.current) {
+      skipQuerySync.current = false;
+      return;
+    }
+
+    if (!hasHydratedFromQuery.current) {
+      return;
+    }
+
+    const nextSearchParams = updateQueryParams(searchParams, {
+      search: debouncedSearch,
+      status,
+      floor,
+    });
+    const nextQuery = nextSearchParams.toString();
+
+    if (nextQuery !== searchParams.toString()) {
+      router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, {
+        scroll: false,
+      });
+    }
+  }, [debouncedSearch, floor, pathname, router, searchParams, status]);
 
   const {
     data: reportsData,
@@ -50,8 +112,8 @@ const ReportsPage = () => {
     }
 
     // Filter by search
-    if (search) {
-      const normalizedSearch = search.toLowerCase();
+    if (debouncedSearch) {
+      const normalizedSearch = debouncedSearch.toLowerCase();
 
       result = result.filter((report) =>
         report.reporterName.toLowerCase().includes(normalizedSearch),
@@ -59,11 +121,12 @@ const ReportsPage = () => {
     }
 
     return result;
-  }, [reports, machines, floor, search]);
+  }, [reports, machines, floor, debouncedSearch]);
 
   const handleReset = () => {
     setStatus(undefined);
     setSearch("");
+    setDebouncedSearch("");
     setFloor(undefined);
   };
 
