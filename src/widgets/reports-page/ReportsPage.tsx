@@ -15,6 +15,16 @@ import {
 import ReportFilterPanel from "./ui/ReportFilterPanel";
 import ReportsPanel from "./ui/ReportsPanel";
 
+const getReportStatus = (
+  queryStatus: string | null,
+): ReportStatusType | undefined => {
+  return queryStatus === "PENDING" ||
+    queryStatus === "IN_PROGRESS" ||
+    queryStatus === "RESOLVED"
+    ? queryStatus
+    : undefined;
+};
+
 const ReportsPage = () => {
   const pathname = usePathname();
   const router = useRouter();
@@ -22,10 +32,17 @@ const ReportsPage = () => {
   const querySyncTracker = useRef(createQuerySyncTracker());
   const skipQuerySync = useRef(false);
   const [queryHydrationVersion, setQueryHydrationVersion] = useState(0);
-  const [status, setStatus] = useState<ReportStatusType | undefined>();
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [floor, setFloor] = useState<number | undefined>();
+  const [status, setStatus] = useState<ReportStatusType | undefined>(() =>
+    getReportStatus(searchParams.get("status")),
+  );
+  const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
+  const [debouncedSearch, setDebouncedSearch] = useState(
+    () => searchParams.get("search") ?? "",
+  );
+  const [floor, setFloor] = useState<number | undefined>(() => {
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+    return queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined;
+  });
 
   useEffect(() => {
     const query = searchParams.toString();
@@ -35,13 +52,7 @@ const ReportsPage = () => {
       return;
     }
 
-    const queryStatus = searchParams.get("status");
-    const nextStatus: ReportStatusType | undefined =
-      queryStatus === "PENDING" ||
-      queryStatus === "IN_PROGRESS" ||
-      queryStatus === "RESOLVED"
-        ? queryStatus
-        : undefined;
+    const nextStatus = getReportStatus(searchParams.get("status"));
     const querySearch = searchParams.get("search") ?? "";
     const queryFloor = getQueryParamNumber(searchParams, "floor");
 
