@@ -72,6 +72,7 @@ export default function MainPage() {
           }
           reservations={reservations}
           onOpenHistory={setSelectedMachineName}
+          side="left"
         />
       </div>
     </div>

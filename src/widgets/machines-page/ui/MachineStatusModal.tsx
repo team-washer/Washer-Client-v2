@@ -44,6 +44,7 @@ export default function MachineStatusModal({
       }
     },
     isOpen,
+    side,
   );
 
   if (!isOpen || !machine) {

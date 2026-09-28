@@ -13,6 +13,7 @@ import StatusRowActions from "@/shared/ui/admin/StatusRowActions";
 interface ReservationRowProps {
   item: ReservationItem;
   onOpenHistory: (machineName: string) => void;
+  triggerGroup: string;
 }
 
 function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
@@ -29,6 +30,7 @@ function ReservationMachineIcon({ type }: { type: ReservationMachineType }) {
 export default function ReservationRow({
   item,
   onOpenHistory,
+  triggerGroup,
 }: ReservationRowProps) {
   const { mutate: deleteReservation, isPending } = useDeleteReservation();
 
@@ -104,6 +106,7 @@ export default function ReservationRow({
         onHistory={handleHistory}
         onDelete={handleDelete}
         disabled={isPending}
+        triggerGroup={triggerGroup}
       />
     </div>
   );

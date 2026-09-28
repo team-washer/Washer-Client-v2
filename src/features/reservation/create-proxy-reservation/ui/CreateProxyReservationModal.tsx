@@ -113,6 +113,7 @@ export default function CreateProxyReservationModal({
       if (!isPending) onClose();
     },
     true,
+    side,
   );
 
   useEffect(() => {
