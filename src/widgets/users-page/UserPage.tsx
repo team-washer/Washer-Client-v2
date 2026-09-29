@@ -1,17 +1,58 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useGetUsers } from "@/entities/user";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { UserParamsType } from "@/entities/user";
+import { useGetUsers } from "@/entities/user";
+import {
+  createQuerySyncTracker,
+  getQueryParamNumber,
+  updateQueryParams,
+} from "@/shared/lib/queryParams";
 import UserFilterPanel from "./ui/UserFilterPanel";
 import UserStatusPanel from "./ui/UserStatusPanel";
 
 export default function UsersPage() {
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [roomSearch, setRoomSearch] = useState("");
-  const [debouncedRoomSearch, setDebouncedRoomSearch] = useState("");
-  const [floor, setFloor] = useState<number | undefined>();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const querySyncTracker = useRef(
+    createQuerySyncTracker(searchParams.toString()),
+  );
+  const skipQuerySync = useRef(false);
+  const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
+  const [debouncedSearch, setDebouncedSearch] = useState(
+    () => searchParams.get("search") ?? "",
+  );
+  const [roomSearch, setRoomSearch] = useState(
+    () => searchParams.get("room") ?? "",
+  );
+  const [debouncedRoomSearch, setDebouncedRoomSearch] = useState(
+    () => searchParams.get("room") ?? "",
+  );
+  const [floor, setFloor] = useState<number | undefined>(() => {
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+    return queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined;
+  });
+
+  useEffect(() => {
+    const query = searchParams.toString();
+    const navigationSource = querySyncTracker.current.observe(query);
+
+    if (navigationSource === "internal") {
+      return;
+    }
+
+    const querySearch = searchParams.get("search") ?? "";
+    const queryRoomSearch = searchParams.get("room") ?? "";
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+
+    setSearch(querySearch);
+    setDebouncedSearch(querySearch);
+    setRoomSearch(queryRoomSearch);
+    setDebouncedRoomSearch(queryRoomSearch);
+    setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
+    skipQuerySync.current = true;
+  }, [searchParams]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -26,6 +67,28 @@ export default function UsersPage() {
     }, 300);
     return () => clearTimeout(handler);
   }, [roomSearch]);
+
+  useEffect(() => {
+    if (skipQuerySync.current) {
+      skipQuerySync.current = false;
+      return;
+    }
+
+    const nextSearchParams = updateQueryParams(searchParams, {
+      search: debouncedSearch,
+      room: debouncedRoomSearch,
+      floor,
+    });
+    const nextQuery = nextSearchParams.toString();
+
+    if (querySyncTracker.current.request(nextQuery)) {
+      window.history.replaceState(
+        null,
+        "",
+        nextQuery ? `${pathname}?${nextQuery}` : pathname,
+      );
+    }
+  }, [debouncedRoomSearch, debouncedSearch, floor, pathname, searchParams]);
 
   const queryParams = useMemo(() => {
     const params: UserParamsType = {};

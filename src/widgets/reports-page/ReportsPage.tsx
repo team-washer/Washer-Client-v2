@@ -1,18 +1,97 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useGetMachines } from "@/entities/machine";
 import {
   type ReportStatusType,
   useGetMalfunctionReports,
 } from "@/entities/report";
+import {
+  createQuerySyncTracker,
+  getQueryParamNumber,
+  updateQueryParams,
+} from "@/shared/lib/queryParams";
 import ReportFilterPanel from "./ui/ReportFilterPanel";
 import ReportsPanel from "./ui/ReportsPanel";
 
+const getReportStatus = (
+  queryStatus: string | null,
+): ReportStatusType | undefined => {
+  return queryStatus === "PENDING" ||
+    queryStatus === "IN_PROGRESS" ||
+    queryStatus === "RESOLVED"
+    ? queryStatus
+    : undefined;
+};
+
 const ReportsPage = () => {
-  const [status, setStatus] = useState<ReportStatusType | undefined>();
-  const [search, setSearch] = useState("");
-  const [floor, setFloor] = useState<number | undefined>();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const querySyncTracker = useRef(
+    createQuerySyncTracker(searchParams.toString()),
+  );
+  const skipQuerySync = useRef(false);
+  const [status, setStatus] = useState<ReportStatusType | undefined>(() =>
+    getReportStatus(searchParams.get("status")),
+  );
+  const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
+  const [debouncedSearch, setDebouncedSearch] = useState(
+    () => searchParams.get("search") ?? "",
+  );
+  const [floor, setFloor] = useState<number | undefined>(() => {
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+    return queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined;
+  });
+
+  useEffect(() => {
+    const query = searchParams.toString();
+    const navigationSource = querySyncTracker.current.observe(query);
+
+    if (navigationSource === "internal") {
+      return;
+    }
+
+    const nextStatus = getReportStatus(searchParams.get("status"));
+    const querySearch = searchParams.get("search") ?? "";
+    const queryFloor = getQueryParamNumber(searchParams, "floor");
+
+    setStatus(nextStatus);
+    setSearch(querySearch);
+    setDebouncedSearch(querySearch);
+    setFloor(queryFloor === 3 || queryFloor === 4 ? queryFloor : undefined);
+    skipQuerySync.current = true;
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  useEffect(() => {
+    if (skipQuerySync.current) {
+      skipQuerySync.current = false;
+      return;
+    }
+
+    const nextSearchParams = updateQueryParams(searchParams, {
+      search: debouncedSearch,
+      status,
+      floor,
+    });
+    const nextQuery = nextSearchParams.toString();
+
+    if (querySyncTracker.current.request(nextQuery)) {
+      window.history.replaceState(
+        null,
+        "",
+        nextQuery ? `${pathname}?${nextQuery}` : pathname,
+      );
+    }
+  }, [debouncedSearch, floor, pathname, searchParams, status]);
 
   const {
     data: reportsData,
@@ -50,8 +129,8 @@ const ReportsPage = () => {
     }
 
     // Filter by search
-    if (search) {
-      const normalizedSearch = search.toLowerCase();
+    if (debouncedSearch) {
+      const normalizedSearch = debouncedSearch.toLowerCase();
 
       result = result.filter((report) =>
         report.reporterName.toLowerCase().includes(normalizedSearch),
@@ -59,11 +138,12 @@ const ReportsPage = () => {
     }
 
     return result;
-  }, [reports, machines, floor, search]);
+  }, [reports, machines, floor, debouncedSearch]);
 
   const handleReset = () => {
     setStatus(undefined);
     setSearch("");
+    setDebouncedSearch("");
     setFloor(undefined);
   };
 
