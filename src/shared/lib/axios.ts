@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authUrl } from "../api/apiUrls";
+import type { BaseResponseType } from "../api/types";
 import { COOKIE_KEYS } from "../constants/cookies";
 import { getCookie, setCookie } from "../utils/cookies";
 
@@ -73,15 +74,13 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const response: RefreshResponse = await axiosInstance.post(
-          authUrl.refresh(),
-          {
+        const response: BaseResponseType<RefreshResponse> =
+          await axiosInstance.post(authUrl.refresh(), {
             refreshToken,
-          },
-        );
+          });
 
-        const newAccessToken = response.accessToken;
-        const newRefreshToken = response.refreshToken;
+        const newAccessToken = response.data.accessToken;
+        const newRefreshToken = response.data.refreshToken;
 
         setCookie(COOKIE_KEYS.ACCESS_TOKEN, newAccessToken);
         setCookie(COOKIE_KEYS.REFRESH_TOKEN, newRefreshToken);
