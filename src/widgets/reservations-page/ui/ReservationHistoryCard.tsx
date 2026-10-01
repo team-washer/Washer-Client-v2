@@ -2,6 +2,7 @@
 
 import type { ReservationHistoryItem } from "@/entities/reservation";
 import ReservationStatusBadge from "@/entities/reservation/ui/ReservationStatusBadge";
+import { getHistoryTimeField } from "../lib/getHistoryTimeField";
 
 interface ReservationHistoryCardProps {
   machineName: string;
@@ -12,6 +13,8 @@ export default function ReservationHistoryCard({
   machineName,
   item,
 }: ReservationHistoryCardProps) {
+  const timeField = getHistoryTimeField(item.status, item.actionAt);
+
   return (
     <div className="rounded-xl border border-[#D4D4D8] bg-white px-4 py-4">
       <div className="mb-3 flex items-center justify-between">
@@ -27,10 +30,14 @@ export default function ReservationHistoryCard({
           <span>예약시간</span>
           <span className="text-right text-[#8B8B8B]">{item.reservedAt}</span>
 
-          <span>{item.status === "취소됨" ? "취소 시간" : "완료 시간"}</span>
-          <span className="text-right text-[#8B8B8B]">
-            {item.actionAt ?? "-"}
-          </span>
+          {timeField && (
+            <>
+              <span>{timeField.label}</span>
+              <span className="text-right text-[#8B8B8B]">
+                {timeField.value}
+              </span>
+            </>
+          )}
         </div>
       </div>
     </div>
