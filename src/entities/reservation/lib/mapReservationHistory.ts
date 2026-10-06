@@ -15,6 +15,10 @@ function mapHistoryStatus(
       return "취소됨";
     case "COMPLETED":
       return "사용 완료";
+    case "RUNNING":
+      return "사용중";
+    case "RESERVED":
+      return "예약중";
     default:
       return "사용 완료";
   }

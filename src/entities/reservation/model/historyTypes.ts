@@ -1,4 +1,8 @@
-export type ReservationHistoryStatus = "사용 완료" | "취소됨";
+export type ReservationHistoryStatus =
+  | "사용 완료"
+  | "사용중"
+  | "예약중"
+  | "취소됨";
 
 export interface MachineReservationHistoryParamsType {
   machineName?: string;
@@ -13,7 +17,7 @@ export type MachineReservationHistoryItemDTO = {
   reservedAt: string;
   actualCompletionTime: string | null;
   cancelledAt: string | null;
-  status: "COMPLETED" | "CANCELLED" | "RESERVED" | "IN_USE";
+  status: "COMPLETED" | "CANCELLED" | "RESERVED" | "RUNNING";
 };
 
 export type MachineReservationHistoryDTO = {
