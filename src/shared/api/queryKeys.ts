@@ -1,5 +1,9 @@
 import type { ReportParamsType } from "@/entities/report";
-import type { ReservationParamsType } from "@/entities/reservation/model/types";
+import type { MachineHistoryParamsType } from "@/entities/machine/model/types";
+import type {
+  MyReservationHistoryParamsType,
+  ReservationParamsType,
+} from "@/entities/reservation/model/types";
 import type { UserParamsType } from "@/entities/user";
 
 export const reportQueryKeys = {
@@ -13,6 +17,9 @@ export const machineQueryKeys = {
   all: ["machines"] as const,
   getMachines: (params: { floor?: number } = {}) =>
     ["machines", "list", params] as const,
+  getMachineStatuses: () => ["machines", "status"] as const,
+  getMachineHistory: (id: number, params?: MachineHistoryParamsType) =>
+    ["machines", "history", id, params] as const,
 } as const;
 
 export const userQueryKeys = {
@@ -28,6 +35,11 @@ export const reservationQueryKeys = {
     ["reservations", "list", params] as const,
   getMachineReservationHistory: (machineName: string | null) =>
     ["reservations", "history", machineName] as const,
+  getActiveReservation: () => ["reservations", "active"] as const,
+  getRoomActiveReservations: () => ["reservations", "active", "room"] as const,
+  getReservationAvailability: () => ["reservations", "availability"] as const,
+  getMyReservationHistory: (params?: MyReservationHistoryParamsType) =>
+    ["reservations", "my-history", params] as const,
 } as const;
 
 export const dashboardQueryKeys = {

@@ -1,6 +1,12 @@
 export { createProxyReservation } from "./createProxyReservation";
 export { deleteReservation } from "./deleteReservation";
+export { useDeleteMyReservation } from "./useDeleteMyReservation";
 export { useDeleteReservation } from "./useDeleteReservation";
+export { useGetActiveReservation } from "./useGetActiveReservation";
 export { useGetMachineReservationHistory } from "./useGetMachineReservationHistory";
+export { useGetMyReservationHistory } from "./useGetMyReservationHistory";
+export { useGetReservationAvailability } from "./useGetReservationAvailability";
 export { useGetReservations } from "./useGetReservations";
+export { useGetRoomActiveReservations } from "./useGetRoomActiveReservations";
 export { usePostProxyReservation } from "./usePostProxyReservation";
+export { usePostReservation } from "./usePostReservation";

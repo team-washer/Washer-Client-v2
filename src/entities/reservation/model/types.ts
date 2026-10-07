@@ -1,6 +1,11 @@
 import type { z } from "zod";
 import type {
   machineAvailabilityStatusSchema,
+  myReservationDTOSchema,
+  myReservationHistoryItemSchema,
+  myReservationHistoryPageSchema,
+  reservationAvailabilitySchema,
+  reservationCancellationSchema,
   reservationDTOSchema,
   reservationResponseSchema,
   reservationStatusSchema,
@@ -51,4 +56,46 @@ export interface ReservationParamsType {
   page?: number;
   size?: number;
   sort?: string[];
+}
+
+// 사용자용 예약 타입
+export type MyReservation = z.infer<typeof myReservationDTOSchema>;
+
+export type ReservationAvailability = z.infer<
+  typeof reservationAvailabilitySchema
+>;
+
+export type ReservationCancellation = z.infer<
+  typeof reservationCancellationSchema
+>;
+
+export type MyReservationHistoryItem = z.infer<
+  typeof myReservationHistoryItemSchema
+>;
+
+export type MyReservationHistoryPage = z.infer<
+  typeof myReservationHistoryPageSchema
+>;
+
+export interface MyReservationHistoryParamsType {
+  status?: ReservationDTOStatus;
+  machineType?: ReservationMachineType;
+  size?: number;
+}
+
+export type ReserveBlockReason =
+  | "MACHINE_UNAVAILABLE"
+  | "BANNED"
+  | "PENALTY"
+  | "ALREADY_RESERVED"
+  | "ROOM_TYPE_TAKEN";
+
+export interface ReserveContext {
+  machineReservable: boolean;
+  machineType: ReservationMachineType;
+  canReserve: boolean;
+  isBanned: boolean;
+  hasMyActiveReservation: boolean;
+  // 호실 활성 예약 각각의 기기 종류 (알 수 없으면 null)
+  roomReservationTypes: (ReservationMachineType | null)[];
 }

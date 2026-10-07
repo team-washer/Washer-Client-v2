@@ -7,6 +7,7 @@ export const reportUrl = {
   getMalfunctionReports: () => "/api/v2/admin/malfunction-reports",
   updateMalfunctionReportStatus: (id: number) =>
     `/api/v2/admin/malfunction-reports/${id}/status`,
+  createMalfunctionReport: () => "/api/v2/malfunction-reports",
 } as const;
 
 // 개별 상수로 분리하여 확실하게 정의
@@ -18,6 +19,8 @@ export const machineUrl = {
   getMachines,
   updateMachineStatus,
   deleteMachine: (id: number) => `/api/v2/admin/machines/${id}`,
+  getMachineStatuses: () => "/api/v2/machines/status",
+  getMachineHistory: (id: number) => `/api/v2/machines/${id}/history`,
 } as const;
 
 export const reservationUrl = {
@@ -27,6 +30,12 @@ export const reservationUrl = {
   getMachineReservationHistory: () =>
     "/api/v2/admin/reservations/machines/history",
   deleteReservation: (id: number) => `/api/v2/admin/reservations/${id}`,
+  createReservation: () => "/api/v2/reservations",
+  cancelReservation: (id: number) => `/api/v2/reservations/${id}`,
+  getActiveReservation: () => "/api/v2/reservations/active",
+  getRoomActiveReservations: () => "/api/v2/reservations/active/room",
+  getReservationAvailability: () => "/api/v2/reservations/availability",
+  getMyReservationHistory: () => "/api/v2/reservations/history",
 } as const;
 
 export const userUrl = {
