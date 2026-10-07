@@ -32,6 +32,7 @@ export const reservationUrl = {
 export const userUrl = {
   getUsers: () => "/api/v2/admin/users",
   getMyInfo: () => "/api/v2/users/my",
+  withdraw: () => "/api/v2/users/me",
   deleteUserPenalty: (userId: number) =>
     `/api/v2/admin/reservations/users/${userId}/penalty`,
   applyUserPenalty: (userId: number) =>
