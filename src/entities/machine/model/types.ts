@@ -80,6 +80,8 @@ export interface UserMachine {
   availability: UserMachineAvailability;
   // SmartThings 원본 값: "run" | "pause" | "stop", 알 수 없으면 null
   operatingState: string | null;
+  // SmartThings 작업 상태 원본 값 (예: "wash", "rinse", "drying")
+  jobState: string | null;
   expectedCompletionTime: string | null;
   remainingMinutes: number | null;
   reservationId: number | null;

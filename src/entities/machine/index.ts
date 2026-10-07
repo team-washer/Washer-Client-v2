@@ -1,4 +1,5 @@
 export * from "./api";
+export { getJobStateInfo, type JobStateInfo } from "./lib/jobStateInfo";
 export { MACHINE_STATUS_OPTIONS } from "./lib/machineStatusOptions";
 export { mapMachine, mapMachines } from "./lib/mapMachine";
 export {
