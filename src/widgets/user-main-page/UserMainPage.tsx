@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertCircle, Calendar, RefreshCw } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { isMachineReservable, useGetMachineStatuses } from "@/entities/machine";
 import {
@@ -29,7 +29,12 @@ const REFRESH_COOLDOWN_SECONDS = 5;
 const formatDateTime = (value: string): string =>
   new Date(value).toLocaleString("ko-KR");
 
-export default function UserMainPage() {
+interface UserMainPageProps {
+  // 하단 "기기 예약" 섹션 (세탁기 / 건조기 탭)
+  machineSection?: ReactNode;
+}
+
+export default function UserMainPage({ machineSection }: UserMainPageProps) {
   const now = useNow();
   const [refreshCooldown, setRefreshCooldown] = useState(0);
 
@@ -208,6 +213,8 @@ export default function UserMainPage() {
             </CardContent>
           </Card>
         )}
+
+        {machineSection}
       </div>
     </div>
   );
