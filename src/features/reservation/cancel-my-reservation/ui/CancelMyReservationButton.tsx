@@ -2,21 +2,12 @@
 
 import { toast } from "sonner";
 import { useDeleteMyReservation } from "@/entities/reservation";
+import { formatKstClock } from "@/shared/lib/kstDateTime";
 import { Button } from "@/shared/ui/button";
 
 interface CancelMyReservationButtonProps {
   reservationId: number;
 }
-
-const formatClock = (value: string): string | null => {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-  return date.toLocaleTimeString("ko-KR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-};
 
 export default function CancelMyReservationButton({
   reservationId,
@@ -26,10 +17,9 @@ export default function CancelMyReservationButton({
   const handleCancel = () => {
     mutate(reservationId, {
       onSuccess: (result) => {
-        const penaltyUntil =
-          result.penaltyApplied && result.penaltyExpiresAt
-            ? formatClock(result.penaltyExpiresAt)
-            : null;
+        const penaltyUntil = result.penaltyApplied
+          ? formatKstClock(result.penaltyExpiresAt)
+          : null;
 
         toast.success("예약 취소 완료", {
           description: penaltyUntil

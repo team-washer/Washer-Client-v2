@@ -12,6 +12,7 @@ import {
 import { AppError } from "@/shared/api";
 import { useNow } from "@/shared/hooks/useNow";
 import { usePullToRefresh } from "@/shared/hooks/usePullToRefresh";
+import { formatKstDateTime } from "@/shared/lib/kstDateTime";
 import { Alert, AlertDescription } from "@/shared/ui/alert";
 import {
   Card,
@@ -25,9 +26,6 @@ import MyReservationCard from "./ui/MyReservationCard";
 const MACHINE_POLLING_MS = 30_000;
 const RESERVATION_POLLING_MS = 10_000;
 const REFRESH_COOLDOWN_SECONDS = 5;
-
-const formatDateTime = (value: string): string =>
-  new Date(value).toLocaleString("ko-KR");
 
 export default function UserMainPage() {
   const now = useNow();
@@ -162,7 +160,7 @@ export default function UserMainPage() {
               <br />
               {availability.penaltyExpiresAt && (
                 <>
-                  제한 해제: {formatDateTime(availability.penaltyExpiresAt)}
+                  제한 해제: {formatKstDateTime(availability.penaltyExpiresAt)}
                   <br />
                 </>
               )}
