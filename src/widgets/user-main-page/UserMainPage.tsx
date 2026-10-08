@@ -12,6 +12,7 @@ import {
 import { AppError } from "@/shared/api";
 import { useNow } from "@/shared/hooks/useNow";
 import { usePullToRefresh } from "@/shared/hooks/usePullToRefresh";
+import { formatKstDateTime } from "@/shared/lib/kstDateTime";
 import { Alert, AlertDescription } from "@/shared/ui/alert";
 import {
   Card,
@@ -25,9 +26,6 @@ import MyReservationCard from "./ui/MyReservationCard";
 const MACHINE_POLLING_MS = 30_000;
 const RESERVATION_POLLING_MS = 10_000;
 const REFRESH_COOLDOWN_SECONDS = 5;
-
-const formatDateTime = (value: string): string =>
-  new Date(value).toLocaleString("ko-KR");
 
 interface UserMainPageProps {
   // 하단 "기기 예약" 섹션 (세탁기 / 건조기 탭)
@@ -167,7 +165,7 @@ export default function UserMainPage({ machineSection }: UserMainPageProps) {
               <br />
               {availability.penaltyExpiresAt && (
                 <>
-                  제한 해제: {formatDateTime(availability.penaltyExpiresAt)}
+                  제한 해제: {formatKstDateTime(availability.penaltyExpiresAt)}
                   <br />
                 </>
               )}

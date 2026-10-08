@@ -13,6 +13,7 @@ import {
 } from "@/entities/reservation";
 import { CancelMyReservationButton } from "@/features/reservation/cancel-my-reservation";
 import { formatCountdown } from "@/shared/lib";
+import { formatKstClock, parseKstDateTime } from "@/shared/lib/kstDateTime";
 import { Badge } from "@/shared/ui/badge";
 import {
   Card,
@@ -27,7 +28,8 @@ interface MyReservationCardProps {
   reservation: MyReservation;
   machine?: UserMachine;
   isMine: boolean;
-  now: number;
+  // mount 전에는 null (카운트다운 숨김)
+  now: number | null;
 }
 
 const statusInfo = {
@@ -45,25 +47,21 @@ const statusInfo = {
   },
 } as const;
 
-const formatClock = (value: string | null): string => {
-  if (!value) return "-";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "-";
-  return date.toLocaleTimeString("ko-KR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-};
+const getRemainingMs = (
+  reservation: MyReservation,
+  now: number | null,
+): number => {
+  if (now === null) return 0;
 
-const getRemainingMs = (reservation: MyReservation, now: number): number => {
   if (reservation.status === "RESERVED") {
-    const deadline = getReservedDeadline(reservation.reservedAt);
+    const deadline = getReservedDeadline(
+      parseKstDateTime(reservation.reservedAt),
+    );
     return deadline === null ? 0 : deadline - now;
   }
 
-  if (!reservation.expectedCompletionTime) return 0;
-  return new Date(reservation.expectedCompletionTime).getTime() - now;
+  const completion = parseKstDateTime(reservation.expectedCompletionTime);
+  return completion ? completion.getTime() - now : 0;
 };
 
 export default function MyReservationCard({
@@ -137,11 +135,11 @@ export default function MyReservationCard({
               {reservation.status === "RUNNING" ? "시작 시간:" : "예약 시간:"}
             </span>
             <span className="ml-1 font-medium dark:text-white">
-              {formatClock(
+              {formatKstClock(
                 reservation.status === "RUNNING"
                   ? reservation.startTime
                   : reservation.reservedAt,
-              )}
+              ) ?? "-"}
             </span>
           </div>
 

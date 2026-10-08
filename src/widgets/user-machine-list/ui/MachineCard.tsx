@@ -9,6 +9,7 @@ import {
   ReserveMachineButton,
 } from "@/features/reservation/reserve-machine";
 import { formatCountdown } from "@/shared/lib";
+import { parseKstDateTime } from "@/shared/lib/kstDateTime";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import {
@@ -26,8 +27,10 @@ import {
 
 interface MachineCardProps {
   machine: UserMachine;
-  now: number;
-  isMyRoomMachine: boolean;
+  // mount 전에는 null (카운트다운 숨김)
+  now: number | null;
+  // 본인 예약 여부 (룸메이트 예약은 false)
+  isMyReservation: boolean;
   // 우리 호실 예약이면 예약 만료 시각(epoch ms)
   myRoomReservedDeadline: number | null;
   blockReason: ReserveBlockReason | null | undefined;
@@ -39,7 +42,7 @@ interface MachineCardProps {
 export default function MachineCard({
   machine,
   now,
-  isMyRoomMachine,
+  isMyReservation,
   myRoomReservedDeadline,
   blockReason,
   penaltyExpiresAt,
@@ -51,23 +54,24 @@ export default function MachineCard({
   const Icon = isWasher ? Shirt : Wind;
   const positionCode = getPositionCode(machine);
 
-  const completionTime = machine.expectedCompletionTime
-    ? new Date(machine.expectedCompletionTime).getTime()
-    : null;
+  const completionTime =
+    parseKstDateTime(machine.expectedCompletionTime)?.getTime() ?? null;
   const remaining =
-    status.key === "IN_USE" && completionTime
-      ? {
-          label: isWasher ? "세탁 완료까지" : "건조 완료까지",
-          ms: completionTime - now,
-          tone: "text-yellow-600 dark:text-yellow-400",
-        }
-      : status.key === "RESERVED" && myRoomReservedDeadline
+    now === null
+      ? null
+      : status.key === "IN_USE" && completionTime
         ? {
-            label: "예약 만료까지",
-            ms: myRoomReservedDeadline - now,
-            tone: "text-orange-600 dark:text-orange-400",
+            label: isWasher ? "세탁 완료까지" : "건조 완료까지",
+            ms: completionTime - now,
+            tone: "text-yellow-600 dark:text-yellow-400",
           }
-        : null;
+        : status.key === "RESERVED" && myRoomReservedDeadline
+          ? {
+              label: "예약 만료까지",
+              ms: myRoomReservedDeadline - now,
+              tone: "text-orange-600 dark:text-orange-400",
+            }
+          : null;
 
   const showBlockMessage =
     status.key === "AVAILABLE" &&
@@ -123,7 +127,7 @@ export default function MachineCard({
             <div className="flex items-center gap-2 rounded-md bg-blue-50 p-2 text-sm text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
               <Home className="h-4 w-4" />
               <span className="font-medium">
-                {machine.roomNumber}호 {isMyRoomMachine ? "(내 예약)" : "예약"}
+                {machine.roomNumber}호 {isMyReservation ? "(내 예약)" : "예약"}
               </span>
             </div>
           )}
@@ -165,7 +169,7 @@ export default function MachineCard({
               disabled
               className="flex-1 cursor-not-allowed bg-transparent py-2 text-sm"
             >
-              {isMyRoomMachine
+              {isMyReservation
                 ? "내 예약"
                 : status.key === "CLEANING"
                   ? "통세척 중"

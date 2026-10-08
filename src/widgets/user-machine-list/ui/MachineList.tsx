@@ -18,8 +18,8 @@ import {
   useGetReservationAvailability,
   useGetRoomActiveReservations,
 } from "@/entities/reservation";
-import { useGetMyInfo } from "@/entities/user";
 import { useNow } from "@/shared/hooks/useNow";
+import { parseKstDateTime } from "@/shared/lib/kstDateTime";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { getPositionCode } from "../lib/machineCardStatus";
@@ -54,12 +54,12 @@ export default function MachineList({ type, renderActions }: MachineListProps) {
   const roomReservationsQuery = useGetRoomActiveReservations({
     refetchInterval: RESERVATION_POLLING_MS,
   });
-  const { data: myInfoData } = useGetMyInfo();
 
   const allMachines = machinesQuery.data ?? [];
   const availability = availabilityQuery.data;
   const roomReservations = roomReservationsQuery.data ?? [];
-  const myRoomNumber = myInfoData?.data.roomNumber ?? null;
+  // 호실 예약에는 룸메이트 예약도 포함되므로, 본인 예약은 활성 예약 ID로 판별한다.
+  const myReservationId = activeReservationQuery.data?.id ?? null;
   const isContextReady =
     availabilityQuery.isSuccess &&
     activeReservationQuery.isSuccess &&
@@ -107,8 +107,11 @@ export default function MachineList({ type, renderActions }: MachineListProps) {
       canReserve: availability.canReserve,
       isBanned: availability.isBanned,
       hasMyActiveReservation: activeReservationQuery.data !== null,
-      roomReservationTypes: roomReservations.map((reservation) =>
-        getMachineTypeFromName(reservation.machineName),
+      // 호실 예약 응답에는 기기 종류가 없어 machineId로 기기 목록에서 찾고, 없을 때만 이름으로 추정한다.
+      roomReservationTypes: roomReservations.map(
+        (reservation) =>
+          allMachines.find((item) => item.id === reservation.machineId)?.type ??
+          getMachineTypeFromName(reservation.machineName),
       ),
     });
   };
@@ -117,7 +120,9 @@ export default function MachineList({ type, renderActions }: MachineListProps) {
     const reservation = roomReservations.find(
       (item) => item.machineId === machine.id && item.status === "RESERVED",
     );
-    return reservation ? getReservedDeadline(reservation.reservedAt) : null;
+    return reservation
+      ? getReservedDeadline(parseKstDateTime(reservation.reservedAt))
+      : null;
   };
 
   const machines = allMachines.filter((machine) => machine.type === type);
@@ -198,8 +203,9 @@ export default function MachineList({ type, renderActions }: MachineListProps) {
                   key={machine.id}
                   machine={machine}
                   now={now}
-                  isMyRoomMachine={
-                    myRoomNumber !== null && machine.roomNumber === myRoomNumber
+                  isMyReservation={
+                    myReservationId !== null &&
+                    machine.reservationId === myReservationId
                   }
                   myRoomReservedDeadline={getMyRoomReservedDeadline(machine)}
                   blockReason={getBlockReason(machine)}

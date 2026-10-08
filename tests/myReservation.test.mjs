@@ -1,5 +1,5 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import {
   myReservationDTOSchema,
   myReservationHistoryPageSchema,
@@ -8,8 +8,8 @@ import {
   roomActiveReservationsResponseSchema,
 } from "../src/entities/reservation/api/schemas.ts";
 import {
-  getReservedDeadline,
   getReserveBlockReason,
+  getReservedDeadline,
 } from "../src/entities/reservation/lib/myReservation.ts";
 
 const reservationResponse = {
@@ -115,12 +115,12 @@ test("parses my reservation history page", () => {
 });
 
 test("computes the auto-cancel deadline five minutes after reservedAt", () => {
-  const reservedAt = "2026-10-07T15:00:00";
+  const reservedAt = new Date("2026-10-07T15:00:00+09:00");
   assert.equal(
-    getReservedDeadline(reservedAt) - new Date(reservedAt).getTime(),
+    getReservedDeadline(reservedAt) - reservedAt.getTime(),
     5 * 60_000,
   );
-  assert.equal(getReservedDeadline("not-a-date"), null);
+  assert.equal(getReservedDeadline(null), null);
 });
 
 const allowed = {
