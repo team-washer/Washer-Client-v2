@@ -3,9 +3,13 @@ import type {
   adminMachineDTOSchema,
   machineAvailabilityStatusSchema,
   machineConditionStatusSchema,
+  machineHistoryItemDTOSchema,
+  machineHistoryPageSchema,
   machinePositionSchema,
   machineResponseSchema,
+  machineStatusDTOSchema,
   machineTypeSchema,
+  userMachineAvailabilitySchema,
 } from "../api/schemas";
 
 // UI 타입
@@ -53,4 +57,67 @@ export type MachineResponseType = z.infer<typeof machineResponseSchema>;
 // 조회 파라미터
 export interface MachineParamsType {
   floor?: number;
+}
+
+// 사용자용 기기 현황 타입
+export type UserMachineAvailability = z.infer<
+  typeof userMachineAvailabilitySchema
+>;
+
+export type MachineStatusDTO = z.infer<typeof machineStatusDTOSchema>;
+
+export interface MachinePlacement {
+  floor: number;
+  position: MachinePosition;
+  number: number;
+}
+
+export interface UserMachine {
+  id: number;
+  name: string;
+  type: MachineType;
+  condition: MachineConditionStatusDTO;
+  availability: UserMachineAvailability;
+  // SmartThings 원본 값: "run" | "pause" | "stop", 알 수 없으면 null
+  operatingState: string | null;
+  expectedCompletionTime: string | null;
+  remainingMinutes: number | null;
+  reservationId: number | null;
+  roomNumber: string | null;
+  placement: MachinePlacement | null;
+}
+
+export type UserMachineStatusTone =
+  | "available"
+  | "reserved"
+  | "inUse"
+  | "cleaning"
+  | "broken"
+  | "unavailable";
+
+export interface UserMachineStatusView {
+  label: string;
+  tone: UserMachineStatusTone;
+}
+
+export interface MachineFloorLayout {
+  left: UserMachine[];
+  right: UserMachine[];
+  unplaced: UserMachine[];
+}
+
+export interface MachineSummary {
+  total: number;
+  available: number;
+  inUse: number;
+  unavailable: number;
+}
+
+// 기기별 이용 이력 타입
+export type MachineHistoryItemDTO = z.infer<typeof machineHistoryItemDTOSchema>;
+
+export type MachineHistoryPage = z.infer<typeof machineHistoryPageSchema>;
+
+export interface MachineHistoryParamsType {
+  size?: number;
 }

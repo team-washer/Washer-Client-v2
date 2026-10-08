@@ -63,3 +63,59 @@ export const machineReservationHistorySchema = z.object({
 export const machineReservationHistoryResponseSchema = z.object({
   machines: z.array(machineReservationHistorySchema),
 });
+
+// 사용자용 예약 한 건의 API 응답 구조
+export const myReservationDTOSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  userName: z.string(),
+  userRoomNumber: z.string(),
+  machineId: z.number(),
+  machineName: z.string(),
+  reservedAt: z.string(),
+  startTime: z.string().nullable(),
+  expectedCompletionTime: z.string().nullable(),
+  status: reservationStatusSchema,
+});
+
+// 호실 활성 예약 목록 API의 data 응답 구조 (없으면 빈 배열)
+export const roomActiveReservationsResponseSchema = z.object({
+  reservations: z.array(myReservationDTOSchema),
+});
+
+// 예약 가능 여부 API의 data 응답 구조
+export const reservationAvailabilitySchema = z.object({
+  canReserve: z.boolean(),
+  penaltyExpiresAt: z.string().nullable(),
+  isBanned: z.boolean().default(false),
+});
+
+// 예약 취소 API의 data 응답 구조
+export const reservationCancellationSchema = z.object({
+  success: z.boolean(),
+  message: z.string(),
+  penaltyApplied: z.boolean(),
+  penaltyExpiresAt: z.string().nullable(),
+});
+
+// 내 예약 이력 한 건의 응답 구조
+export const myReservationHistoryItemSchema = z.object({
+  id: z.number(),
+  userRoomNumber: z.string(),
+  machineName: z.string(),
+  machineType: z.enum(["WASHER", "DRYER"]),
+  startTime: z.string().nullable(),
+  completionTime: z.string().nullable(),
+  status: reservationStatusSchema,
+  createdAt: z.string(),
+});
+
+// 내 예약 이력 API의 data 응답 구조
+export const myReservationHistoryPageSchema = z.object({
+  content: z.array(myReservationHistoryItemSchema),
+  pageNumber: z.number(),
+  pageSize: z.number(),
+  totalElements: z.number(),
+  totalPages: z.number(),
+  last: z.boolean(),
+});
