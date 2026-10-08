@@ -36,6 +36,7 @@ export function mapUserMachine(dto: MachineStatusDTO): UserMachine {
     condition: dto.status,
     availability: dto.availability,
     operatingState: dto.operatingState,
+    jobState: dto.jobState,
     expectedCompletionTime: dto.expectedCompletionTime,
     remainingMinutes: dto.remainingMinutes,
     reservationId: dto.reservationId,
