@@ -12,6 +12,7 @@ export const STALE_TIME = {
   REPORT: 3 * MINUTE,
   USER: 3 * MINUTE,
   MY_INFO: 30 * MINUTE,
+  NOTIFICATION: 30 * SECOND,
 } as const;
 
 export const DEFAULT_STALE_TIME = MINUTE;

@@ -50,6 +50,11 @@ export const userUrl = {
     `/api/v2/admin/reservations/users/${userId}/penalty/block`,
 } as const;
 
+export const notificationUrl = {
+  getNotifications: () => "/api/v2/notifications",
+  deleteAllNotifications: () => "/api/v2/notifications",
+} as const;
+
 export const dashboardUrl = {
   getSummary: () => "/api/v2/admin/dashboard",
 } as const;
