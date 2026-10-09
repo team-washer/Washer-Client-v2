@@ -6,6 +6,10 @@ import TanStackProvider from "@/shared/lib/TanStackProvider";
 export const metadata: Metadata = {
   title: "washer",
   description: "광주소프트웨어마이스터고 세탁건조기 관리 서비스",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/icons/washer-drop.svg",
+  },
 };
 
 export default function RootLayout({

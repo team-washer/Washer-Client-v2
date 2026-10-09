@@ -1,0 +1,19 @@
+{
+  "name": "Washer",
+  "short_name": "Washer",
+  "description": "광주소프트웨어마이스터고 세탁건조기 관리 서비스",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f9fbff",
+  "theme_color": "#4486ff",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/icons/washer-drop.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
