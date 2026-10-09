@@ -10,8 +10,11 @@ interface RoleBasedLayoutStateInput {
   role?: UserRole;
 }
 
-export const getUserHomeKind = (role: UserRole): UserHomeKind =>
-  role === "USER" ? "user" : "admin";
+export const getUserHomeKind = (role: UserRole): UserHomeKind | null => {
+  if (role === "USER") return "user";
+  if (role === "ADMIN" || role === "DORMITORY_COUNCIL") return "admin";
+  return null;
+};
 
 export const getRoleBasedLayoutState = ({
   isPending,
@@ -20,5 +23,5 @@ export const getRoleBasedLayoutState = ({
 }: RoleBasedLayoutStateInput): RoleBasedLayoutState => {
   if (isPending) return "loading";
   if (isError || !role) return "error";
-  return getUserHomeKind(role);
+  return getUserHomeKind(role) ?? "error";
 };
