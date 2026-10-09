@@ -29,6 +29,11 @@ export const userQueryKeys = {
   getMyInfo: () => ["users", "my"] as const,
 } as const;
 
+export const notificationQueryKeys = {
+  all: ["notifications"] as const,
+  list: () => ["notifications", "list"] as const,
+} as const;
+
 export const reservationQueryKeys = {
   all: ["reservations"] as const,
   getReservations: (params?: ReservationParamsType) =>
