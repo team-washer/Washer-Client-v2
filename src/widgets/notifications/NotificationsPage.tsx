@@ -8,6 +8,7 @@ import {
   useGetNotifications,
   type Notification,
 } from "@/entities/notification";
+import { EnablePushNotificationsButton } from "@/features/notification/enable-push";
 import { AppError } from "@/shared";
 import { Button } from "@/shared/ui/button";
 import {
@@ -88,21 +89,24 @@ export default function NotificationsPage() {
               Washer에서 발생한 알림을 확인하세요.
             </p>
           </div>
-          <Button
-            variant="outline"
-            onClick={handleDeleteAll}
-            disabled={
-              deleteNotifications.isPending || notifications.length === 0
-            }
-            className="text-red-600 hover:bg-red-50 hover:text-red-700"
-          >
-            {deleteNotifications.isPending ? (
-              <LoaderCircle className="animate-spin" />
-            ) : (
-              <Trash2 />
-            )}
-            전체 삭제
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <EnablePushNotificationsButton />
+            <Button
+              variant="outline"
+              onClick={handleDeleteAll}
+              disabled={
+                deleteNotifications.isPending || notifications.length === 0
+              }
+              className="text-red-600 hover:bg-red-50 hover:text-red-700"
+            >
+              {deleteNotifications.isPending ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                <Trash2 />
+              )}
+              전체 삭제
+            </Button>
+          </div>
         </div>
 
         <Card>

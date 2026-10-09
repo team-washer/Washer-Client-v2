@@ -53,6 +53,8 @@ export const userUrl = {
 export const notificationUrl = {
   getNotifications: () => "/api/v2/notifications",
   deleteAllNotifications: () => "/api/v2/notifications",
+  registerFcmToken: () => "/api/v2/notifications/fcm-token",
+  deleteFcmToken: () => "/api/v2/notifications/fcm-token",
 } as const;
 
 export const dashboardUrl = {
