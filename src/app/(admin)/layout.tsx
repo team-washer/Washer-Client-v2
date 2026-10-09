@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
-import AdminLayout from "@/widgets/layout/admin-layout/ui/AdminLayout";
+import RoleBasedLayout from "./RoleBasedLayout";
 
 export default function AdminGroupLayout({ children }: PropsWithChildren) {
-  return <AdminLayout>{children}</AdminLayout>;
+  return <RoleBasedLayout>{children}</RoleBasedLayout>;
 }
