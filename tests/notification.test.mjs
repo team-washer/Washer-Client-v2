@@ -38,3 +38,34 @@ test("정규화 함수는 잘못된 알림 목록 응답을 거부한다", () =>
     null,
   );
 });
+
+test("정규화 함수는 확장된 타입과 알 수 없는 타입이 섞인 목록을 보존한다", () => {
+  const notifications = [
+    validResponse.notifications[0],
+    {
+      id: 2,
+      type: "FORCE_STOPPED",
+      message: "관리자에 의해 정지되었습니다.",
+      createdAt: "2026-03-30T14:31:00",
+    },
+    {
+      id: 3,
+      type: "ADMIN_PENALTY_BLOCKED",
+      message: "예약이 차단되었습니다.",
+      createdAt: "2026-03-30T14:32:00",
+    },
+    {
+      id: 4,
+      type: "FUTURE_NOTIFICATION_TYPE",
+      message: "향후 추가될 알림입니다.",
+      createdAt: "2026-03-30T14:33:00",
+    },
+  ];
+
+  assert.deepEqual(normalizeNotificationListResponse({ notifications }), [
+    notifications[0],
+    notifications[1],
+    notifications[2],
+    { ...notifications[3], type: "UNKNOWN" },
+  ]);
+});

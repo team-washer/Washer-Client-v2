@@ -9,13 +9,16 @@ export const NOTIFICATION_TYPES = [
   "TIMEOUT_WARNING",
   "CANCELLATION_BLOCKED",
   "CANCELLATION_BLOCK_EXTENDED",
+  "FORCE_STOPPED",
+  "ADMIN_PENALTY_BLOCKED",
 ] as const;
 
 export type NotificationType = (typeof NOTIFICATION_TYPES)[number];
+export type NotificationDisplayType = NotificationType | "UNKNOWN";
 
 export type Notification = {
   id: number;
-  type: NotificationType;
+  type: NotificationDisplayType;
   message: string;
   createdAt: string;
 };
@@ -47,16 +50,21 @@ export function normalizeNotificationListResponse(
     if (
       typeof notification.id !== "number" ||
       typeof notification.type !== "string" ||
-      !NOTIFICATION_TYPES.includes(notification.type as NotificationType) ||
       typeof notification.message !== "string" ||
       typeof notification.createdAt !== "string"
     ) {
       return null;
     }
 
+    const type = NOTIFICATION_TYPES.includes(
+      notification.type as NotificationType,
+    )
+      ? (notification.type as NotificationType)
+      : "UNKNOWN";
+
     notifications.push({
       id: notification.id,
-      type: notification.type as NotificationType,
+      type,
       message: notification.message,
       createdAt: notification.createdAt,
     });

@@ -29,6 +29,9 @@ const notificationLabels: Record<Notification["type"], string> = {
   TIMEOUT_WARNING: "취소 경고",
   CANCELLATION_BLOCKED: "예약 차단",
   CANCELLATION_BLOCK_EXTENDED: "예약 차단 연장",
+  FORCE_STOPPED: "강제 정지",
+  ADMIN_PENALTY_BLOCKED: "관리자 예약 차단",
+  UNKNOWN: "알림",
 };
 
 export default function NotificationsPage() {
