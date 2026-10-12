@@ -1,5 +1,5 @@
-import test from "node:test";
 import assert from "node:assert/strict";
+import test from "node:test";
 import { machineStatusResponseSchema } from "../src/entities/machine/api/schemas.ts";
 import {
   buildMachineFloorLayout,
@@ -8,6 +8,7 @@ import {
   getUserMachineStatusView,
   mapUserMachines,
   parseMachinePlacement,
+  sortFloorsByUserFloor,
   summarizeMachines,
 } from "../src/entities/machine/lib/userMachine.ts";
 
@@ -135,4 +136,11 @@ test("infers machine type from its name", () => {
   assert.equal(getMachineTypeFromName("Washer-3F-L1"), "WASHER");
   assert.equal(getMachineTypeFromName("dryer-2F-R1"), "DRYER");
   assert.equal(getMachineTypeFromName("Unknown-1"), null);
+});
+
+test("puts the user's floor first and keeps other floors ascending", () => {
+  assert.deepEqual(sortFloorsByUserFloor([3, 4], 4), [4, 3]);
+  assert.deepEqual(sortFloorsByUserFloor([1, 2, 3, 4], 3), [3, 1, 2, 4]);
+  assert.deepEqual(sortFloorsByUserFloor([3, 4], null), [3, 4]);
+  assert.deepEqual(sortFloorsByUserFloor([3, 4], 5), [3, 4]);
 });

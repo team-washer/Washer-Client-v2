@@ -4,6 +4,7 @@ import { AlertTriangle, Clock, Home, MapPin, Shirt, Wind } from "lucide-react";
 import type { ReactNode } from "react";
 import { getJobStateInfo, type UserMachine } from "@/entities/machine";
 import type { ReserveBlockReason } from "@/entities/reservation";
+import { CancelMyReservationButton } from "@/features/reservation/cancel-my-reservation";
 import {
   getReserveBlockMessage,
   ReserveMachineButton,
@@ -49,6 +50,8 @@ export default function MachineCard({
   actions,
 }: MachineCardProps) {
   const status = getMachineCardStatus(machine);
+  // 아직 시작하지 않은 내 예약(RESERVED)만 취소할 수 있다. RUNNING은 서버가 409로 거절한다.
+  const canCancel = isMyReservation && status.key === "RESERVED";
   const operatingStateInfo = getJobStateInfo(machine.type, machine.jobState);
   const isWasher = machine.type === "WASHER";
   const Icon = isWasher ? Shirt : Wind;
@@ -160,24 +163,32 @@ export default function MachineCard({
             </div>
           )}
 
-          {(status.key === "RESERVED" ||
-            status.key === "IN_USE" ||
-            status.key === "CLEANING" ||
-            status.key === "UNAVAILABLE") && (
-            <Button
-              variant="outline"
-              disabled
-              className="flex-1 cursor-not-allowed bg-transparent py-2 text-sm"
-            >
-              {isMyReservation
-                ? "내 예약"
-                : status.key === "CLEANING"
-                  ? "통세척 중"
-                  : status.key === "UNAVAILABLE"
-                    ? "사용 불가"
-                    : "사용 중"}
-            </Button>
+          {canCancel && machine.reservationId !== null && (
+            <CancelMyReservationButton
+              reservationId={machine.reservationId}
+              className="flex-1 py-2 text-sm"
+            />
           )}
+
+          {!canCancel &&
+            (status.key === "RESERVED" ||
+              status.key === "IN_USE" ||
+              status.key === "CLEANING" ||
+              status.key === "UNAVAILABLE") && (
+              <Button
+                variant="outline"
+                disabled
+                className="flex-1 cursor-not-allowed bg-transparent py-2 text-sm"
+              >
+                {isMyReservation
+                  ? "내 예약"
+                  : status.key === "CLEANING"
+                    ? "통세척 중"
+                    : status.key === "UNAVAILABLE"
+                      ? "사용 불가"
+                      : "사용 중"}
+              </Button>
+            )}
 
           {actions}
         </div>
