@@ -1,5 +1,5 @@
-import MainPage from "@/widgets/main-page/MainPage";
+import RoleBasedHome from "./RoleBasedHome";
 
 export default function Home() {
-  return <MainPage />;
+  return <RoleBasedHome />;
 }
