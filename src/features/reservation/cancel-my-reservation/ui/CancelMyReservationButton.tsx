@@ -2,15 +2,19 @@
 
 import { toast } from "sonner";
 import { useDeleteMyReservation } from "@/entities/reservation";
+import { cn } from "@/shared/lib/cn";
 import { formatKstClock } from "@/shared/lib/kstDateTime";
 import { Button } from "@/shared/ui/button";
 
 interface CancelMyReservationButtonProps {
   reservationId: number;
+  // 기본은 가로 전체 너비. 다른 버튼과 한 줄에 둘 때 덮어쓴다.
+  className?: string;
 }
 
 export default function CancelMyReservationButton({
   reservationId,
+  className = "w-full",
 }: CancelMyReservationButtonProps) {
   const { mutate, isPending } = useDeleteMyReservation();
 
@@ -40,7 +44,10 @@ export default function CancelMyReservationButton({
       variant="outline"
       onClick={handleCancel}
       disabled={isPending}
-      className="w-full border-red-500 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-500 dark:hover:bg-red-900/20"
+      className={cn(
+        "border-red-500 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-500 dark:hover:bg-red-900/20",
+        className,
+      )}
     >
       {isPending ? "취소 중..." : "예약 취소"}
     </Button>

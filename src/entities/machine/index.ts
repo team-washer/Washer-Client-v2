@@ -9,6 +9,7 @@ export {
   getUserMachineStatusView,
   isMachineReservable,
   parseMachinePlacement,
+  sortFloorsByUserFloor,
   summarizeMachines,
 } from "./lib/userMachine";
 export {

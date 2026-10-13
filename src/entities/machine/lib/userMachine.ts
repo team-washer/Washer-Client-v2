@@ -82,6 +82,19 @@ export function getMachineFloors(machines: UserMachine[]): number[] {
   return [...floors].sort((a, b) => a - b);
 }
 
+// 사용자 층을 맨 앞에 두고 나머지 층은 오름차순으로 정렬한다.
+// (다른 층 기기도 예약할 수 있어 숨기지 않는다)
+export function sortFloorsByUserFloor(
+  floors: number[],
+  userFloor: number | null,
+): number[] {
+  return [...floors].sort((a, b) => {
+    if (a === userFloor) return -1;
+    if (b === userFloor) return 1;
+    return a - b;
+  });
+}
+
 // 한 층의 기기를 좌/우로 나누고, 기존 배치도처럼 번호 내림차순(L3 → L1)으로 정렬한다.
 export function buildMachineFloorLayout(
   machines: UserMachine[],

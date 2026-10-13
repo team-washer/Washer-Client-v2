@@ -1,15 +1,16 @@
 "use client";
 
-import { Bell, Home, LogOut, Shirt, User } from "lucide-react";
+import { Bell, Home, LogOut, User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useState } from "react";
+import { toast } from "sonner";
 import { useGetNotifications } from "@/entities/notification";
 import { useGetMyInfo } from "@/entities/user";
 import { useLogout } from "@/features/auth/logout";
-import { Button } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/cn";
-import { toast } from "sonner";
+import { Button } from "@/shared/ui/button";
 
 const navigationItems = [
   { href: "/", label: "홈", icon: Home },
@@ -39,10 +40,14 @@ export default function UserNavbar() {
           className="flex shrink-0 items-center rounded-md px-1 py-1 text-[#6487DB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#86A9FF]"
           aria-label="Washer 홈"
         >
-          <Shirt className="h-5 w-5 sm:h-6 sm:w-6" />
-          <span className="ml-1.5 text-lg font-bold sm:ml-2 sm:text-xl">
-            Washer
-          </span>
+          <Image
+            src="/logo.svg"
+            alt="Washer"
+            width={120}
+            height={28}
+            className="h-6 w-auto sm:h-7"
+            priority
+          />
         </Link>
 
         <div className="ml-1 flex min-w-0 flex-1 items-center gap-0.5 sm:ml-4 sm:gap-1">

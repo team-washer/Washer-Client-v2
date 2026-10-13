@@ -7,6 +7,7 @@ import {
   getMachineTypeFromName,
   isMachineReservable,
   type MachineType,
+  sortFloorsByUserFloor,
   type UserMachine,
   useGetMachineStatuses,
 } from "@/entities/machine";
@@ -18,6 +19,7 @@ import {
   useGetReservationAvailability,
   useGetRoomActiveReservations,
 } from "@/entities/reservation";
+import { useGetMyInfo } from "@/entities/user";
 import { useNow } from "@/shared/hooks/useNow";
 import { parseKstDateTime } from "@/shared/lib/kstDateTime";
 import { Badge } from "@/shared/ui/badge";
@@ -54,6 +56,8 @@ export default function MachineList({ type, renderActions }: MachineListProps) {
   const roomReservationsQuery = useGetRoomActiveReservations({
     refetchInterval: RESERVATION_POLLING_MS,
   });
+  const { data: myInfoData } = useGetMyInfo();
+  const myFloor = myInfoData?.data.floor ?? null;
 
   const allMachines = machinesQuery.data ?? [];
   const availability = availabilityQuery.data;
@@ -148,7 +152,7 @@ export default function MachineList({ type, renderActions }: MachineListProps) {
       machine,
     ]);
   }
-  const floors = [...machinesByFloor.keys()].sort((a, b) => a - b);
+  const floors = sortFloorsByUserFloor([...machinesByFloor.keys()], myFloor);
 
   return (
     <div className="space-y-6">
