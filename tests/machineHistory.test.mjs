@@ -5,6 +5,7 @@ import {
   getMachineHistoryErrorState,
   getMachineHistoryStatusLabel,
   groupMachineHistoryByDay,
+  shouldShowMachineHistoryEmptyState,
 } from "../src/widgets/user-machine-list/lib/machineHistoryPresentation.ts";
 
 test("returns yesterday start and today end in Korean calendar time", () => {
@@ -87,4 +88,11 @@ test("groups machine history records under today and yesterday in Korean time", 
 test("keeps cached history visible when loading another page fails", () => {
   assert.equal(getMachineHistoryErrorState(true, 2), "pagination");
   assert.equal(getMachineHistoryErrorState(true, 0), "initial");
+});
+
+test("shows empty state when response has no displayable day groups", () => {
+  assert.equal(shouldShowMachineHistoryEmptyState(false, null, 0), true);
+  assert.equal(shouldShowMachineHistoryEmptyState(false, null, 1), false);
+  assert.equal(shouldShowMachineHistoryEmptyState(true, null, 0), false);
+  assert.equal(shouldShowMachineHistoryEmptyState(false, "initial", 0), false);
 });

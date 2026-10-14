@@ -40,6 +40,14 @@ export function getMachineHistoryErrorState(
   return itemCount > 0 ? "pagination" : "initial";
 }
 
+export function shouldShowMachineHistoryEmptyState(
+  isLoading: boolean,
+  errorState: MachineHistoryErrorState,
+  groupCount: number,
+): boolean {
+  return !isLoading && errorState === null && groupCount === 0;
+}
+
 function getKstDateKey(value: string): string | null {
   const date = new Date(
     HAS_OFFSET.test(value) ? value : `${value}${KST_OFFSET}`,

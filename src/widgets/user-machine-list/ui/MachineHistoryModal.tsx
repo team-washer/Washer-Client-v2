@@ -15,6 +15,7 @@ import { getRecentMachineHistoryRange } from "../lib/machineHistory";
 import {
   getMachineHistoryErrorState,
   groupMachineHistoryByDay,
+  shouldShowMachineHistoryEmptyState,
 } from "../lib/machineHistoryPresentation";
 import MachineHistoryCard from "./MachineHistoryCard";
 
@@ -79,14 +80,16 @@ export default function MachineHistoryModal({
             </div>
           )}
 
-          {!historyQuery.isLoading &&
-            errorState === null &&
-            items.length === 0 && (
-              <div className="flex min-h-48 flex-col items-center justify-center gap-3 text-center text-sm text-muted-foreground">
-                <History className="h-8 w-8" />
-                최근 2일간 이용 내역이 없습니다.
-              </div>
-            )}
+          {shouldShowMachineHistoryEmptyState(
+            historyQuery.isLoading,
+            errorState,
+            groups.length,
+          ) && (
+            <div className="flex min-h-48 flex-col items-center justify-center gap-3 text-center text-sm text-muted-foreground">
+              <History className="h-8 w-8" />
+              최근 2일간 이용 내역이 없습니다.
+            </div>
+          )}
 
           {!historyQuery.isLoading && groups.length > 0 && (
             <div className="space-y-6">
