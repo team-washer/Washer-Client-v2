@@ -11,6 +11,8 @@ export interface MachineHistoryDayGroup {
   items: MachineHistoryItemDTO[];
 }
 
+export type MachineHistoryErrorState = "initial" | "pagination" | null;
+
 const STATUS_LABELS: Record<
   MachineHistoryItemDTO["status"],
   MachineHistoryStatusLabel
@@ -28,6 +30,14 @@ export function getMachineHistoryStatusLabel(
   status: MachineHistoryItemDTO["status"],
 ): MachineHistoryStatusLabel {
   return STATUS_LABELS[status];
+}
+
+export function getMachineHistoryErrorState(
+  isError: boolean,
+  itemCount: number,
+): MachineHistoryErrorState {
+  if (!isError) return null;
+  return itemCount > 0 ? "pagination" : "initial";
 }
 
 function getKstDateKey(value: string): string | null {

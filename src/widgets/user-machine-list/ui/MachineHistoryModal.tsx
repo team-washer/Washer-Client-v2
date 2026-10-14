@@ -12,7 +12,10 @@ import {
   DialogTitle,
 } from "@/shared/ui/dialog";
 import { getRecentMachineHistoryRange } from "../lib/machineHistory";
-import { groupMachineHistoryByDay } from "../lib/machineHistoryPresentation";
+import {
+  getMachineHistoryErrorState,
+  groupMachineHistoryByDay,
+} from "../lib/machineHistoryPresentation";
 import MachineHistoryCard from "./MachineHistoryCard";
 
 interface MachineHistoryModalProps {
@@ -32,6 +35,10 @@ export default function MachineHistoryModal({
     size: HISTORY_PAGE_SIZE,
   });
   const items = historyQuery.data?.pages.flatMap((page) => page.content) ?? [];
+  const errorState = getMachineHistoryErrorState(
+    historyQuery.isError,
+    items.length,
+  );
   const groups = groupMachineHistoryByDay(items, range);
   const lastPage = historyQuery.data?.pages.at(-1);
   const showLoadMore =
@@ -65,7 +72,7 @@ export default function MachineHistoryModal({
             </div>
           )}
 
-          {historyQuery.isError && (
+          {errorState === "initial" && (
             <div className="flex min-h-48 flex-col items-center justify-center gap-3 text-center text-sm text-destructive">
               <AlertCircle className="h-7 w-7" />
               히스토리를 불러오지 못했습니다.
@@ -73,7 +80,7 @@ export default function MachineHistoryModal({
           )}
 
           {!historyQuery.isLoading &&
-            !historyQuery.isError &&
+            errorState === null &&
             items.length === 0 && (
               <div className="flex min-h-48 flex-col items-center justify-center gap-3 text-center text-sm text-muted-foreground">
                 <History className="h-8 w-8" />
@@ -81,45 +88,54 @@ export default function MachineHistoryModal({
               </div>
             )}
 
-          {!historyQuery.isLoading &&
-            !historyQuery.isError &&
-            groups.length > 0 && (
-              <div className="space-y-6">
-                {groups.map((group) => (
-                  <section
-                    key={group.label}
-                    aria-labelledby={`history-${group.label}`}
+          {!historyQuery.isLoading && groups.length > 0 && (
+            <div className="space-y-6">
+              {groups.map((group) => (
+                <section
+                  key={group.label}
+                  aria-labelledby={`history-${group.label}`}
+                >
+                  <h3
+                    id={`history-${group.label}`}
+                    className="mb-3 text-sm font-semibold text-foreground"
                   >
-                    <h3
-                      id={`history-${group.label}`}
-                      className="mb-3 text-sm font-semibold text-foreground"
-                    >
-                      {group.label}
-                    </h3>
-                    <div className="space-y-3">
-                      {group.items.map((item) => (
-                        <MachineHistoryCard
-                          key={item.id}
-                          machineName={machine?.name ?? "기기"}
-                          item={item}
-                        />
-                      ))}
-                    </div>
-                  </section>
-                ))}
+                    {group.label}
+                  </h3>
+                  <div className="space-y-3">
+                    {group.items.map((item) => (
+                      <MachineHistoryCard
+                        key={item.id}
+                        machineName={machine?.name ?? "기기"}
+                        item={item}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ))}
 
-                {showLoadMore && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full"
-                    onClick={() => void historyQuery.fetchNextPage()}
+              {errorState === "pagination" &&
+                !historyQuery.isFetchingNextPage && (
+                  <div
+                    role="alert"
+                    className="flex items-center justify-center gap-2 text-center text-sm text-destructive"
                   >
-                    더 보기
-                  </Button>
+                    <AlertCircle className="h-4 w-4" />
+                    추가 히스토리를 불러오지 못했습니다.
+                  </div>
                 )}
-              </div>
-            )}
+
+              {showLoadMore && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => void historyQuery.fetchNextPage()}
+                >
+                  {errorState === "pagination" ? "다시 시도" : "더 보기"}
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { getRecentMachineHistoryRange } from "../src/widgets/user-machine-list/lib/machineHistory.ts";
 import {
+  getMachineHistoryErrorState,
   getMachineHistoryStatusLabel,
   groupMachineHistoryByDay,
 } from "../src/widgets/user-machine-list/lib/machineHistoryPresentation.ts";
@@ -81,4 +82,9 @@ test("groups machine history records under today and yesterday in Korean time", 
       { label: "어제", ids: [2] },
     ],
   );
+});
+
+test("keeps cached history visible when loading another page fails", () => {
+  assert.equal(getMachineHistoryErrorState(true, 2), "pagination");
+  assert.equal(getMachineHistoryErrorState(true, 0), "initial");
 });
