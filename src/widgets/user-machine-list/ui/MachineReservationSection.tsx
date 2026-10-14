@@ -1,7 +1,9 @@
 "use client";
 
-import { Shirt, Wind } from "lucide-react";
+import { History, Shirt, Wind } from "lucide-react";
 import { useState } from "react";
+import type { UserMachine } from "@/entities/machine";
+import { Button } from "@/shared/ui/button";
 import {
   Card,
   CardContent,
@@ -10,6 +12,7 @@ import {
   CardTitle,
 } from "@/shared/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
+import MachineHistoryModal from "./MachineHistoryModal";
 import MachineList from "./MachineList";
 
 const tabTriggerClassName =
@@ -18,37 +21,65 @@ const tabTriggerClassName =
 // v1 홈의 "기기 예약" 카드 (세탁기 / 건조기 탭)
 export default function MachineReservationSection() {
   const [activeTab, setActiveTab] = useState("washing");
+  const [selectedMachine, setSelectedMachine] = useState<UserMachine | null>(
+    null,
+  );
+
+  const renderHistoryAction = (machine: UserMachine) => (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      className="shrink-0"
+      aria-label={`${machine.name} 히스토리 보기`}
+      onClick={() => setSelectedMachine(machine)}
+    >
+      <History className="h-4 w-4" />
+      <span className="hidden sm:inline">히스토리</span>
+    </Button>
+  );
 
   return (
-    <Card className="w-full">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg">기기 예약</CardTitle>
-        <CardDescription>
-          사용하고 싶은 세탁기나 건조기를 선택하세요
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="pt-0 pb-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="mb-6 grid h-auto w-full grid-cols-2 rounded-lg bg-muted p-2">
-            <TabsTrigger value="washing" className={tabTriggerClassName}>
-              <Shirt className="h-4 w-4" />
-              세탁기
-            </TabsTrigger>
-            <TabsTrigger value="dryer" className={tabTriggerClassName}>
-              <Wind className="h-4 w-4" />
-              건조기
-            </TabsTrigger>
-          </TabsList>
+    <>
+      <Card className="w-full">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg">기기 예약</CardTitle>
+          <CardDescription>
+            사용하고 싶은 세탁기나 건조기를 선택하세요
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-0 pb-8">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
+            <TabsList className="mb-6 grid h-auto w-full grid-cols-2 rounded-lg bg-muted p-2">
+              <TabsTrigger value="washing" className={tabTriggerClassName}>
+                <Shirt className="h-4 w-4" />
+                세탁기
+              </TabsTrigger>
+              <TabsTrigger value="dryer" className={tabTriggerClassName}>
+                <Wind className="h-4 w-4" />
+                건조기
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="washing" className="mt-0">
-            <MachineList type="WASHER" />
-          </TabsContent>
+            <TabsContent value="washing" className="mt-0">
+              <MachineList type="WASHER" renderActions={renderHistoryAction} />
+            </TabsContent>
 
-          <TabsContent value="dryer" className="mt-0">
-            <MachineList type="DRYER" />
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+            <TabsContent value="dryer" className="mt-0">
+              <MachineList type="DRYER" renderActions={renderHistoryAction} />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+
+      <MachineHistoryModal
+        machine={selectedMachine}
+        onClose={() => setSelectedMachine(null)}
+      />
+    </>
   );
 }
