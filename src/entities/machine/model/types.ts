@@ -122,4 +122,6 @@ export type MachineHistoryPage = z.infer<typeof machineHistoryPageSchema>;
 
 export interface MachineHistoryParamsType {
   size?: number;
+  startDate?: string;
+  endDate?: string;
 }

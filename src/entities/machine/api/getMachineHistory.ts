@@ -1,11 +1,14 @@
 import { get, machineUrl, normalizeApiError } from "@/shared/api";
 import type { BaseResponseType } from "@/shared/api/types";
-import type { MachineHistoryPage } from "../model/types";
+import type {
+  MachineHistoryPage,
+  MachineHistoryParamsType,
+} from "../model/types";
 import { machineHistoryPageSchema } from "./schemas";
 
 export async function getMachineHistory(
   id: number,
-  params: { page: number; size?: number },
+  params: MachineHistoryParamsType & { page: number },
 ): Promise<MachineHistoryPage> {
   try {
     const response = await get<BaseResponseType<unknown>>(
