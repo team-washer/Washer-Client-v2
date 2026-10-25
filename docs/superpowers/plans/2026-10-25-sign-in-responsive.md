@@ -35,33 +35,33 @@
 - Consumes: existing `AuthLayout` children contract and `OAuthLoginButton` component.
 - Produces: an auth layout with full-width content area and a sign-in card that is full width up to `max-w-110`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
   Add source-contract tests named `uses a viewport-safe auth layout` and `uses a responsive sign-in card` that assert the layout source contains `min-h-dvh`, `w-full`, responsive padding classes, and the form source contains `w-full max-w-110` plus mobile/desktop padding classes.
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
   Run: `node --test tests/sign-in-responsive.test.mjs`
 
   Expected: FAIL because the current layout uses `min-h-screen` without a full-width content contract and the form uses fixed `w-110`.
 
-- [ ] **Step 3: Implement the responsive layout**
+- [x] **Step 3: Implement the responsive layout**
 
   In `AuthLayout`, use `min-h-dvh` on the main container and make the content section `w-full` with `px-4 py-6 sm:px-6 sm:py-10`. In `SignInForm`, replace the fixed card width with `w-full max-w-110`, use `px-5 py-8 sm:px-7 sm:py-10`, and use smaller default button padding with the existing desktop padding restored at `sm`.
 
-- [ ] **Step 4: Run the focused test**
+- [x] **Step 4: Run the focused test**
 
   Run: `node --test tests/sign-in-responsive.test.mjs`
 
   Expected: PASS with 2 tests and 0 failures.
 
-- [ ] **Step 5: Run project verification**
+- [x] **Step 5: Run project verification**
 
   Run: `pnpm check-types; pnpm lint; pnpm build`
 
   Expected: all commands exit with code 0.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
   ```bash
   git add docs/superpowers/specs/2026-10-25-sign-in-responsive-design.md docs/superpowers/plans/2026-10-25-sign-in-responsive.md tests/sign-in-responsive.test.mjs src/widgets/layout/auth-layout/ui/AuthLayout/index.tsx src/features/auth/sign-in/ui/SignInForm/index.tsx

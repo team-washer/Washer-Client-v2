@@ -14,9 +14,17 @@ test("uses a viewport-safe auth layout", async () => {
     "src/widgets/layout/auth-layout/ui/AuthLayout/index.tsx",
   );
 
-  assert.match(source, /min-h-dvh/);
-  assert.match(source, /w-full/);
-  assert.match(source, /px-4 py-6 sm:px-6 sm:py-10/);
+  const mainClassName = source.match(/<main className="([^"]+)"/)?.[1];
+  const sectionClassName = source.match(
+    /<section className="([^"]+)">/,
+  )?.[1];
+
+  assert.ok(mainClassName);
+  assert.ok(sectionClassName);
+  assert.match(mainClassName, /min-h-dvh/);
+  assert.match(sectionClassName, /w-full/);
+  assert.match(sectionClassName, /px-4 py-6/);
+  assert.match(sectionClassName, /sm:px-6 sm:py-10/);
 });
 
 test("uses a responsive sign-in card", async () => {
@@ -24,9 +32,17 @@ test("uses a responsive sign-in card", async () => {
     "src/features/auth/sign-in/ui/SignInForm/index.tsx",
   );
 
-  assert.match(source, /w-full max-w-110/);
-  assert.match(source, /px-5 py-8/);
-  assert.match(source, /sm:px-7 sm:py-10/);
-  assert.match(source, /px-4/);
-  assert.match(source, /sm:px-\[2\.09375rem\]/);
+  const cardClassName = source.match(/<div className="([^"]+)"/)?.[1];
+  const buttonClassName = source.match(
+    /<OAuthLoginButton className="([^"]+)" \/>/,
+  )?.[1];
+
+  assert.ok(cardClassName);
+  assert.ok(buttonClassName);
+  assert.match(cardClassName, /w-full max-w-110/);
+  assert.match(cardClassName, /px-5 py-8/);
+  assert.match(cardClassName, /sm:px-7 sm:py-10/);
+  assert.match(buttonClassName, /w-full/);
+  assert.match(buttonClassName, /px-4/);
+  assert.match(buttonClassName, /sm:px-\[2\.09375rem\]/);
 });
