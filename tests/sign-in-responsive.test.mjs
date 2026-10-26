@@ -9,6 +9,17 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const readSource = (relativePath) =>
   readFile(path.join(projectRoot, relativePath), "utf8");
 
+const assertHasClasses = (className, expectedClasses) => {
+  const classTokens = new Set(className.split(/\s+/));
+
+  for (const expectedClass of expectedClasses) {
+    assert.ok(
+      classTokens.has(expectedClass),
+      `Expected className to include ${expectedClass}`,
+    );
+  }
+};
+
 test("uses a viewport-safe auth layout", async () => {
   const source = await readSource(
     "src/widgets/layout/auth-layout/ui/AuthLayout/index.tsx",
@@ -21,10 +32,14 @@ test("uses a viewport-safe auth layout", async () => {
 
   assert.ok(mainClassName);
   assert.ok(sectionClassName);
-  assert.match(mainClassName, /min-h-dvh/);
-  assert.match(sectionClassName, /w-full/);
-  assert.match(sectionClassName, /px-4 py-6/);
-  assert.match(sectionClassName, /sm:px-6 sm:py-10/);
+  assertHasClasses(mainClassName, ["min-h-dvh"]);
+  assertHasClasses(sectionClassName, [
+    "w-full",
+    "px-4",
+    "py-6",
+    "sm:px-6",
+    "sm:py-10",
+  ]);
 });
 
 test("uses a responsive sign-in card", async () => {
@@ -39,10 +54,17 @@ test("uses a responsive sign-in card", async () => {
 
   assert.ok(cardClassName);
   assert.ok(buttonClassName);
-  assert.match(cardClassName, /w-full max-w-110/);
-  assert.match(cardClassName, /px-5 py-8/);
-  assert.match(cardClassName, /sm:px-7 sm:py-10/);
-  assert.match(buttonClassName, /w-full/);
-  assert.match(buttonClassName, /px-4/);
-  assert.match(buttonClassName, /sm:px-\[2\.09375rem\]/);
+  assertHasClasses(cardClassName, [
+    "w-full",
+    "max-w-110",
+    "px-5",
+    "py-8",
+    "sm:px-7",
+    "sm:py-10",
+  ]);
+  assertHasClasses(buttonClassName, [
+    "w-full",
+    "px-4",
+    "sm:px-[2.09375rem]",
+  ]);
 });
