@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { COOKIE_KEYS } from "@/shared/constants/cookies";
-import { isPublicProxyPath } from "@/shared/lib/publicProxyPaths.mjs";
+import { isPublicProxyPath } from "@/shared/lib/publicProxyPaths";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

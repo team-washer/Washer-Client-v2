@@ -5,6 +5,6 @@ const PUBLIC_PROXY_PATHS = new Set([
   "/firebase-messaging-sw.js",
 ]);
 
-export function isPublicProxyPath(pathname) {
+export function isPublicProxyPath(pathname: string) {
   return pathname.startsWith("/api/") || PUBLIC_PROXY_PATHS.has(pathname);
 }

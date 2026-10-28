@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { isPublicProxyPath } from "../src/shared/lib/publicProxyPaths.mjs";
+import { isPublicProxyPath } from "../src/shared/lib/publicProxyPaths.ts";
 
 test("allows public PWA assets through the authentication proxy", () => {
   for (const pathname of [

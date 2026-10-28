@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test:proxy": "node --test tests/publicProxyPaths.test.mjs",
+    "test:proxy": "node --no-warnings --experimental-strip-types --test tests/publicProxyPaths.test.mjs",
     "dev": "next dev",
     "dev:insecure": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
     "build": "next build",
