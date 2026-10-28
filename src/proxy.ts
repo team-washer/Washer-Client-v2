@@ -1,15 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { COOKIE_KEYS } from "@/shared/constants/cookies";
+import { isPublicProxyPath } from "@/shared/lib/publicProxyPaths";
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get(COOKIE_KEYS.ACCESS_TOKEN)?.value;
 
-  if (
-    pathname.startsWith("/api/") ||
-    pathname === "/sign-in" ||
-    pathname === "/app-download"
-  ) {
+  if (isPublicProxyPath(pathname)) {
     return NextResponse.next();
   }
 
