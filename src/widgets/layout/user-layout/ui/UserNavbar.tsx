@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { useGetNotifications } from "@/entities/notification";
-import { useGetMyInfo } from "@/entities/user";
+import { getUserHomeKind, useGetMyInfo } from "@/entities/user";
 import { useLogout } from "@/features/auth/logout";
 import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
@@ -25,6 +25,8 @@ export default function UserNavbar() {
   const { data: myInfoData } = useGetMyInfo();
   const { data: notifications = [] } = useGetNotifications();
   const myInfo = myInfoData?.data;
+  const isStaff = Boolean(myInfo && getUserHomeKind(myInfo.role) === "admin");
+  const homeHref = isStaff ? "/user" : "/";
 
   const handleLogout = useCallback(() => {
     setIsLoggingOut(true);
@@ -36,7 +38,7 @@ export default function UserNavbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur">
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center gap-2 px-3 sm:h-16 sm:px-6 lg:px-8">
         <Link
-          href="/"
+          href={homeHref}
           className="flex shrink-0 items-center rounded-md px-1 py-1 text-[#6487DB] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#86A9FF]"
           aria-label="Washer 홈"
         >
@@ -51,7 +53,8 @@ export default function UserNavbar() {
         </Link>
 
         <div className="ml-1 flex min-w-0 flex-1 items-center gap-0.5 sm:ml-4 sm:gap-1">
-          {navigationItems.map(({ href, label, icon: Icon }) => {
+          {navigationItems.map(({ href: itemHref, label, icon: Icon }) => {
+            const href = itemHref === "/" ? homeHref : itemHref;
             const isActive = pathname === href;
             const notificationCount = notifications.length;
 
@@ -79,6 +82,14 @@ export default function UserNavbar() {
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
+          {isStaff && (
+            <Button asChild variant="outline" size="sm">
+              <Link href="/" aria-label="관리자 페이지">
+                <span>관리자 페이지</span>
+              </Link>
+            </Button>
+          )}
+
           <div className="hidden text-right leading-tight md:block">
             <p className="text-sm font-semibold text-gray-700">
               {myInfo ? `${myInfo.studentId} ${myInfo.name}` : "사용자"}

@@ -17,6 +17,7 @@ export default function UserRouteGuard({ children }: PropsWithChildren) {
     isPending,
     isError,
     role: data?.data?.role,
+    isUserPage: true,
   });
 
   useEffect(() => {
@@ -29,13 +30,9 @@ export default function UserRouteGuard({ children }: PropsWithChildren) {
       router.replace("/sign-in");
       return;
     }
-
-    if (layoutState === "admin") {
-      router.replace("/");
-    }
   }, [error, layoutState, queryClient, router]);
 
-  if (layoutState === "loading" || layoutState === "admin") {
+  if (layoutState === "loading") {
     return <RouteFallback message="접근 권한을 확인하는 중..." />;
   }
 
