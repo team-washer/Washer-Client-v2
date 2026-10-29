@@ -3,10 +3,12 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { useGetMyInfo } from "@/entities/user";
 import { clearAuthSession } from "@/shared";
+import { Button } from "@/shared/ui/button";
 
 export default function Header() {
   const queryClient = useQueryClient();
@@ -25,6 +27,10 @@ export default function Header() {
         <Image src="/logo.svg" alt="Washer" width={120} height={28} />
 
         <div className="flex items-center gap-3">
+          <Button asChild variant="outline" size="sm">
+            <Link href="/user">사용자 페이지</Link>
+          </Button>
+
           {myInfo && (
             <div className="text-right leading-tight">
               <p className="text-[14px] font-semibold text-[#4A4A4F]">
