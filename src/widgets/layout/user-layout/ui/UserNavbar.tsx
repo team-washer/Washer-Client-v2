@@ -84,9 +84,7 @@ export default function UserNavbar() {
         <div className="flex shrink-0 items-center gap-2">
           {isStaff && (
             <Button asChild variant="outline" size="sm">
-              <Link href="/" aria-label="관리자 페이지">
-                <span>관리자 페이지</span>
-              </Link>
+              <Link href="/">관리자 페이지</Link>
             </Button>
           )}
 
