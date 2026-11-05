@@ -44,7 +44,7 @@ export default function MachineReservationSection() {
       <Card className="w-full">
         <CardHeader className="pb-4">
           <CardTitle className="text-lg">기기 예약</CardTitle>
-          <CardDescription>
+          <CardDescription className="break-keep">
             사용하고 싶은 세탁기나 건조기를 선택하세요
           </CardDescription>
         </CardHeader>
