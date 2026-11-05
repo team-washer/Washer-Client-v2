@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Home, LogOut, User } from "lucide-react";
+import { Bell, Home, LayoutDashboard, LogOut, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -81,10 +81,18 @@ export default function UserNavbar() {
           })}
         </div>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           {isStaff && (
-            <Button asChild variant="outline" size="sm">
-              <Link href="/">관리자 페이지</Link>
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="size-8 px-0 has-[>svg]:px-0 sm:size-9 lg:h-8 lg:w-auto lg:has-[>svg]:px-2.5"
+            >
+              <Link href="/" title="관리자 페이지">
+                <LayoutDashboard />
+                <span className="sr-only lg:not-sr-only">관리자 페이지</span>
+              </Link>
             </Button>
           )}
 
