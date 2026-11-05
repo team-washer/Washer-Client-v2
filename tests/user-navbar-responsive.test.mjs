@@ -40,3 +40,21 @@ test("renders the admin link as icon-only below lg with an accessible label", as
   assert.ok(labelClassName);
   assertHasClasses(labelClassName, ["sr-only", "lg:not-sr-only"]);
 });
+
+test("overlays the notification badge below sm and gives nav links accessible names", async () => {
+  const source = await readSource(
+    "src/widgets/layout/user-layout/ui/UserNavbar.tsx",
+  );
+
+  const badgeClassName = source.match(
+    /<span className="([^"]+)">\s*\{notificationCount > 99/,
+  )?.[1];
+  assert.ok(badgeClassName, "Expected to find the notification badge");
+  assertHasClasses(badgeClassName, ["absolute", "sm:static"]);
+
+  assert.match(
+    source,
+    /<Link\s+key=\{href\}\s+href=\{href\}\s+aria-label=\{/,
+    "Expected each nav link to have an aria-label",
+  );
+});
