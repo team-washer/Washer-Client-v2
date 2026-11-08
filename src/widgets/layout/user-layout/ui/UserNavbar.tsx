@@ -92,7 +92,7 @@ export default function UserNavbar() {
               asChild
               variant="outline"
               size="sm"
-              className="size-8 px-0 text-gray-600 has-[>svg]:px-0 sm:size-9 lg:h-8 lg:w-auto lg:has-[>svg]:px-2.5"
+              className="size-8 px-0 text-gray-600 has-[>svg]:px-0 sm:size-9 lg:w-auto lg:has-[>svg]:px-2.5"
             >
               <Link href="/" title="관리자 페이지">
                 <LayoutDashboard />
