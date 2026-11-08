@@ -52,9 +52,13 @@ test("overlays the notification badge below sm and gives nav links accessible na
   assert.ok(badgeClassName, "Expected to find the notification badge");
   assertHasClasses(badgeClassName, ["absolute", "sm:static"]);
 
+  const navItemsBlock = source.match(
+    /navigationItems\.map\(([\s\S]*?)<\/Link>/,
+  )?.[1];
+  assert.ok(navItemsBlock, "Expected to find the nav link block");
   assert.match(
-    source,
-    /<Link\s+key=\{href\}\s+href=\{href\}\s+aria-label=\{/,
+    navItemsBlock,
+    /aria-label=\{/,
     "Expected each nav link to have an aria-label",
   );
 });
