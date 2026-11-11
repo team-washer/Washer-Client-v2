@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Home, LogOut, User } from "lucide-react";
+import { Bell, Home, LayoutDashboard, LogOut, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -47,7 +47,7 @@ export default function UserNavbar() {
             alt="Washer"
             width={120}
             height={28}
-            className="h-6 w-auto sm:h-7"
+            className="h-5 w-auto min-[360px]:h-6 sm:h-7"
             priority
           />
         </Link>
@@ -62,8 +62,13 @@ export default function UserNavbar() {
               <Link
                 key={href}
                 href={href}
+                aria-label={
+                  href === "/notifications" && notificationCount > 0
+                    ? `${label} ${notificationCount > 99 ? "99개 이상" : `${notificationCount}개`}`
+                    : label
+                }
                 className={cn(
-                  "flex min-w-0 items-center gap-1 rounded-md px-2 py-2 text-xs font-medium transition-colors sm:gap-1.5 sm:px-3 sm:text-sm",
+                  "relative flex min-w-0 items-center gap-1 rounded-md px-2 py-2 text-xs font-medium transition-colors sm:gap-1.5 sm:px-3 sm:text-sm",
                   isActive
                     ? "bg-[#A8C2FF] text-[#6487DB]"
                     : "text-gray-600 hover:bg-[#EDF2FF]",
@@ -72,7 +77,7 @@ export default function UserNavbar() {
                 <Icon className="h-4 w-4 shrink-0" />
                 <span className="hidden truncate sm:inline">{label}</span>
                 {href === "/notifications" && notificationCount > 0 && (
-                  <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] leading-none text-white">
+                  <span className="absolute -top-0.5 -right-0.5 min-w-4 rounded-full bg-red-500 px-1 py-0.5 text-center text-[9px] leading-none text-white sm:static sm:min-w-0 sm:px-1.5 sm:text-[10px]">
                     {notificationCount > 99 ? "99+" : notificationCount}
                   </span>
                 )}
@@ -81,10 +86,18 @@ export default function UserNavbar() {
           })}
         </div>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           {isStaff && (
-            <Button asChild variant="outline" size="sm">
-              <Link href="/">관리자 페이지</Link>
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="size-8 px-0 text-gray-600 has-[>svg]:px-0 sm:size-9 lg:w-auto lg:has-[>svg]:px-2.5"
+            >
+              <Link href="/" title="관리자 페이지">
+                <LayoutDashboard />
+                <span className="sr-only lg:not-sr-only">관리자 페이지</span>
+              </Link>
             </Button>
           )}
 
